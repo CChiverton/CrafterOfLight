@@ -304,78 +304,108 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QGroupBox" name="groupBox_2">
-        <property name="title">
-         <string>Output</string>
+     <widget class="QGroupBox" name="outputBox">
+      <property name="title">
+       <string>Output</string>
+      </property>
+      <widget class="QScrollArea" name="scrollArea_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>261</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>259</width>
+          <height>89</height>
+         </rect>
         </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="optionsBox">
-        <property name="title">
-         <string>Crafting Options</string>
-        </property>
-        <widget class="QWidget" name="gridLayoutWidget">
+        <widget class="QWidget" name="gridLayoutWidget_3">
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>30</y>
-           <width>261</width>
+           <y>0</y>
+           <width>241</width>
            <height>81</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="2" column="0">
-           <widget class="QPushButton" name="pushButton">
-            <property name="text">
-             <string>Brute Craft</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="checkBox">
-            <property name="text">
-             <string>Force Max Quality</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="text">
-             <string>Smart Craft</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="stepsLabel">
-            <property name="text">
-             <string>Maximum Steps</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="spinBox_7"/>
-          </item>
-         </layout>
+         <layout class="QGridLayout" name="gridLayout_macroOutput"/>
         </widget>
        </widget>
-      </item>
-     </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="optionsBox">
+      <property name="title">
+       <string>Crafting Options</string>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>261</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="checkBox">
+          <property name="text">
+           <string>Force Max Quality</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="pushButton_smartCraft">
+          <property name="text">
+           <string>Smart Craft</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="stepsLabel">
+          <property name="text">
+           <string>Maximum Steps</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="spinBox_7"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="pushButton_bruteCraft">
+          <property name="text">
+           <string>Brute Craft</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
