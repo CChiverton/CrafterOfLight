@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CrafterOfLight.h"
+#include "Item.h"
 
 CrafterOfLight::CrafterOfLight(QWidget *parent)
     : QWidget(parent)
@@ -14,16 +15,20 @@ CrafterOfLight::~CrafterOfLight()
 
 void CrafterOfLight::BruteCraft() {
     DeleteMacros();
-    ui.spinBox->setValue(15);
+    ui.spinBox_maxCP->setValue(15);
 }
 
 void CrafterOfLight::SmartCraft() {
     DeleteMacros();
     ui.gridLayout_macroOutput->addWidget(new QPushButton("1"), 0, 0);
-    QLineEdit* option = new QLineEdit("This is an example");                // worry about memory leak: QObjects should be deleted on program end
-                                                                            // but during runtime this could build up
+    QLineEdit* option = new QLineEdit("This is an example");                
     option->setReadOnly(true);
     ui.gridLayout_macroOutput->addWidget(option, 0, 1);
+
+    Item item = Item(3000, 11000, 80);
+    ui.spinBox_itemDurability->setValue(item.GetMaxDurability());
+    ui.spinBox_itemProgress->setValue(item.GetMaxProgress());
+    ui.spinBox_itemQuality->setValue(item.GetMaxQuality());
 }
 
 void CrafterOfLight::DeleteMacros() {

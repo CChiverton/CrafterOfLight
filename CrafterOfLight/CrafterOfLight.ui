@@ -79,7 +79,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QSpinBox" name="spinBox">
+           <widget class="QSpinBox" name="spinBox_itemProgress">
             <property name="buttonSymbols">
              <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
             </property>
@@ -89,14 +89,14 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QSpinBox" name="spinBox_2">
+           <widget class="QSpinBox" name="spinBox_itemQuality">
             <property name="maximum">
              <number>100000</number>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QSpinBox" name="spinBox_3">
+           <widget class="QSpinBox" name="spinBox_itemDurability">
             <property name="maximum">
              <number>1000</number>
             </property>
@@ -169,21 +169,21 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QSpinBox" name="spinBox_4">
+           <widget class="QSpinBox" name="spinBox_maxCP">
             <property name="maximum">
              <number>1000</number>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QSpinBox" name="spinBox_5">
+           <widget class="QSpinBox" name="spinBox_progress">
             <property name="maximum">
              <number>1000</number>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QSpinBox" name="spinBox_6">
+           <widget class="QSpinBox" name="spinBox_quality">
             <property name="maximum">
              <number>1000</number>
             </property>
