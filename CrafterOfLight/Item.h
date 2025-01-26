@@ -1,18 +1,17 @@
 #pragma once
 
-#include "stdafx.h"
 #include <cstdint>
+
+struct ItemState {
+	uint16_t progress = 0;
+	uint16_t quality = 0;
+	int16_t durability = 0;
+};
 
 class Item {
 public:
-	Item(uint16_t maxItemProgress, uint16_t maxItemQuality, int16_t maxItemDurability);
+	Item(ItemState maxItemState);
 	~Item();
-
-	struct ItemState {
-		uint16_t progress = 0;
-		uint16_t quality = 0;
-		int16_t durability = 0;
-	};
 
 	/* Progress */
 	inline const uint16_t GetCurrentProgress() const;

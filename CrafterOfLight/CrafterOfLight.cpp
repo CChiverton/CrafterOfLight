@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CrafterOfLight.h"
-#include "Item.h"
+#include "Player.h"
 
 CrafterOfLight::CrafterOfLight(QWidget *parent)
     : QWidget(parent)
@@ -24,8 +24,10 @@ void CrafterOfLight::SmartCraft() {
     QLineEdit* option = new QLineEdit("This is an example");                
     option->setReadOnly(true);
     ui.gridLayout_macroOutput->addWidget(option, 0, 1);
-
-    Item item = Item(3000, 11000, 80);
+    PlayerState state = { 10 };
+    ItemState itemState = { 3000, 11000, 80 };
+    Player player = Player(state, itemState);
+    Item item = player.GetItemState();
     ui.spinBox_itemDurability->setValue(item.GetMaxDurability());
     ui.spinBox_itemProgress->setValue(item.GetMaxProgress());
     ui.spinBox_itemQuality->setValue(item.GetMaxQuality());
