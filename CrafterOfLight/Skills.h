@@ -55,8 +55,6 @@ namespace Skills {
 		NONE
 	};
 
-	const enum class SkillType;
-
 	std::string GetSkillName(SkillName skillName);
 	
 	const struct SkillInformation {
