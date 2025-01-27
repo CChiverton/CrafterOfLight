@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CrafterOfLight.h"
 #include "Player.h"
+#include <format>
 
 CrafterOfLight::CrafterOfLight(QWidget *parent)
     : QWidget(parent)
@@ -24,13 +25,14 @@ void CrafterOfLight::SmartCraft() {
     QLineEdit* option = new QLineEdit("This is an example");                
     option->setReadOnly(true);
     ui.gridLayout_macroOutput->addWidget(option, 0, 1);
-    PlayerState state = { 10 };
-    ItemState itemState = { 3000, 11000, 80 };
-    Player player = Player(state, itemState);
+    PlayerState state = { ui.spinBox_maxCP->value()};
+    ItemState itemState = { ui.spinBox_itemProgress->value(), ui.spinBox_itemQuality->value(), ui.spinBox_itemDurability->value()};
+    Player player = Player(state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), itemState);
     Item item = player.GetItemState();
-    ui.spinBox_itemDurability->setValue(item.GetMaxDurability());
-    ui.spinBox_itemProgress->setValue(item.GetMaxProgress());
-    ui.spinBox_itemQuality->setValue(item.GetMaxQuality());
+    PlayerState playerState = player.GetCurrentPlayerState();
+    std::string output = std::format("Item Max Progress: {}, Quality: {}, Durability: {}\nPlayer CP: {}, ProgEff: {:3.2f}, QualEff: {:3.2f}",
+        item.GetMaxProgress(), item.GetMaxQuality(), item.GetMaxDurability(), playerState.cP, player.GetProgressEfficiency(), player.GetQualityEfficiency());
+    ui.label_info->setText(QString::fromStdString(output));
 }
 
 void CrafterOfLight::DeleteMacros() {
