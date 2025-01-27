@@ -13,6 +13,10 @@ public:
 	Item(ItemState maxItemState);
 	~Item();
 
+	/* State */
+	inline ItemState GetCurrentItemState() const;
+	inline void LoadItemState(ItemState itemState);
+
 	/* Progress */
 	inline const uint16_t GetCurrentProgress() const;
 	inline const uint16_t GetMaxProgress() const;
@@ -28,6 +32,14 @@ public:
 private:
 	ItemState currentItemState, maxItemState;
 };
+
+inline ItemState Item::GetCurrentItemState() const {
+	return currentItemState;
+}
+
+inline void Item::LoadItemState(ItemState itemState) {
+	currentItemState = itemState;
+}
 
 inline const uint16_t Item::GetCurrentProgress() const {
 	return currentItemState.progress;
