@@ -9,23 +9,39 @@ Player::Player(PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t
 
 Player::~Player() {}
 
-void Player::CheckSpecialConditions(const Skills::SkillName skillName, uint16_t& skillCost, uint8_t& skillEfficiency, int16_t& skillDurabilityCost, const int16_t itemDurability) {
-	switch (skillName) {
+bool Player::CastSkill(const Skills::SkillName skillName) {
+	if (currentSkill.name != skillName) {			// sanity check to test that the player is casting the right skill
+		return false;
+	}
+	// Calculate efficiency, durability cost
+	// Change player state 
+	// Return calculated efficiency, durability cost
+}
+
+bool Player::IsSkillCastable(const Skills::SkillInformation& skill, const int16_t itemDurability) {
+	currentSkill = skill;
+	CheckSpecialConditions(itemDurability); 
+	return CanCastSkill();
+}
+
+// Maybe change touch skills to be default 18CP and increase if not combo? Will stop the CP check being late
+void Player::CheckSpecialConditions(const int16_t itemDurability) {
+	switch (currentSkill.name) {
 	case Skills::SkillName::GROUNDWORK:
-		if (itemDurability < skillDurabilityCost) {
-			skillEfficiency /= 2;
+		if (itemDurability < currentSkill.costDurability) {
+			currentSkill.efficiency /= 2;
 		}
 		currentPlayerState.combo = false;
 		break;
-	case Skills::SkillName::STANDARDTOUCH:
+	case Skills::SkillName::STANDARDTOUCH:		
 		if (currentPlayerState.lastSkillUsed == Skills::SkillName::BASICTOUCH) {
-			skillCost = 18;
+			currentSkill.costCP = 18;
 			currentPlayerState.combo = true;
 		}
 		break;
 	case Skills::SkillName::ADVANCEDTOUCH:
 		if ((currentPlayerState.lastSkillUsed == Skills::SkillName::STANDARDTOUCH && currentPlayerState.combo == true) || currentPlayerState.lastSkillUsed == Skills::SkillName::OBSERVE) {
-			skillCost = 18;
+			currentSkill.costCP = 18;
 		}
 		currentPlayerState.combo = false;
 		break;
@@ -40,12 +56,12 @@ void Player::CheckSpecialConditions(const Skills::SkillName skillName, uint16_t&
 	}
 }
 
-bool Player::CanCastSkill(const Skills::SkillName skillName, const uint16_t skillCost) {
-	if (skillCost > currentPlayerState.cP) {
+bool Player::CanCastSkill() {
+	if (currentSkill.costCP > currentPlayerState.cP) {
 		return false;
 	}
 
-	switch (skillName) {
+	switch (currentSkill.name) {
 	case Skills::SkillName::PRUDENTSYNTHESIS:
 	case Skills::SkillName::PRUDENTTOUCH:
 		/* Check buff status here */

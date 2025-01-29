@@ -22,13 +22,19 @@ public:
 	inline const float GetProgressEfficiency() const;
 	inline const float GetQualityEfficiency() const;
 
+	bool CastSkill(const Skills::SkillName skillName);
+	bool IsSkillCastable(const Skills::SkillInformation& skill, const int16_t itemDurability);
+
 private:
-	void CheckSpecialConditions(const Skills::SkillName skillName, uint16_t& skillCost, uint8_t& skillEfficiency, int16_t& skillDurabilityCost, const int16_t itemDurability);
-	bool CanCastSkill(const Skills::SkillName skillName, const uint16_t skillCost);
+	void CheckSpecialConditions(const int16_t itemDurability);
+	bool CanCastSkill();
 
 protected:
 	PlayerState maxPlayerState, currentPlayerState;
 	const float progressPerOneEfficiency, qualityPerOneEfficiency;
+
+private:
+	Skills::SkillInformation currentSkill = { Skills::SkillName::NONE,	Skills::SkillType::NONE, 0,	0,	0,	0 };
 };
 
 inline const PlayerState Player::GetCurrentPlayerState() const {
