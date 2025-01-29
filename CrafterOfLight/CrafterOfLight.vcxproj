@@ -133,6 +133,39 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\skillIcons\Advanced_Touch.png" />
+    <Image Include="resources\skillIcons\Basic_Synthesis.png" />
+    <Image Include="resources\skillIcons\Basic_Touch.png" />
+    <Image Include="resources\skillIcons\Byregot%27s_Blessing.png" />
+    <Image Include="resources\skillIcons\Careful_Synthesis.png" />
+    <Image Include="resources\skillIcons\Delicate_Synthesis.png" />
+    <Image Include="resources\skillIcons\Final_Appraisal.png" />
+    <Image Include="resources\skillIcons\Focused_Synthesis.png" />
+    <Image Include="resources\skillIcons\Focused_Touch.png" />
+    <Image Include="resources\skillIcons\Great_Strides.png" />
+    <Image Include="resources\skillIcons\Groundwork.png" />
+    <Image Include="resources\skillIcons\Hasty_Touch.png" />
+    <Image Include="resources\skillIcons\Innovation.png" />
+    <Image Include="resources\skillIcons\Intensive_Synthesis.png" />
+    <Image Include="resources\skillIcons\Manipulation.png" />
+    <Image Include="resources\skillIcons\Master%27s_Mend.png" />
+    <Image Include="resources\skillIcons\Muscle_Memory.png" />
+    <Image Include="resources\skillIcons\Observe.png" />
+    <Image Include="resources\skillIcons\Precise_Touch.png" />
+    <Image Include="resources\skillIcons\Preparatory_Touch.png" />
+    <Image Include="resources\skillIcons\Prudent_Synthesis.png" />
+    <Image Include="resources\skillIcons\Prudent_Touch.png" />
+    <Image Include="resources\skillIcons\Rapid_Synthesis.png" />
+    <Image Include="resources\skillIcons\Reflect.png" />
+    <Image Include="resources\skillIcons\Standard_Touch.png" />
+    <Image Include="resources\skillIcons\Trained_Eye.png" />
+    <Image Include="resources\skillIcons\Trained_Finesse.png" />
+    <Image Include="resources\skillIcons\Tricks_of_the_Trade.png" />
+    <Image Include="resources\skillIcons\Veneration.png" />
+    <Image Include="resources\skillIcons\Waste_Not.png" />
+    <Image Include="resources\skillIcons\Waste_Not_II.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

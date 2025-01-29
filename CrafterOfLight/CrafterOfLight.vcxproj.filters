@@ -21,6 +21,9 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="Resource Files\skillIcons">
+      <UniqueIdentifier>{13bce3c0-1819-4ddd-9d50-2f0cf85907bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="CrafterOfLight.qrc">
@@ -78,5 +81,100 @@
     <ClInclude Include="Crafter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\skillIcons\Advanced_Touch.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Basic_Synthesis.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Basic_Touch.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Byregot%27s_Blessing.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Careful_Synthesis.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Delicate_Synthesis.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Final_Appraisal.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Focused_Synthesis.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Focused_Touch.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Great_Strides.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Groundwork.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Hasty_Touch.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Innovation.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Intensive_Synthesis.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Manipulation.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Master%27s_Mend.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Muscle_Memory.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Observe.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Precise_Touch.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Preparatory_Touch.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Prudent_Synthesis.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Prudent_Touch.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Rapid_Synthesis.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Reflect.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Standard_Touch.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Trained_Eye.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Trained_Finesse.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Tricks_of_the_Trade.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Veneration.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Waste_Not.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
+    <Image Include="resources\skillIcons\Waste_Not_II.png">
+      <Filter>Resource Files\skillIcons</Filter>
+    </Image>
   </ItemGroup>
 </Project>

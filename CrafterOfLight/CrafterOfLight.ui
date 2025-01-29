@@ -224,202 +224,157 @@
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="3">
-         <widget class="QToolButton" name="toolButton_13">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton_basicSynthesis">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Basic_Synthesis.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
-          <property name="autoExclusive">
+          <property name="checked">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QToolButton" name="toolButton_12">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QToolButton" name="toolButton_14">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="6">
-         <widget class="QToolButton" name="toolButton_16">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QToolButton" name="toolButton_3">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QToolButton" name="toolButton_4">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QToolButton" name="toolButton_5">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="6">
-         <widget class="QToolButton" name="toolButton_7">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="7">
-         <widget class="QToolButton" name="toolButton_8">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QToolButton" name="toolButton_10">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="8">
-         <widget class="QToolButton" name="toolButton_18">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="5">
-         <widget class="QToolButton" name="toolButton_15">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QToolButton" name="toolButton_2">
+         <widget class="QPushButton" name="pushButton_carefulSynthesis">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Careful_Synthesis.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="pushButton_prudentSynthesis">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Prudent_Synthesis.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="pushButton_groundwork">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Groundwork.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -427,31 +382,110 @@
           <property name="autoExclusive">
            <bool>false</bool>
           </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QPushButton" name="pushButton_muscleMemory">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Muscle_Memory.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
         <item row="0" column="5">
-         <widget class="QToolButton" name="toolButton_6">
+         <widget class="QPushButton" name="pushButton_basicTouch">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Basic_Touch.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QToolButton" name="toolButton">
+        <item row="0" column="6">
+         <widget class="QPushButton" name="pushButton_standardTouch">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Standard_Touch.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -459,15 +493,98 @@
           <property name="autoExclusive">
            <bool>false</bool>
           </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+         </widget>
+        </item>
+        <item row="0" column="7">
+         <widget class="QPushButton" name="pushButton_advancedTouch">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Advanced_Touch.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_prudentTouch">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Prudent_Touch.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QToolButton" name="toolButton_11">
+         <widget class="QPushButton" name="pushButton_preparatoryTouch">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Preparatory_Touch.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -475,159 +592,433 @@
           <property name="autoExclusive">
            <bool>false</bool>
           </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="pushButton_reflect">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Reflect.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QPushButton" name="pushButton_trainedFinesse">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Trained_Finesse.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="QPushButton" name="pushButton_refinedTouch">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Refined_Touch.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QPushButton" name="pushButton_wasteNotI">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Waste_Not.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="6">
+         <widget class="QPushButton" name="pushButton_wasteNotII">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Waste_Not_II.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
         <item row="1" column="7">
-         <widget class="QToolButton" name="toolButton_17">
+         <widget class="QPushButton" name="pushButton_greatStrides">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Great_Strides.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="8">
-         <widget class="QToolButton" name="toolButton_9">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QToolButton" name="toolButton_19">
+         <widget class="QPushButton" name="pushButton_veneration">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Veneration.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QToolButton" name="toolButton_20">
+         <widget class="QPushButton" name="pushButton_finalAppraisal">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Final_Appraisal.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QToolButton" name="toolButton_21">
+         <widget class="QPushButton" name="pushButton_mastersMend">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Master's_Mend.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="3">
-         <widget class="QToolButton" name="toolButton_22">
+         <widget class="QPushButton" name="pushButton_manipulation">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Manipulation.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="4">
-         <widget class="QToolButton" name="toolButton_23">
+         <widget class="QPushButton" name="pushButton_immaculateMend">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Immaculate_Mend.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="5">
-         <widget class="QToolButton" name="toolButton_24">
+         <widget class="QPushButton" name="pushButton_trainedPerfection">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Trained_Perfection.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="6">
-         <widget class="QToolButton" name="toolButton_25">
+         <widget class="QPushButton" name="pushButton_observe">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Observe.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
           </property>
          </widget>
         </item>
         <item row="2" column="7">
-         <widget class="QToolButton" name="toolButton_26">
+         <widget class="QPushButton" name="pushButton_delicateSynthesis">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
           <property name="text">
-           <string>...</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Delicate_Synthesis.png</selectedon>
+           </iconset>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -635,8 +1026,73 @@
           <property name="autoExclusive">
            <bool>false</bool>
           </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+         </widget>
+        </item>
+        <item row="0" column="8">
+         <widget class="QPushButton" name="pushButton_byregotsBlessing">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Byregot's_Blessing.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="8">
+         <widget class="QPushButton" name="pushButton_innovation">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border-width: 1px;
+     border-style: solid;
+     border-color: red;
+ }
+QPushButton:checked{ border-width: 1px;
+     border-style: solid;
+     border-color: green;
+ }
+QPushButton:disabled{
+	border-style: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <selectedon>resources/skillIcons/Innovation.png</selectedon>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
