@@ -35,17 +35,18 @@ public:
 	inline const float GetProgressEfficiency() const;
 	inline const float GetQualityEfficiency() const;
 
-	bool CastSkill(const Skills::SkillName skillName);
+	const Skills::SkillInformation& CastSkill(const Skills::SkillName skillName);
 	bool IsSkillCastable(const Skills::SkillInformation& skill, const int16_t itemDurability);
 
 private:
 	void CheckSpecialConditions(const int16_t itemDurability);
 	bool CanCastSkill();
 	void SkillEffect();
+	inline void UpdatePlayerState();
 	void SynthesisBuffs();
 	void TouchBuffs(uint8_t innerQuietStacks);
-	void inline ApplyInnerQuiet();
-	void inline AddInnerQuiet(uint8_t stacks);
+	inline void ApplyInnerQuiet();
+	inline void AddInnerQuiet(uint8_t stacks);
 
 protected:
 	PlayerState maxPlayerState, currentPlayerState;
@@ -70,6 +71,21 @@ inline const float Player::GetProgressEfficiency() const {
 
 inline const float Player::GetQualityEfficiency() const {
 	return qualityPerOneEfficiency;
+}
+
+inline void Player::UpdatePlayerState() {
+	currentPlayerState.cP -= currentSkill.costCP;
+	++currentPlayerState.turn;
+
+	if (currentSkill.name == Skills::SkillName::FINALAPPRAISAL) {
+		return;
+	}
+
+	for (uint8_t buff : currentPlayerState.buffs) {
+		if (buff > 0) {
+			--buff;
+		}
+	}
 }
 
 inline void Player::ApplyInnerQuiet() {

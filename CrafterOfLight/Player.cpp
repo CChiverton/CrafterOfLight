@@ -9,13 +9,13 @@ Player::Player(PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t
 
 Player::~Player() {}
 
-bool Player::CastSkill(const Skills::SkillName skillName) {
+const Skills::SkillInformation& Player::CastSkill(const Skills::SkillName skillName) {
 	if (currentSkill.name != skillName) {			// sanity check to test that the player is casting the right skill
-		return false;
+		return Skills::SkillArray[25];				// return the NONE skill
 	}
 	SkillEffect();
-	// Update player state 
-	// Return calculated efficiency, durability cost
+	UpdatePlayerState();
+	return currentSkill;
 }
 
 bool Player::IsSkillCastable(const Skills::SkillInformation& skill, const int16_t itemDurability) {
