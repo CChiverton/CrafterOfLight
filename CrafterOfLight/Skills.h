@@ -62,7 +62,8 @@ namespace Skills {
 		SkillType	type;
 		uint8_t		costCP;
 		int16_t		costDurability;
-		uint8_t		efficiency;
+		uint8_t		synthesisEfficiency;
+		uint8_t		touchEfficiency;
 		uint8_t		castTime;
 	};
 
