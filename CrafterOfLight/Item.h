@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include "Skills.h"
 
 struct ItemState {
 	uint16_t progress = 0;
@@ -16,10 +17,13 @@ public:
 	/* State */
 	inline ItemState GetCurrentItemState() const;
 	inline void LoadItemState(ItemState itemState);
+	void CraftItem(const Skills::SkillInformation& skill);
 
 	/* Progress */
 	inline const uint16_t GetCurrentProgress() const;
 	inline const uint16_t GetMaxProgress() const;
+	inline const bool IsItemCrafted() const;
+	inline void AppraiseItem();
 
 	/* Quality */
 	inline const uint16_t GetCurrentQuality() const;
@@ -28,6 +32,9 @@ public:
 	/* Durability */
 	inline const int16_t GetCurrentDurability() const;
 	inline const int16_t GetMaxDurability() const;
+	inline void RemoveDurability(uint8_t durability);
+	inline const bool IsItemBroken() const;
+	inline void ManipulateItem();
 
 private:
 	ItemState currentItemState, maxItemState;
@@ -49,6 +56,14 @@ inline const uint16_t Item::GetMaxProgress() const {
 	return maxItemState.progress;
 }
 
+inline const bool Item::IsItemCrafted() const {
+	return currentItemState.progress > maxItemState.progress;
+}
+
+inline void Item::AppraiseItem() {
+	currentItemState.progress = maxItemState.progress - 1;
+}
+
 inline const uint16_t Item::GetCurrentQuality() const {
 	return currentItemState.quality;
 }
@@ -63,4 +78,19 @@ inline const int16_t Item::GetCurrentDurability() const {
 
 inline const int16_t Item::GetMaxDurability() const {
 	return maxItemState.durability;
+}
+
+inline const bool Item::IsItemBroken() const {
+	return currentItemState.progress <= 0;
+}
+
+inline void Item::RemoveDurability(uint8_t durability) {
+	currentItemState.durability -= durability;
+	if (currentItemState.durability > maxItemState.durability) {
+		currentItemState.durability = maxItemState.durability;
+	}
+}
+
+inline void Item::ManipulateItem() {
+	RemoveDurability(-5);
 }

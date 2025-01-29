@@ -11,6 +11,17 @@ CraftingSession::CraftingSession(uint8_t maxTurns,
 
 CraftingSession::~CraftingSession() {}
 
+void CraftingSession::CraftingTurn(Skills::SkillInformation& skill) {
+	if (!player.IsSkillCastable(skill, item.GetCurrentDurability()) || item.GetCurrentDurability() <= 0) {
+		return;
+	}
+
+	item.CraftItem(player.CastSkill(skill.name));
+	ApplyPlayerItemBuffs();
+
+	SaveCraftingTurn(currentTurn);
+}
+
 bool CraftingSession::SaveCraftingTurn(uint8_t turn) {
 	craftState[turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState() };
 	++currentTurn;

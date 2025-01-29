@@ -12,12 +12,17 @@ public:
 		ItemState baseItemState);
 	~CraftingSession();
 
+	void CraftingTurn(Skills::SkillInformation& skill);
+
 	bool SaveCraftingTurn(uint8_t turn);
 	bool LoadCraftingTurn(uint8_t turn);
 
 	inline Player GetPlayer() const;
 	inline Item GetItem() const;
 	inline uint8_t GetMaximumTurns() const;
+
+private:
+	inline void ApplyPlayerItemBuffs();
 
 protected:
 	struct CraftState {
@@ -30,6 +35,8 @@ protected:
 	const uint8_t maxCraftingTurns;
 	uint8_t currentTurn = 0;
 	std::array<CraftState, 60> craftState;
+
+
 };
 
 inline Player CraftingSession::GetPlayer() const {
@@ -42,4 +49,14 @@ inline Item CraftingSession::GetItem() const {
 
 inline uint8_t CraftingSession::GetMaximumTurns() const {
 	return maxCraftingTurns;
+}
+
+inline void CraftingSession::ApplyPlayerItemBuffs() {
+	if (craftState[currentTurn].playerState.buffs[Buffs::FINALAPPRAISAL] > 0 && item.IsItemCrafted()) {
+		item.AppraiseItem();
+	}
+
+	if (craftState[currentTurn].playerState.buffs[Buffs::MANIPULATION] > 0 && item.IsItemBroken()) {
+		item.ManipulateItem();
+	}
 }

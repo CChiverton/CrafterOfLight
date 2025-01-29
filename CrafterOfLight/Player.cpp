@@ -10,9 +10,6 @@ Player::Player(PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t
 Player::~Player() {}
 
 const Skills::SkillInformation& Player::CastSkill(const Skills::SkillName skillName) {
-	if (currentSkill.name != skillName) {			// sanity check to test that the player is casting the right skill
-		return Skills::SkillArray[25];				// return the NONE skill
-	}
 	SkillEffect();
 	UpdatePlayerState();
 	return currentSkill;
