@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CrafterOfLight.h"
-#include "CraftingSession.h"
+#include "Crafter.h"
 #include <format>
 
 CrafterOfLight::CrafterOfLight(QWidget *parent)
@@ -27,13 +27,13 @@ void CrafterOfLight::SmartCraft() {
     ui.gridLayout_macroOutput->addWidget(option, 0, 1);
     PlayerState state = { ui.spinBox_maxCP->value()};
     ItemState itemState = { ui.spinBox_itemProgress->value(), ui.spinBox_itemQuality->value(), ui.spinBox_itemDurability->value()};
-    CraftingSession craftingSession = CraftingSession(ui.spinBox_maximumTurns->value(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), itemState);
-    Item item = craftingSession.GetItem();
-    Player player = craftingSession.GetPlayer();
+    Crafter crafter = Crafter(ui.spinBox_maximumTurns->value(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), itemState);
+   /* Item item = crafter.GetItem();
+    Player player = crafter.GetPlayer();
     PlayerState playerState = player.GetCurrentPlayerState();
     std::string output = std::format("Item Max Progress: {}, Quality: {}, Durability: {}\nPlayer CP: {}, ProgEff: {:3.2f}, QualEff: {:3.2f}\n Maximum Turns: {}",
-        item.GetMaxProgress(), item.GetMaxQuality(), item.GetMaxDurability(), playerState.cP, player.GetProgressEfficiency(), player.GetQualityEfficiency(), craftingSession.GetMaximumTurns());
-    ui.label_info->setText(QString::fromStdString(output));
+        item.GetMaxProgress(), item.GetMaxQuality(), item.GetMaxDurability(), playerState.cP, player.GetProgressEfficiency(), player.GetQualityEfficiency(), crafter.GetMaximumTurns());
+    ui.label_info->setText(QString::fromStdString(output));*/
 }
 
 void CrafterOfLight::DeleteMacros() {
