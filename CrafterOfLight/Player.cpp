@@ -26,6 +26,9 @@ bool Player::IsSkillCastable(const Skills::SkillInformation& skill, const int16_
 
 // Maybe change touch skills to be default 18CP and increase if not combo? Will stop the CP check being late
 void Player::CheckSpecialConditions(const int16_t itemDurability) {
+	if (currentPlayerState.buffs[TRAINEDPERFECTION] > 0) {
+		currentSkill.costDurability = 0;
+	}
 	switch (currentSkill.name) {
 	case Skills::SkillName::GROUNDWORK:
 		if (itemDurability < currentSkill.costDurability) {
@@ -81,10 +84,11 @@ bool Player::CanCastSkill() {
 	return true;
 }
 
+/*
+Player applies immediate effect before acting on the item
+*/
 void Player::SkillEffect() {
-	if (currentPlayerState.buffs[TRAINEDPERFECTION] > 0) {
-		currentSkill.costDurability = 0;
-	} else if (currentPlayerState.buffs[WASTENOT] > 0) {
+	if (currentPlayerState.buffs[WASTENOT] > 0) {
 		currentSkill.costDurability /= 2;
 	}
 	switch (currentSkill.name) {
@@ -93,10 +97,10 @@ void Player::SkillEffect() {
 	case Skills::SkillName::CAREFULSYNTHESIS:
 	case Skills::SkillName::PRUDENTSYNTHESIS:
 	case Skills::SkillName::GROUNDWORK:
-		// synthesis skill cast
+		SynthesisBuffs();
 		break;
 	case Skills::SkillName::MUSCLEMEMORY:
-		// synthesis skill cast
+		SynthesisBuffs();
 		currentPlayerState.buffs[Buffs::MUSCLEMEMORY] = 6;
 		break;
 
@@ -104,32 +108,30 @@ void Player::SkillEffect() {
 	case Skills::SkillName::BASICTOUCH:
 	case Skills::SkillName::STANDARDTOUCH:
 	case Skills::SkillName::ADVANCEDTOUCH:
-		// touch skills cast
-		// add inner quiet
+		TouchBuffs(1);
 		break;
 	case Skills::SkillName::BYREGOTSBLESSING:
 		currentSkill.touchEfficiency += currentPlayerState.innerQuiet * 20;
-		// touch skills cast
+		TouchBuffs(0);
+		currentPlayerState.innerQuiet = 0;
 		break;
 	case Skills::SkillName::PRUDENTTOUCH:
-		// touch skills cast
-		// add inner quiet
+		TouchBuffs(1);
 		break;
 	case Skills::SkillName::PREPARATORYTOUCH:
-		// touch skills cast
-		// add 2 inner quiet
-		break;
 	case Skills::SkillName::REFLECT:
-		// touch skills cast
-		// add 2 inner quiet
+		TouchBuffs(2);
 		break;
 	case Skills::SkillName::TRAINEDFINESSE:
-		// touch skills cast
+		TouchBuffs(0);
 		break;
-
 	case Skills::SkillName::REFINEDTOUCH:
-		// touch skills cast
-		// add inner quiet (2 if combo)
+		if (currentPlayerState.combo) {
+			TouchBuffs(2);
+		}
+		else {
+			TouchBuffs(1);
+		}
 		break;
 
 	/* Buff skills */
@@ -169,12 +171,41 @@ void Player::SkillEffect() {
 	case Skills::SkillName::OBSERVE:
 		break;
 	case Skills::SkillName::DELICATESYNTHESIS:
-		// synthesis skill
-		// touch skill
-		// add inner quiet
+		SynthesisBuffs();
+		TouchBuffs(1);
+		break;
 	case Skills::SkillName::NONE:
 		break;
 	default:
 		break;
 	}
+}
+
+void Player::SynthesisBuffs() {
+	const uint8_t efficiency = currentSkill.synthesisEfficiency;
+	if (currentPlayerState.buffs[MUSCLEMEMORY] > 0) {
+		currentPlayerState.buffs[MUSCLEMEMORY] = 0;
+		currentSkill.synthesisEfficiency += efficiency;
+	}
+	if (currentPlayerState.buffs[VENERATION] > 0) {
+		currentSkill.synthesisEfficiency += efficiency/2;
+	}
+
+	currentPlayerState.buffs[TRAINEDPERFECTION] = 0;
+}
+
+void Player::TouchBuffs(uint8_t innerQuietStacks) {
+	ApplyInnerQuiet();
+
+	const uint8_t efficiency = currentSkill.synthesisEfficiency;
+	if (currentPlayerState.buffs[GREATSTRIDES] > 0) {
+		currentSkill.touchEfficiency += efficiency;
+	}
+	if (currentPlayerState.buffs[INNOVATION] > 0) {
+		currentSkill.touchEfficiency += efficiency/2;
+	}
+
+	AddInnerQuiet(innerQuietStacks);
+
+	currentPlayerState.buffs[TRAINEDPERFECTION] = 0;
 }

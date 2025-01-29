@@ -42,6 +42,10 @@ private:
 	void CheckSpecialConditions(const int16_t itemDurability);
 	bool CanCastSkill();
 	void SkillEffect();
+	void SynthesisBuffs();
+	void TouchBuffs(uint8_t innerQuietStacks);
+	void inline ApplyInnerQuiet();
+	void inline AddInnerQuiet(uint8_t stacks);
 
 protected:
 	PlayerState maxPlayerState, currentPlayerState;
@@ -66,4 +70,15 @@ inline const float Player::GetProgressEfficiency() const {
 
 inline const float Player::GetQualityEfficiency() const {
 	return qualityPerOneEfficiency;
+}
+
+inline void Player::ApplyInnerQuiet() {
+	currentSkill.touchEfficiency += (currentSkill.touchEfficiency / 10.0f) * currentPlayerState.innerQuiet;
+}
+
+inline void Player::AddInnerQuiet(uint8_t stacks) {
+	currentPlayerState.innerQuiet += stacks;
+	if (currentPlayerState.innerQuiet > 10) {
+		currentPlayerState.innerQuiet = 10;
+	}
 }
