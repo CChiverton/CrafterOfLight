@@ -2,6 +2,8 @@
 
 #include <QtWidgets/QWidget>
 #include "ui_CrafterOfLight.h"
+#include <vector>
+#include "Skills.h"
 
 class CrafterOfLight : public QWidget
 {
@@ -18,5 +20,6 @@ private slots:
 private:
     Ui::CrafterOfLightClass ui;
 
+    std::vector<Skills::SkillInformation> UserSkillSelection();
     void DeleteMacros();
 };

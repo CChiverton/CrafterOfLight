@@ -27,13 +27,98 @@ void CrafterOfLight::SmartCraft() {
     ui.gridLayout_macroOutput->addWidget(option, 0, 1);
     PlayerState state = { ui.spinBox_maxCP->value()};
     ItemState itemState = { ui.spinBox_itemProgress->value(), ui.spinBox_itemQuality->value(), ui.spinBox_itemDurability->value()};
-    Crafter crafter = Crafter(ui.spinBox_maximumTurns->value(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), itemState);
+    Crafter crafter = Crafter(ui.spinBox_maximumTurns->value(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), itemState);
    /* Item item = crafter.GetItem();
     Player player = crafter.GetPlayer();
     PlayerState playerState = player.GetCurrentPlayerState();
     std::string output = std::format("Item Max Progress: {}, Quality: {}, Durability: {}\nPlayer CP: {}, ProgEff: {:3.2f}, QualEff: {:3.2f}\n Maximum Turns: {}",
         item.GetMaxProgress(), item.GetMaxQuality(), item.GetMaxDurability(), playerState.cP, player.GetProgressEfficiency(), player.GetQualityEfficiency(), crafter.GetMaximumTurns());
     ui.label_info->setText(QString::fromStdString(output));*/
+    ui.label_info->setText(QString::fromStdString(crafter.GetSkillSelection()));
+}
+
+std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() {
+    std::vector<Skills::SkillInformation> skills;
+    if (ui.pushButton_basicSynthesis->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::BASICSYNTHESIS]);
+    }
+    if (ui.pushButton_carefulSynthesis->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::CAREFULSYNTHESIS]);
+    }
+    if (ui.pushButton_prudentSynthesis->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::PRUDENTSYNTHESIS]);
+    }
+    if (ui.pushButton_groundwork->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::GROUNDWORK]);
+    }
+    if (ui.pushButton_muscleMemory->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::MUSCLEMEMORY]);
+    }
+    if (ui.pushButton_basicTouch->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::BASICTOUCH]);
+    }
+    if (ui.pushButton_standardTouch->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::STANDARDTOUCH]);
+    }
+    if (ui.pushButton_advancedTouch->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::ADVANCEDTOUCH]);
+    }
+    if (ui.pushButton_byregotsBlessing->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::BYREGOTSBLESSING]);
+    }
+    if (ui.pushButton_prudentTouch->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::PRUDENTTOUCH]);
+    }
+    if (ui.pushButton_preparatoryTouch->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::PREPARATORYTOUCH]);
+    }
+    if (ui.pushButton_reflect->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::REFLECT]);
+    }
+    if (ui.pushButton_trainedFinesse->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::TRAINEDFINESSE]);
+    }
+    if (ui.pushButton_refinedTouch->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::REFINEDTOUCH]);
+    }
+    if (ui.pushButton_wasteNotI->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::WASTENOTI]);
+    }
+    if (ui.pushButton_wasteNotII->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::WASTENOTII]);
+    }
+    if (ui.pushButton_greatStrides->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::GREATSTRIDES]);
+    }
+    if (ui.pushButton_innovation->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::INNOVATION]);
+    }
+    if (ui.pushButton_veneration->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::VENERATION]);
+    }
+    if (ui.pushButton_finalAppraisal->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::FINALAPPRAISAL]);
+    }
+    if (ui.pushButton_mastersMend->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::MASTERSMEND]);
+    }
+    if (ui.pushButton_manipulation->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::MANIPULATION]);
+    }
+    if (ui.pushButton_immaculateMend->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::IMMACULATEMEND]);
+    }
+    if (ui.pushButton_trainedPerfection->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::TRAINEDPERFECTION]);
+    }
+    if (ui.pushButton_observe->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::OBSERVE]);
+    }
+    if (ui.pushButton_delicateSynthesis->isChecked()) {
+        skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::DELICATESYNTHESIS]);
+    }
+
+    return skills;
 }
 
 void CrafterOfLight::DeleteMacros() {
