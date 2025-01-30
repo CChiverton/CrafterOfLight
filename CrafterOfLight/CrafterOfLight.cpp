@@ -9,6 +9,8 @@ CrafterOfLight::CrafterOfLight(QWidget *parent)
     ui.setupUi(this);
     connect(ui.pushButton_bruteCraft, &QPushButton::clicked, this, &CrafterOfLight::BruteCraft);
     connect(ui.pushButton_smartCraft, &QPushButton::clicked, this, &CrafterOfLight::SmartCraft);
+    connect(ui.checkBox_maxQuality, &QCheckBox::checkStateChanged, this, &CrafterOfLight::ToggleCraftingSkills);
+    ToggleCraftingSkills();
 }
 
 CrafterOfLight::~CrafterOfLight()
@@ -38,6 +40,15 @@ void CrafterOfLight::SmartCraft() {
     ui.label_info->setText(QString::fromStdString(crafter.GetSkillSelection()));
 }
 
+void CrafterOfLight::ToggleCraftingSkills() {
+    if (ui.checkBox_maxQuality->isChecked()) {
+        SetQualitySkills(false);
+    }
+    else {
+        SetQualitySkills(true);
+    }
+}
+
 std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() {
     std::vector<Skills::SkillInformation> skills;
     if (ui.pushButton_basicSynthesis->isChecked()) {
@@ -55,31 +66,31 @@ std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() {
     if (ui.pushButton_muscleMemory->isChecked()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::MUSCLEMEMORY]);
     }
-    if (ui.pushButton_basicTouch->isChecked()) {
+    if (ui.pushButton_basicTouch->isChecked() && ui.pushButton_basicTouch->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::BASICTOUCH]);
     }
-    if (ui.pushButton_standardTouch->isChecked()) {
+    if (ui.pushButton_standardTouch->isChecked() && ui.pushButton_standardTouch->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::STANDARDTOUCH]);
     }
-    if (ui.pushButton_advancedTouch->isChecked()) {
+    if (ui.pushButton_advancedTouch->isChecked() && ui.pushButton_advancedTouch->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::ADVANCEDTOUCH]);
     }
-    if (ui.pushButton_byregotsBlessing->isChecked()) {
+    if (ui.pushButton_advancedTouch->isChecked() && ui.pushButton_advancedTouch->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::BYREGOTSBLESSING]);
     }
-    if (ui.pushButton_prudentTouch->isChecked()) {
+    if (ui.pushButton_prudentTouch->isChecked() && ui.pushButton_prudentTouch->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::PRUDENTTOUCH]);
     }
-    if (ui.pushButton_preparatoryTouch->isChecked()) {
+    if (ui.pushButton_preparatoryTouch->isChecked() && ui.pushButton_preparatoryTouch->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::PREPARATORYTOUCH]);
     }
-    if (ui.pushButton_reflect->isChecked()) {
+    if (ui.pushButton_reflect->isChecked() && ui.pushButton_reflect->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::REFLECT]);
     }
-    if (ui.pushButton_trainedFinesse->isChecked()) {
+    if (ui.pushButton_trainedFinesse->isChecked() && ui.pushButton_trainedFinesse->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::TRAINEDFINESSE]);
     }
-    if (ui.pushButton_refinedTouch->isChecked()) {
+    if (ui.pushButton_refinedTouch->isChecked() && ui.pushButton_refinedTouch->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::REFINEDTOUCH]);
     }
     if (ui.pushButton_wasteNotI->isChecked()) {
@@ -88,10 +99,10 @@ std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() {
     if (ui.pushButton_wasteNotII->isChecked()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::WASTENOTII]);
     }
-    if (ui.pushButton_greatStrides->isChecked()) {
+    if (ui.pushButton_greatStrides->isChecked() && ui.pushButton_greatStrides->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::GREATSTRIDES]);
     }
-    if (ui.pushButton_innovation->isChecked()) {
+    if (ui.pushButton_innovation->isChecked() && ui.pushButton_innovation->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::INNOVATION]);
     }
     if (ui.pushButton_veneration->isChecked()) {
@@ -115,7 +126,7 @@ std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() {
     if (ui.pushButton_observe->isChecked()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::OBSERVE]);
     }
-    if (ui.pushButton_delicateSynthesis->isChecked()) {
+    if (ui.pushButton_delicateSynthesis->isChecked() && ui.pushButton_delicateSynthesis->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::DELICATESYNTHESIS]);
     }
 
@@ -137,4 +148,19 @@ void CrafterOfLight::DeleteMacros() {
         }
         ++row;
     }
+}
+
+void CrafterOfLight::SetQualitySkills(bool state) {
+    ui.pushButton_basicTouch->setDisabled(state);
+    ui.pushButton_standardTouch->setDisabled(state);
+    ui.pushButton_advancedTouch->setDisabled(state);
+    ui.pushButton_byregotsBlessing->setDisabled(state);
+    ui.pushButton_prudentTouch->setDisabled(state);
+    ui.pushButton_preparatoryTouch->setDisabled(state);
+    ui.pushButton_reflect->setDisabled(state);
+    ui.pushButton_trainedFinesse->setDisabled(state);
+    ui.pushButton_refinedTouch->setDisabled(state);
+    ui.pushButton_greatStrides->setDisabled(state);
+    ui.pushButton_innovation->setDisabled(state);
+    ui.pushButton_delicateSynthesis->setDisabled(state);
 }
