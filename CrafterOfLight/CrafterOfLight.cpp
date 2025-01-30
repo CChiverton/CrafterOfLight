@@ -75,7 +75,7 @@ std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() {
     if (ui.pushButton_advancedTouch->isChecked() && ui.pushButton_advancedTouch->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::ADVANCEDTOUCH]);
     }
-    if (ui.pushButton_advancedTouch->isChecked() && ui.pushButton_advancedTouch->isEnabled()) {
+    if (ui.pushButton_byregotsBlessing->isChecked() && ui.pushButton_byregotsBlessing->isEnabled()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::BYREGOTSBLESSING]);
     }
     if (ui.pushButton_prudentTouch->isChecked() && ui.pushButton_prudentTouch->isEnabled()) {

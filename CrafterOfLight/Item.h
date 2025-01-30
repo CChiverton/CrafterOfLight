@@ -28,6 +28,7 @@ public:
 	/* Quality */
 	inline const uint16_t GetCurrentQuality() const;
 	inline const uint16_t GetMaxQuality() const;
+	inline const bool IsItemMaxQuality() const;
 
 	/* Durability */
 	inline const int16_t GetCurrentDurability() const;
@@ -57,7 +58,7 @@ inline const uint16_t Item::GetMaxProgress() const {
 }
 
 inline const bool Item::IsItemCrafted() const {
-	return currentItemState.progress > maxItemState.progress;
+	return currentItemState.progress >= maxItemState.progress;
 }
 
 inline void Item::AppraiseItem() {
@@ -70,6 +71,10 @@ inline const uint16_t Item::GetCurrentQuality() const {
 
 inline const uint16_t Item::GetMaxQuality() const {
 	return maxItemState.quality;
+}
+
+inline const bool Item::IsItemMaxQuality() const {
+	return currentItemState.quality >= maxItemState.quality;
 }
 
 inline const int16_t Item::GetCurrentDurability() const {
