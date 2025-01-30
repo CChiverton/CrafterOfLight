@@ -11,7 +11,7 @@ public:
 		ItemState baseItemState);
 	~CraftingSession();
 
-	void CraftingTurn(Skills::SkillInformation& skill);
+	void CraftingTurn(const Skills::SkillInformation& skill);
 
 	bool SaveCraftingTurn(uint8_t turn);
 	bool LoadCraftingTurn(uint8_t turn);

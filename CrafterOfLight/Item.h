@@ -33,7 +33,7 @@ public:
 	/* Durability */
 	inline const int16_t GetCurrentDurability() const;
 	inline const int16_t GetMaxDurability() const;
-	inline void RemoveDurability(uint8_t durability);
+	inline void RemoveDurability(int16_t durability);
 	inline const bool IsItemBroken() const;
 	inline void ManipulateItem();
 
@@ -89,7 +89,7 @@ inline const bool Item::IsItemBroken() const {
 	return currentItemState.progress <= 0;
 }
 
-inline void Item::RemoveDurability(uint8_t durability) {
+inline void Item::RemoveDurability(int16_t durability) {
 	currentItemState.durability -= durability;
 	if (currentItemState.durability > maxItemState.durability) {
 		currentItemState.durability = maxItemState.durability;

@@ -38,6 +38,7 @@ void CrafterOfLight::SmartCraft() {
         item.GetMaxProgress(), item.GetMaxQuality(), item.GetMaxDurability(), playerState.cP, player.GetProgressEfficiency(), player.GetQualityEfficiency(), crafter.GetMaximumTurns());
     ui.label_info->setText(QString::fromStdString(output));*/
     ui.label_info->setText(QString::fromStdString(crafter.GetSkillSelection()));
+    crafter.Debug_VerifyCrafts();
 }
 
 void CrafterOfLight::ToggleCraftingSkills() {

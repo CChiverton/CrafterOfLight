@@ -9,7 +9,7 @@ CraftingSession::CraftingSession(PlayerState maxPlayerState, uint16_t progressPe
 
 CraftingSession::~CraftingSession() {}
 
-void CraftingSession::CraftingTurn(Skills::SkillInformation& skill) {
+void CraftingSession::CraftingTurn(const Skills::SkillInformation& skill) {
 	if (!player.IsSkillCastable(skill, item.GetCurrentDurability()) || item.GetCurrentDurability() <= 0) {
 		return;
 	}

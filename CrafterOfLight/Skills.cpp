@@ -71,7 +71,7 @@ namespace Skills {
 		{SkillName::PRUDENTSYNTHESIS,	SkillType::SYNTHESIS,			18,		5,		180,	0,		3	},
 		{SkillName::GROUNDWORK,			SkillType::SYNTHESIS,			18,		20,		360,	0,		3	},
 		{SkillName::MUSCLEMEMORY,		SkillType::SYNTHESIS,			6,		10,		300,	0,		3	},
-		{SkillName::BASICTOUCH,			SkillType::TOUCH,				18,		10,		0,		120,	3	},
+		{SkillName::BASICTOUCH,			SkillType::TOUCH,				18,		10,		0,		100,	3	},
 		{SkillName::STANDARDTOUCH,		SkillType::TOUCH,				32,		10,		0,		125,	3	},
 		{SkillName::ADVANCEDTOUCH,		SkillType::TOUCH,				46,		10,		0,		150,	3	},
 		{SkillName::BYREGOTSBLESSING,	SkillType::TOUCH,				24,		10,		0,		100,	3	},

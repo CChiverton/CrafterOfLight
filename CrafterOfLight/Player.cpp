@@ -176,6 +176,8 @@ void Player::SkillEffect() {
 	default:
 		break;
 	}
+
+	currentPlayerState.lastSkillUsed = currentSkill.name;
 }
 
 void Player::SynthesisBuffs() {

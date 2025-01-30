@@ -15,7 +15,7 @@ public:
 	inline const uint8_t GetMaximumTurns() const;
 	const std::string GetSkillSelection() const;
 
-
+	void Debug_VerifyCrafts();
 protected:
 	struct CraftTurn {
 		Skills::SkillName name = Skills::SkillName::NONE;
@@ -28,6 +28,7 @@ protected:
 	CraftingOptions craftingOptions;
 	std::vector<Skills::SkillInformation> skillSelection;
 	CraftTurn currentCraftingTurn;
+	
 };
 
 inline const uint8_t Crafter::GetMaximumTurns() const {
