@@ -25,9 +25,10 @@ void CrafterOfLight::SmartCraft() {
     QLineEdit* option = new QLineEdit("This is an example");                
     option->setReadOnly(true);
     ui.gridLayout_macroOutput->addWidget(option, 0, 1);
+    CraftingOptions userCraftingOptions = { ui.spinBox_itemProgress->value(), ui.checkBox_maxQuality->checkState()};
     PlayerState state = { ui.spinBox_maxCP->value()};
-    ItemState itemState = { ui.spinBox_itemProgress->value(), ui.spinBox_itemQuality->value(), ui.spinBox_itemDurability->value()};
-    Crafter crafter = Crafter(ui.spinBox_maximumTurns->value(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), itemState);
+    ItemState itemState = {ui.spinBox_itemQuality->value(), ui.spinBox_itemDurability->value()};
+    Crafter crafter = Crafter(userCraftingOptions, UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), itemState);
    /* Item item = crafter.GetItem();
     Player player = crafter.GetPlayer();
     PlayerState playerState = player.GetCurrentPlayerState();

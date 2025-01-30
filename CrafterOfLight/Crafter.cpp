@@ -2,8 +2,8 @@
 
 #include "Crafter.h"
 
-Crafter::Crafter(uint8_t maxTurns, std::vector<Skills::SkillInformation> userSkills, PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred, ItemState maxItemState)
-: maxTurnLimit(maxTurns), skillSelection(userSkills),
+Crafter::Crafter(CraftingOptions craftingOptions, std::vector<Skills::SkillInformation> userSkills, PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred, ItemState maxItemState)
+: craftingOptions(craftingOptions), skillSelection(userSkills),
 craftingManager(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState) {}
 
 Crafter::~Crafter() {}

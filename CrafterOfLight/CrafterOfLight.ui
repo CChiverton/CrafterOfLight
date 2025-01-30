@@ -1202,31 +1202,10 @@ QPushButton:disabled{
          <x>10</x>
          <y>30</y>
          <width>261</width>
-         <height>81</height>
+         <height>111</height>
         </rect>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="checkBox">
-          <property name="text">
-           <string>Force Max Quality</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton_smartCraft">
-          <property name="text">
-           <string>Smart Craft</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="stepsLabel">
-          <property name="text">
-           <string>Maximum Steps</string>
-          </property>
-         </widget>
-        </item>
+       <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="1">
          <widget class="QSpinBox" name="spinBox_maximumTurns">
           <property name="minimum">
@@ -1241,6 +1220,27 @@ QPushButton:disabled{
          <widget class="QPushButton" name="pushButton_bruteCraft">
           <property name="text">
            <string>Brute Craft</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="checkBox_maxQuality">
+          <property name="text">
+           <string>Max Quality</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="pushButton_smartCraft">
+          <property name="text">
+           <string>Smart Craft</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="stepsLabel">
+          <property name="text">
+           <string>Maximum Steps</string>
           </property>
          </widget>
         </item>
