@@ -14,6 +14,7 @@ public:
 
 	inline const uint8_t GetMaximumTurns() const;
 	const std::string GetSkillSelection() const;
+	inline const uint8_t GetBestCraftTime() const;
 
 	void Debug_VerifyCrafts();
 protected:
@@ -28,6 +29,7 @@ protected:
 	CraftingOptions craftingOptions;
 	std::vector<Skills::SkillInformation> skillSelection;
 	CraftTurn currentCraftingTurn;
+	uint8_t bestCraftTime = 255;
 	
 };
 
@@ -37,4 +39,8 @@ inline const uint8_t Crafter::GetMaximumTurns() const {
 
 inline bool Crafter::IsSolved() const {
 	return craftingManager.GetItem().IsItemCrafted() && (craftingOptions.maxQualityRequired && craftingManager.GetItem().IsItemMaxQuality());
+}
+
+inline const uint8_t Crafter::GetBestCraftTime() const {
+	return bestCraftTime;
 }

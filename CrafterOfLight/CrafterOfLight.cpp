@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CrafterOfLight.h"
-#include "Crafter.h"
+#include "BruteCrafter.h"
 #include <format>
 
 CrafterOfLight::CrafterOfLight(QWidget *parent)
@@ -18,7 +18,10 @@ CrafterOfLight::~CrafterOfLight()
 
 void CrafterOfLight::BruteCraft() {
     DeleteMacros();
-    ui.spinBox_maxCP->setValue(15);
+    PlayerState state = { ui.spinBox_maxCP->value() };
+    BruteCrafter bruteCrafter = BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
+    bruteCrafter.RecursiveBruteSolve();
+    ui.label_info->setText(QString::number(bruteCrafter.GetBestCraftTime()));
 }
 
 void CrafterOfLight::SmartCraft() {

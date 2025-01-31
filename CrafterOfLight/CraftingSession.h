@@ -11,26 +11,34 @@ public:
 		ItemState baseItemState);
 	~CraftingSession();
 
-	void CraftingTurn(const Skills::SkillInformation& skill);
+	bool CraftingTurn(const Skills::SkillInformation& skill);
 
-	bool SaveCraftingTurn(uint8_t turn);
+	bool SaveCraftingTurn(uint8_t turn, uint8_t time);
+	bool SaveCurrentCraftingTurn();
 	bool LoadCraftingTurn(uint8_t turn);
+	bool LoadLastCraftingTurn();
+	bool ReloadCraftingTurn();
 
 	inline Player GetPlayer() const;
-	inline Item GetItem() const;	
+	inline Item GetItem() const;
+	inline uint8_t GetCraftingSessionDuration() const;
 
 private:
 	inline void ApplyPlayerItemBuffs();
+	inline void LoadCraftState(uint8_t turn);
 
 protected:
 	struct CraftState {
 		PlayerState playerState;
 		ItemState	itemState;
+		uint8_t turn = 0;
+		uint8_t duration = 0;
 	};
 
 	Player player;
 	Item item;
-	uint8_t currentTurn = 0;
+	CraftState currentState;
+	uint8_t currentSkillDuration = 0;
 	std::array<CraftState, 60> craftState;
 
 
@@ -44,12 +52,23 @@ inline Item CraftingSession::GetItem() const {
 	return item;
 }
 
+inline uint8_t CraftingSession::GetCraftingSessionDuration() const {
+	return currentState.duration + currentSkillDuration;
+}
+
 inline void CraftingSession::ApplyPlayerItemBuffs() {
-	if (craftState[currentTurn].playerState.buffs[Buffs::FINALAPPRAISAL] > 0 && item.IsItemCrafted()) {
+	if (craftState[currentState.turn].playerState.buffs[Buffs::FINALAPPRAISAL] > 0 && item.IsItemCrafted()) {
 		item.AppraiseItem();
 	}
 
-	if (craftState[currentTurn].playerState.buffs[Buffs::MANIPULATION] > 0 && item.IsItemBroken()) {
+	if (craftState[currentState.turn].playerState.buffs[Buffs::MANIPULATION] > 0 && item.IsItemBroken()) {
 		item.ManipulateItem();
 	}
+}
+
+inline void CraftingSession::LoadCraftState(uint8_t turn) {
+	currentState = craftState[turn];
+	player.LoadPlayerState(currentState.playerState);
+	item.LoadItemState(currentState.itemState);
+	currentSkillDuration = 0;
 }

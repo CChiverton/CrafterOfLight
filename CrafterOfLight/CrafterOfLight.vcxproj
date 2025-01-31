@@ -115,11 +115,13 @@
     <QtRcc Include="CrafterOfLight.qrc" />
     <QtUic Include="CrafterOfLight.ui" />
     <QtMoc Include="CrafterOfLight.h" />
+    <ClCompile Include="BruteCrafter.cpp" />
     <ClCompile Include="Crafter.cpp" />
     <ClCompile Include="CrafterOfLight.cpp" />
     <ClCompile Include="CraftinSession.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClInclude Include="BruteCrafter.h" />
     <ClInclude Include="Crafter.h" />
     <ClInclude Include="CraftingSession.h" />
     <ClInclude Include="Item.h" />
