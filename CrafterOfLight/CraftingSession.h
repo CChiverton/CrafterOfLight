@@ -71,9 +71,11 @@ inline void CraftingSession::ApplyPlayerItemBuffs() {
 	}
 }
 
+/* Load selected turn */
 inline void CraftingSession::LoadCraftState(uint8_t turn) {
 	currentState = craftState[turn];
 	player.LoadPlayerState(currentState.playerState);
 	item.LoadItemState(currentState.itemState);
+	++currentState.turn;
 	currentSkillDuration = 0;
 }

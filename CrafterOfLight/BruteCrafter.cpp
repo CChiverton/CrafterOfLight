@@ -32,7 +32,7 @@ void BruteCrafter::BruteSolveConditions() {
 	}
 	else {
 		craftingManager.SaveCurrentCraftingTurn();
-		BruteSolveConditions();
+		RecursiveBruteSolve();
 	}
 	
 }

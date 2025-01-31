@@ -181,6 +181,7 @@ void Player::SkillEffect() {
 }
 
 void Player::SynthesisBuffs() {
+	currentSkill.synthesisEfficiency *= progressPerOneEfficiency;
 	const uint8_t efficiency = currentSkill.synthesisEfficiency;
 	if (currentPlayerState.buffs[MUSCLEMEMORY] > 0) {
 		currentPlayerState.buffs[MUSCLEMEMORY] = 0;
@@ -195,8 +196,8 @@ void Player::SynthesisBuffs() {
 
 void Player::TouchBuffs(uint8_t innerQuietStacks) {
 	ApplyInnerQuiet();
-
-	const uint8_t efficiency = currentSkill.synthesisEfficiency;
+	currentSkill.touchEfficiency *= qualityPerOneEfficiency;
+	const uint8_t efficiency = currentSkill.touchEfficiency;
 	if (currentPlayerState.buffs[GREATSTRIDES] > 0) {
 		currentSkill.touchEfficiency += efficiency;
 	}

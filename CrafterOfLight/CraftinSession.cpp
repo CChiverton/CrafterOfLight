@@ -29,8 +29,11 @@ bool CraftingSession::SaveCraftingTurn(uint8_t turn, uint8_t time) {
 	return true;
 }
 
+/* Saves the current turn with the added skill time cast before moving on to the next turn */
 bool CraftingSession::SaveCurrentCraftingTurn() {
-	craftState[currentState.turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState(), currentState.turn, (uint8_t)(currentState.duration + currentSkillDuration)};
+	currentState.duration += currentSkillDuration;
+	craftState[currentState.turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState(), currentState.turn, currentState.duration};
+	currentState = craftState[currentState.turn];
 	++currentState.turn;
 	currentSkillDuration = 0;
 	return true;
@@ -44,16 +47,17 @@ bool CraftingSession::LoadCraftingTurn(uint8_t turn) {
 
 /* Loads previous saved turn */
 bool CraftingSession::LoadLastCraftingTurn() {
-	if (currentState.turn < 1) {
+	if (currentState.turn < 2) {
 		return false;
 	}
-	--currentState.turn;
-	LoadCraftState(currentState.turn);
+	LoadCraftState(currentState.turn-2);	// As state turn is currently tracking an unsaved turn, -1 is current saved turn.
 	return true;
 }
 
 /* Reloads current saved turn */
 bool CraftingSession::ReloadCraftingTurn() {
-	LoadCraftState(currentState.turn);
+	player.LoadPlayerState(currentState.playerState);
+	item.LoadItemState(currentState.itemState);
+	currentSkillDuration = 0;
 	return true;
 }
