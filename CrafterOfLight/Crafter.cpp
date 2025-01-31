@@ -18,6 +18,18 @@ const std::string Crafter::GetSkillSelection() const {
 	return output;
 }
 
+std::string Crafter::GetSolution() const {
+	std::string output = "";
+	if (solutions.at(bestCraftTime).size() == 0) {
+		return output;
+	}
+	for (const auto& skill : solutions.at(bestCraftTime)[0]) {
+		output.append(Skills::GetSkillName(skill));
+		output.append(",");
+	}
+	return output;
+}
+
 void Crafter::Debug_VerifyCrafts() {
 	PlayerState debugPlayer;
 	debugPlayer.cP = 78;

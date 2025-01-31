@@ -22,12 +22,15 @@ void BruteCrafter::BruteSolveConditions() {
 	Item item = craftingManager.GetItem();
 	if (item.IsItemCrafted()) {
 		if (!craftingOptions.maxQualityRequired || (craftingOptions.maxQualityRequired && item.IsItemMaxQuality())) {
-				// add to successful solves
-			bestCraftTime = craftingManager.GetCraftingSessionDuration();
+			craftingManager.SaveCurrentCraftingTurn();		// Add the current turn to the history
+			AddSolution();
+			craftingManager.LoadLastCraftingTurn();
 		}
-		craftingManager.ReloadCraftingTurn();
+		else {
+			craftingManager.ReloadCraftingTurn();
+		}
 	}
-	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() >= bestCraftTime - 2 || craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit) {
+	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() >= bestCraftTime - 2 || craftingManager.GetCraftingSessionTurn() > craftingOptions.maxTurnLimit) {
 		craftingManager.ReloadCraftingTurn();
 	}
 	else {

@@ -7,6 +7,14 @@
 /* Keeps records of the entire crafting session and acts as mediator between Player and Item */
 class CraftingSession {
 public:
+	struct CraftState {
+		PlayerState playerState;
+		ItemState	itemState;
+		uint8_t turn = 0;
+		uint8_t duration = 0;
+		Skills::SkillName skillName;
+	};
+
 	CraftingSession(PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred,
 		ItemState baseItemState);
 	~CraftingSession();
@@ -23,18 +31,14 @@ public:
 	inline Item GetItem() const;
 	inline uint8_t GetCraftingSessionTurn() const;
 	inline uint8_t GetCraftingSessionDuration() const;
+	inline std::array<CraftState, 60> GetCurrentCraftingHistory() const;
 
 private:
 	inline void ApplyPlayerItemBuffs();
 	inline void LoadCraftState(uint8_t turn);
 
 protected:
-	struct CraftState {
-		PlayerState playerState;
-		ItemState	itemState;
-		uint8_t turn = 0;
-		uint8_t duration = 0;
-	};
+	
 
 	Player player;
 	Item item;
@@ -59,6 +63,10 @@ inline uint8_t CraftingSession::GetCraftingSessionTurn() const {
 
 inline uint8_t CraftingSession::GetCraftingSessionDuration() const {
 	return currentState.duration + currentSkillDuration;
+}
+
+inline std::array<CraftingSession::CraftState, 60> CraftingSession::GetCurrentCraftingHistory() const {
+	return craftState;
 }
 
 inline void CraftingSession::ApplyPlayerItemBuffs() {

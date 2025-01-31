@@ -25,7 +25,7 @@ void CrafterOfLight::BruteCraft() {
     PlayerState state = { ui.spinBox_maxCP->value() };
     BruteCrafter bruteCrafter = BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
     bruteCrafter.RecursiveBruteSolve();
-    ui.label_info->setText(QString("Best time: ") + QString::number(bruteCrafter.GetBestCraftTime()) + QString(" seconds"));
+    ui.label_info->setText(QString("Best time: ") + QString::number(bruteCrafter.GetBestCraftTime()) + QString(" seconds\n") + QString::fromStdString(bruteCrafter.GetSolution()));
 }
 
 void CrafterOfLight::SmartCraft() {
