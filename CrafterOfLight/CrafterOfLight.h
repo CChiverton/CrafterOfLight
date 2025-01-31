@@ -4,6 +4,7 @@
 #include "ui_CrafterOfLight.h"
 #include <vector>
 #include "Skills.h"
+#include "Crafter.h"
 
 class CrafterOfLight : public QWidget
 {
@@ -21,7 +22,9 @@ private slots:
 private:
     Ui::CrafterOfLightClass ui;
 
-    std::vector<Skills::SkillInformation> UserSkillSelection();
+    std::vector<Skills::SkillInformation> UserSkillSelection() const;
+    CraftingOptions UserCraftingOptions() const;
+    ItemState UserMaxItemState() const;
     void SetQualitySkills(bool state);
     void DeleteMacros();
 };

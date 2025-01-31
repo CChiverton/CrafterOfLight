@@ -27,10 +27,8 @@ void CrafterOfLight::SmartCraft() {
     QLineEdit* option = new QLineEdit("This is an example");                
     option->setReadOnly(true);
     ui.gridLayout_macroOutput->addWidget(option, 0, 1);
-    CraftingOptions userCraftingOptions = { ui.spinBox_itemProgress->value(), ui.checkBox_maxQuality->checkState()};
     PlayerState state = { ui.spinBox_maxCP->value()};
-    ItemState itemState = {ui.spinBox_itemQuality->value(), ui.spinBox_itemDurability->value()};
-    Crafter crafter = Crafter(userCraftingOptions, UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), itemState);
+    Crafter crafter = Crafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
    /* Item item = crafter.GetItem();
     Player player = crafter.GetPlayer();
     PlayerState playerState = player.GetCurrentPlayerState();
@@ -50,7 +48,7 @@ void CrafterOfLight::ToggleCraftingSkills() {
     }
 }
 
-std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() {
+std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() const {
     std::vector<Skills::SkillInformation> skills;
     if (ui.pushButton_basicSynthesis->isChecked()) {
         skills.emplace_back(Skills::SkillArray[(int)Skills::SkillName::BASICSYNTHESIS]);
@@ -132,6 +130,14 @@ std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() {
     }
 
     return skills;
+}
+
+CraftingOptions CrafterOfLight::UserCraftingOptions() const {
+    return { (uint8_t)ui.spinBox_maximumTurns->value(), ui.checkBox_maxQuality->isChecked() };
+}
+
+ItemState CrafterOfLight::UserMaxItemState() const {
+    return { (uint16_t)ui.spinBox_itemProgress->value(), (uint16_t)ui.spinBox_itemQuality->value(), (int16_t)ui.spinBox_itemDurability->value() };
 }
 
 void CrafterOfLight::DeleteMacros() {
