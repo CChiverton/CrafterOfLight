@@ -27,7 +27,7 @@ void BruteCrafter::BruteSolveConditions() {
 		}
 		craftingManager.ReloadCraftingTurn();
 	}
-	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() >= bestCraftTime - 2) {
+	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() >= bestCraftTime - 2 || craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit) {
 		craftingManager.ReloadCraftingTurn();
 	}
 	else {

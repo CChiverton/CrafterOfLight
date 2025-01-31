@@ -18,10 +18,14 @@ CrafterOfLight::~CrafterOfLight()
 
 void CrafterOfLight::BruteCraft() {
     DeleteMacros();
+    if (UserSkillSelection().size() == 0) {
+        ui.label_info->setText(QString("Please select at least one skill"));
+        return;
+    }
     PlayerState state = { ui.spinBox_maxCP->value() };
     BruteCrafter bruteCrafter = BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
     bruteCrafter.RecursiveBruteSolve();
-    ui.label_info->setText(QString::number(bruteCrafter.GetBestCraftTime()));
+    ui.label_info->setText(QString("Best time: ") + QString::number(bruteCrafter.GetBestCraftTime()) + QString(" seconds"));
 }
 
 void CrafterOfLight::SmartCraft() {

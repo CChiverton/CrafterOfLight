@@ -21,6 +21,7 @@ public:
 
 	inline Player GetPlayer() const;
 	inline Item GetItem() const;
+	inline uint8_t GetCraftingSessionTurn() const;
 	inline uint8_t GetCraftingSessionDuration() const;
 
 private:
@@ -50,6 +51,10 @@ inline Player CraftingSession::GetPlayer() const {
 
 inline Item CraftingSession::GetItem() const {
 	return item;
+}
+
+inline uint8_t CraftingSession::GetCraftingSessionTurn() const {
+	return currentState.turn;
 }
 
 inline uint8_t CraftingSession::GetCraftingSessionDuration() const {
