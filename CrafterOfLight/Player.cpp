@@ -67,11 +67,11 @@ bool Player::CanCastSkill() {
 		return currentPlayerState.buffs[Buffs::WASTENOT] == 0;
 	case Skills::SkillName::MUSCLEMEMORY:
 	case Skills::SkillName::REFLECT:
-		return currentPlayerState.turn = 1;
+		return currentPlayerState.turn == 1;
 	case Skills:: SkillName::BYREGOTSBLESSING:
 		return currentPlayerState.innerQuiet > 0;
 	case Skills::SkillName::TRAINEDFINESSE:
-		return currentPlayerState.innerQuiet = 10;
+		return currentPlayerState.innerQuiet == 10;
 	case Skills::SkillName::TRAINEDPERFECTION:
 		return !currentPlayerState.trainedPerfectionUsed;
 	default:
