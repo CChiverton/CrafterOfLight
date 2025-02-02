@@ -2,6 +2,7 @@
 #include "CrafterOfLight.h"
 #include "BruteCrafter.h"
 #include <format>
+#include <thread>
 
 CrafterOfLight::CrafterOfLight(QWidget *parent)
     : QWidget(parent)
@@ -24,7 +25,17 @@ void CrafterOfLight::BruteCraft() {
     }
     PlayerState state = { ui.spinBox_maxCP->value() };
     BruteCrafter bruteCrafter = BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
-    bruteCrafter.RecursiveBruteSolve();
+    uint64_t totalCasts = bruteCrafter.GetRemainingCasts()/100;
+    ui.progressBar->setMaximum(totalCasts);
+    std::thread solver(&BruteCrafter::RecursiveBruteSolve, &bruteCrafter);
+    //bruteCrafter.RecursiveBruteSolve();
+    while (bruteCrafter.GetRemainingCasts()) {
+        ui.progressBar->setValue(totalCasts - bruteCrafter.GetRemainingCasts()/100);
+        ui.progressBar->update();
+    }
+    solver.join();
+    ui.progressBar->setValue(totalCasts);
+    ui.progressBar->update();
     if (bruteCrafter.GetSolution().size() == 0) {
         ui.label_info->setText(QString("No solutions found"));
         return;
