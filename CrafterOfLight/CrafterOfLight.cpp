@@ -25,7 +25,14 @@ void CrafterOfLight::BruteCraft() {
     PlayerState state = { ui.spinBox_maxCP->value() };
     BruteCrafter bruteCrafter = BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
     bruteCrafter.RecursiveBruteSolve();
-    ui.label_info->setText(QString("Best time: ") + QString::number(bruteCrafter.GetBestCraftTime()) + QString(" seconds\n") + QString::fromStdString(bruteCrafter.GetSolution()));
+    if (bruteCrafter.GetSolution().size() == 0) {
+        ui.label_info->setText(QString("No solutions found"));
+        return;
+    }
+    for (uint8_t i{ 1 }; i <= bruteCrafter.GetSolution().size(); ++i) {
+        ui.gridLayout_macroOutput->addWidget(new QPushButton(QString::number(i)), i - 1, 0);
+    }
+    ui.label_info->setText(QString("Best time: ") + QString::number(bruteCrafter.GetBestCraftTime()) + QString(" seconds\n") + QString::fromStdString(bruteCrafter.GetSolution()[0]));
 }
 
 void CrafterOfLight::SmartCraft() {
@@ -151,15 +158,15 @@ void CrafterOfLight::DeleteMacros() {
     int row = 0;
     while (ui.gridLayout_macroOutput->count()) {
         QWidget* widgetButton = ui.gridLayout_macroOutput->itemAtPosition(row,0)->widget();
-        QWidget* widgetText = ui.gridLayout_macroOutput->itemAtPosition(row, 1)->widget();
+        //QWidget* widgetText = ui.gridLayout_macroOutput->itemAtPosition(row, 1)->widget();
         if (widgetButton) {
             ui.gridLayout_macroOutput->removeWidget(widgetButton);
             delete widgetButton;
         }
-        if (widgetText) {
+       /* if (widgetText) {
             ui.gridLayout_macroOutput->removeWidget(widgetText);
             delete widgetText;
-        }
+        }*/
         ++row;
     }
 }

@@ -17,7 +17,7 @@ public:
 	inline const uint8_t GetMaximumTurns() const;
 	const std::string GetSkillSelection() const;
 	inline const uint8_t GetBestCraftTime() const;
-	std::string GetSolution() const;
+	std::vector<std::string> GetSolution() const;
 
 	void Debug_VerifyCrafts();
 protected:

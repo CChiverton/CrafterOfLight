@@ -18,16 +18,21 @@ const std::string Crafter::GetSkillSelection() const {
 	return output;
 }
 
-std::string Crafter::GetSolution() const {
+std::vector<std::string> Crafter::GetSolution() const {
 	std::string output = "";
+	std::vector<std::string> vectorOutput{};
 	if (solutions.at(bestCraftTime).size() == 0) {
-		return output;
+		return vectorOutput;
 	}
-	for (const auto& skill : solutions.at(bestCraftTime)[0]) {
-		output.append(Skills::GetSkillName(skill));
-		output.append(",");
+	for (const auto& skillVector : solutions.at(bestCraftTime)) {
+		for (const auto& skill : skillVector) {
+			output.append(Skills::GetSkillName(skill));
+			output.append(",");
+		}
+		vectorOutput.emplace_back(output);
+		output = "";
 	}
-	return output;
+	return vectorOutput;
 }
 
 void Crafter::Debug_VerifyCrafts() {
