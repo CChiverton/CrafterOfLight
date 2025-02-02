@@ -18,6 +18,7 @@ public:
 	const std::string GetSkillSelection() const;
 	inline const uint8_t GetBestCraftTime() const;
 	std::vector<std::string> GetSolution() const;
+	inline uint64_t GetRemainingCasts() const;
 
 	void Debug_VerifyCrafts();
 protected:
@@ -29,6 +30,8 @@ protected:
 	std::vector<Skills::SkillInformation> skillSelection;
 	std::map<uint8_t, std::vector<std::vector<Skills::SkillName>>> solutions;
 	uint8_t bestCraftTime = 255;
+	std::vector<uint64_t> totalNumberOfCasts{};
+	uint64_t remainingCasts = 0;
 	
 };
 
@@ -54,4 +57,8 @@ inline void Crafter::AddSolution() {
 
 inline const uint8_t Crafter::GetBestCraftTime() const {
 	return bestCraftTime;
+}
+
+inline uint64_t Crafter::GetRemainingCasts() const {
+	return remainingCasts;
 }

@@ -5,6 +5,7 @@
 #include "Player.h"
 
 /* Keeps records of the entire crafting session and acts as mediator between Player and Item */
+/* TODO make it so that there is only one source which controls what turn the system is on */
 class CraftingSession {
 public:
 	struct CraftState {

@@ -32,7 +32,8 @@ void CrafterOfLight::BruteCraft() {
     for (uint8_t i{ 1 }; i <= bruteCrafter.GetSolution().size(); ++i) {
         ui.gridLayout_macroOutput->addWidget(new QPushButton(QString::number(i)), i - 1, 0);
     }
-    ui.label_info->setText(QString("Best time: ") + QString::number(bruteCrafter.GetBestCraftTime()) + QString(" seconds\n") + QString::fromStdString(bruteCrafter.GetSolution()[0]));
+    ui.label_info->setText(QString("Best time: ") + QString::number(bruteCrafter.GetBestCraftTime()) + QString(" seconds\n") + QString::fromStdString(bruteCrafter.GetSolution()[0])
+    + QString("\n") + QString::number(bruteCrafter.GetRemainingCasts()));
 }
 
 void CrafterOfLight::SmartCraft() {
