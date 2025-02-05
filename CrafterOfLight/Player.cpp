@@ -199,6 +199,7 @@ void Player::TouchBuffs(uint8_t innerQuietStacks) {
 	currentSkill.touchEfficiency *= qualityPerOneEfficiency;
 	const uint8_t efficiency = currentSkill.touchEfficiency;
 	if (currentPlayerState.buffs[GREATSTRIDES] > 0) {
+		currentPlayerState.buffs[GREATSTRIDES] = 0;
 		currentSkill.touchEfficiency += efficiency;
 	}
 	if (currentPlayerState.buffs[INNOVATION] > 0) {
