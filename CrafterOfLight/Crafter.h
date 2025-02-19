@@ -9,7 +9,10 @@ struct CraftingOptions {
 	bool maxQualityRequired = false;
 };
 
-class Crafter {
+class Crafter : public QObject {
+
+	Q_OBJECT
+
 public:
 	Crafter(CraftingOptions craftingOptions, std::vector<Skills::SkillInformation> userSkills, PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred, ItemState maxItemState);
 	~Crafter();
@@ -21,6 +24,11 @@ public:
 	inline uint64_t GetRemainingCasts() const;
 
 	void Debug_VerifyCrafts();
+
+signals:
+	void ResultReady(const std::vector<std::string> &result, uint8_t bestCraftTime);
+	void RemainingCrafts(uint64_t remainingCrafts);
+
 protected:
 	inline bool IsSolved() const;
 	inline void AddSolution();
@@ -32,7 +40,7 @@ protected:
 	uint8_t bestCraftTime = 255;
 	std::vector<uint64_t> totalNumberOfCasts{};
 	std::atomic<uint64_t> remainingCasts = 0;
-	
+	bool forceQuit = false;
 };
 
 inline const uint8_t Crafter::GetMaximumTurns() const {

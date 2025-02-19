@@ -8,8 +8,22 @@ BruteCrafter::BruteCrafter(CraftingOptions craftingOptions, std::vector<Skills::
 
 BruteCrafter::~BruteCrafter() {};
 
+void BruteCrafter::Solve() {
+	RecursiveBruteSolve();
+	if (!forceQuit) {
+		emit ResultReady(GetSolution(), bestCraftTime);
+	}
+}
+
 void BruteCrafter::RecursiveBruteSolve() {
+	if (QThread::currentThread()->isInterruptionRequested()) {
+		forceQuit = true;
+	}
+	emit RemainingCrafts(remainingCasts);
 	for (const auto& skill : skillSelection) {
+		if (forceQuit) {
+			return;
+		}
 		--remainingCasts;
 		if (craftingManager.CraftingTurn(skill)) {
 			BruteSolveConditions();

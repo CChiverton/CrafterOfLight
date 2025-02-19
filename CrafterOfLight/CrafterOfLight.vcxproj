@@ -122,7 +122,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClInclude Include="BruteCrafter.h" />
-    <ClInclude Include="Crafter.h" />
+    <QtMoc Include="Crafter.h" />
     <ClInclude Include="CraftingSession.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />

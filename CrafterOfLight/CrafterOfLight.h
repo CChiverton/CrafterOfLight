@@ -9,15 +9,25 @@
 class CrafterOfLight : public QWidget
 {
     Q_OBJECT
+    QThread crafterThread;
 
 public:
     CrafterOfLight(QWidget *parent = nullptr);
     ~CrafterOfLight();
 
+public slots:
+    void HandleResults(const std::vector<std::string> &results, uint8_t bestCraftTime);
+    void UpdateProgressBar(uint64_t remainingCasts);
+
+signals:
+    void FindSolution();
+
 private slots:
     void BruteCraft();
     void SmartCraft();
     void ToggleCraftingSkills();
+    
+
 
 private:
     Ui::CrafterOfLightClass ui;
@@ -27,4 +37,5 @@ private:
     ItemState UserMaxItemState() const;
     void SetQualitySkills(bool state);
     void DeleteMacros();
+    uint64_t progressBarCasts = 0;
 };

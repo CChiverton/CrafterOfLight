@@ -15,7 +15,11 @@ CrafterOfLight::CrafterOfLight(QWidget *parent)
 }
 
 CrafterOfLight::~CrafterOfLight()
-{}
+{
+    crafterThread.requestInterruption();
+    crafterThread.quit();
+    crafterThread.wait();
+}
 
 void CrafterOfLight::BruteCraft() {
     DeleteMacros();
@@ -23,28 +27,26 @@ void CrafterOfLight::BruteCraft() {
         ui.label_info->setText(QString("Please select at least one skill"));
         return;
     }
+    if (crafterThread.isRunning()) {
+        crafterThread.requestInterruption();
+        crafterThread.quit();
+        crafterThread.wait();
+        ui.label_info->setText(QString("Restarting"));
+    }
+
     PlayerState state = { ui.spinBox_maxCP->value() };
-    BruteCrafter bruteCrafter = BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
-    uint64_t totalCasts = bruteCrafter.GetRemainingCasts()/100;
-    ui.progressBar->setMaximum(totalCasts);
-    std::thread solver(&BruteCrafter::RecursiveBruteSolve, &bruteCrafter);
-    //bruteCrafter.RecursiveBruteSolve();
-    while (bruteCrafter.GetRemainingCasts()) {
-        ui.progressBar->setValue(totalCasts - bruteCrafter.GetRemainingCasts()/100);
-        ui.progressBar->update();
-    }
-    solver.join();
-    ui.progressBar->setValue(totalCasts);
-    ui.progressBar->update();
-    if (bruteCrafter.GetSolution().size() == 0) {
-        ui.label_info->setText(QString("No solutions found"));
-        return;
-    }
-    for (uint8_t i{ 1 }; i <= bruteCrafter.GetSolution().size(); ++i) {
-        ui.gridLayout_macroOutput->addWidget(new QPushButton(QString::number(i)), i - 1, 0);
-    }
-    ui.label_info->setText(QString("Best time: ") + QString::number(bruteCrafter.GetBestCraftTime()) + QString(" seconds\n") + QString::fromStdString(bruteCrafter.GetSolution()[0])
-    + QString("\n") + QString::number(bruteCrafter.GetRemainingCasts()));
+    //BruteCrafter bruteCrafter = BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
+    BruteCrafter* bruteCrafter = new BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
+    progressBarCasts = bruteCrafter->GetRemainingCasts() / 100;
+    ui.progressBar->setMaximum(progressBarCasts);
+    bruteCrafter->moveToThread(&crafterThread);
+    connect(&crafterThread, &QThread::finished, bruteCrafter, &QObject::deleteLater);
+    connect(this, &CrafterOfLight::FindSolution, bruteCrafter, &BruteCrafter::Solve);
+    connect(bruteCrafter, &BruteCrafter::RemainingCrafts, this, &CrafterOfLight::UpdateProgressBar);
+    connect(bruteCrafter, &BruteCrafter::ResultReady, this, &CrafterOfLight::HandleResults);
+
+    crafterThread.start();
+    emit FindSolution();
 }
 
 void CrafterOfLight::SmartCraft() {
@@ -72,6 +74,23 @@ void CrafterOfLight::ToggleCraftingSkills() {
     else {
         SetQualitySkills(true);
     }
+}
+
+void CrafterOfLight::HandleResults(const std::vector<std::string> &results, uint8_t bestCraftTime) {
+    if (results.size() == 0) {
+        ui.label_info->setText(QString("No solutions found"));
+        return;
+    }
+    for (uint8_t i{ 1 }; i <= results.size(); ++i) {
+        ui.gridLayout_macroOutput->addWidget(new QPushButton(QString::number(i)), i - 1, 0);
+    }
+    ui.label_info->setText(QString("Best time: ") + QString::number(bestCraftTime) + QString(" seconds\n") + QString::fromStdString(results[0])
+       /* + QString("\n") + QString::number(bruteCrafter.GetRemainingCasts())*/);
+}
+
+void CrafterOfLight::UpdateProgressBar(uint64_t remainingCasts) {
+    ui.progressBar->setValue(progressBarCasts - remainingCasts / 100);
+    ui.progressBar->update();
 }
 
 std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() const {
