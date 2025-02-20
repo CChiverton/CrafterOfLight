@@ -80,7 +80,7 @@ void CrafterOfLight::ToggleCraftingSkills() {
 void CrafterOfLight::SolutionButtonClicked() {
     QPushButton* widgetButton = qobject_cast<QPushButton*>(sender());
     if (widgetButton) {
-        ui.label_info->setText(QString::fromStdString(solutions[widgetButton->text().toInt() - 1]));
+        ui.label_info->setText("Copied to clipboard");
         QClipboard* clipboard = QGuiApplication::clipboard();
         clipboard->setText(QString::fromStdString(solutions[widgetButton->text().toInt() - 1]));
     }
@@ -221,8 +221,11 @@ void CrafterOfLight::DeleteMacros() {
 std::string CrafterOfLight::CreateMacro(std::vector<Skills::SkillName> skillList) {
     std::string output = "";
     for (const auto& skill : skillList) {
+        output.append("/ac \"");
         output.append(Skills::GetSkillName(skill));
-        output.append(",");
+        output.append("\" <wait.");
+        output.append(std::to_string(Skills::SkillArray[int(skill)].castTime));
+        output.append(">\n");
     }
     return output;
 }
