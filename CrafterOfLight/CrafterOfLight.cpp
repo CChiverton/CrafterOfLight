@@ -80,8 +80,9 @@ void CrafterOfLight::ToggleCraftingSkills() {
 void CrafterOfLight::SolutionButtonClicked() {
     QPushButton* widgetButton = qobject_cast<QPushButton*>(sender());
     if (widgetButton) {
-        //int row = ui.gridLayout_macroOutput->indexOf(widgetButton);
         ui.label_info->setText(QString::fromStdString(solutions[widgetButton->text().toInt() - 1]));
+        QClipboard* clipboard = QGuiApplication::clipboard();
+        clipboard->setText(QString::fromStdString(solutions[widgetButton->text().toInt() - 1]));
     }
 }
 
