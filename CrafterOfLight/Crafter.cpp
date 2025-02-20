@@ -10,9 +10,15 @@ craftingManager(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemSt
 		remainingCasts += std::pow(userSkills.size(), i);
 		totalNumberOfCasts.insert(totalNumberOfCasts.begin(),  remainingCasts);
 	}
+
+	progressUpdateTimer = new QTimer(this);
+	connect(progressUpdateTimer, &QTimer::timeout, this, &Crafter::EmitRemainingCrafts);
+	progressUpdateTimer->start(1000);
 }
 
-Crafter::~Crafter() {}
+Crafter::~Crafter() {
+	delete progressUpdateTimer;
+}
 
 const std::string Crafter::GetSkillSelection() const {
 	std::string output = "";
@@ -27,7 +33,7 @@ const std::string Crafter::GetSkillSelection() const {
 std::vector<std::string> Crafter::GetSolution() const {
 	std::string output = "";
 	std::vector<std::string> vectorOutput{};
-	if (solutions.at(bestCraftTime).size() == 0) {
+	if (solutions.empty()) {
 		return vectorOutput;
 	}
 	for (const auto& skillVector : solutions.at(bestCraftTime)) {
@@ -127,4 +133,9 @@ void Crafter::Debug_VerifyCrafts() {
 		assert(craftingDebug.GetItem().GetCurrentQuality() == 200 + 240 + 280 + 320 + 360 + 400 + 400);
 		assert(craftingDebug.GetItem().GetCurrentDurability() == 100 - 20 - 20 - 20 - 20 + 30 - 20 - 20 - 20);
 	}
+
+}
+
+void Crafter::EmitRemainingCrafts() {
+	emit RemainingCrafts(remainingCasts);
 }

@@ -19,7 +19,7 @@ void BruteCrafter::RecursiveBruteSolve() {
 	if (QThread::currentThread()->isInterruptionRequested()) {
 		forceQuit = true;
 	}
-	emit RemainingCrafts(remainingCasts);
+	qApp->processEvents();
 	for (const auto& skill : skillSelection) {
 		if (forceQuit) {
 			return;

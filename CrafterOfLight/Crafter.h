@@ -29,6 +29,9 @@ signals:
 	void ResultReady(const std::vector<std::string> &result, uint8_t bestCraftTime);
 	void RemainingCrafts(uint64_t remainingCrafts);
 
+public slots:
+	void EmitRemainingCrafts();
+
 protected:
 	inline bool IsSolved() const;
 	inline void AddSolution();
@@ -41,6 +44,11 @@ protected:
 	std::vector<uint64_t> totalNumberOfCasts{};
 	std::atomic<uint64_t> remainingCasts = 0;
 	bool forceQuit = false;
+
+private:
+	QTimer* progressUpdateTimer;
+
+
 };
 
 inline const uint8_t Crafter::GetMaximumTurns() const {

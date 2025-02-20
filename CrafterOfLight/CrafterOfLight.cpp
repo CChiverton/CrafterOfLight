@@ -86,6 +86,8 @@ void CrafterOfLight::HandleResults(const std::vector<std::string> &results, uint
     }
     ui.label_info->setText(QString("Best time: ") + QString::number(bestCraftTime) + QString(" seconds\n") + QString::fromStdString(results[0])
        /* + QString("\n") + QString::number(bruteCrafter.GetRemainingCasts())*/);
+    crafterThread.quit();
+    crafterThread.wait();
 }
 
 void CrafterOfLight::UpdateProgressBar(uint64_t remainingCasts) {
