@@ -28,6 +28,7 @@ public:
 signals:
 	void ResultReady(const std::vector<std::string> &result, uint8_t bestCraftTime);
 	void RemainingCrafts(uint64_t remainingCrafts);
+	void Finished();
 
 public slots:
 	void EmitRemainingCrafts();

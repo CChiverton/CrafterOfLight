@@ -35,12 +35,13 @@ void CrafterOfLight::BruteCraft() {
     }
 
     PlayerState state = { ui.spinBox_maxCP->value() };
-    //BruteCrafter bruteCrafter = BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
     BruteCrafter* bruteCrafter = new BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
-    progressBarCasts = bruteCrafter->GetRemainingCasts() / 100;
-    ui.progressBar->setMaximum(progressBarCasts);
+    progressBarCasts = bruteCrafter->GetRemainingCasts();
+    ui.progressBar->setMaximum(100);
+    ui.progressBar->setValue(0);
     bruteCrafter->moveToThread(&crafterThread);
     connect(&crafterThread, &QThread::finished, bruteCrafter, &QObject::deleteLater);
+    connect(bruteCrafter, &BruteCrafter::Finished, bruteCrafter, &QObject::deleteLater);
     connect(this, &CrafterOfLight::FindSolution, bruteCrafter, &BruteCrafter::Solve);
     connect(bruteCrafter, &BruteCrafter::RemainingCrafts, this, &CrafterOfLight::UpdateProgressBar);
     connect(bruteCrafter, &BruteCrafter::ResultReady, this, &CrafterOfLight::HandleResults);
@@ -91,7 +92,7 @@ void CrafterOfLight::HandleResults(const std::vector<std::string> &results, uint
 }
 
 void CrafterOfLight::UpdateProgressBar(uint64_t remainingCasts) {
-    ui.progressBar->setValue(progressBarCasts - remainingCasts / 100);
+    ui.progressBar->setValue(float(progressBarCasts - remainingCasts)/progressBarCasts * 100);
     ui.progressBar->update();
 }
 

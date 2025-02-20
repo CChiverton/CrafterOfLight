@@ -13,6 +13,8 @@ void BruteCrafter::Solve() {
 	if (!forceQuit) {
 		emit ResultReady(GetSolution(), bestCraftTime);
 	}
+	emit EmitRemainingCrafts();
+	emit Finished();
 }
 
 void BruteCrafter::RecursiveBruteSolve() {
