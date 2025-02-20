@@ -20,13 +20,13 @@ public:
 	inline const uint8_t GetMaximumTurns() const;
 	const std::string GetSkillSelection() const;
 	inline const uint8_t GetBestCraftTime() const;
-	std::vector<std::string> GetSolution() const;
+	std::vector<std::vector<Skills::SkillName>> GetSolution() const;
 	inline uint64_t GetRemainingCasts() const;
 
 	void Debug_VerifyCrafts();
 
 signals:
-	void ResultReady(const std::vector<std::string> &result, uint8_t bestCraftTime);
+	void ResultReady(const std::vector<std::vector<Skills::SkillName>> &result, uint8_t bestCraftTime);
 	void RemainingCrafts(uint64_t remainingCrafts);
 	void Finished();
 

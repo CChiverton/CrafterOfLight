@@ -16,7 +16,7 @@ public:
     ~CrafterOfLight();
 
 public slots:
-    void HandleResults(const std::vector<std::string> &results, uint8_t bestCraftTime);
+    void HandleResults(const std::vector<std::vector<Skills::SkillName>> &results, uint8_t bestCraftTime);
     void UpdateProgressBar(uint64_t remainingCasts);
 
 signals:
@@ -33,9 +33,11 @@ private:
     Ui::CrafterOfLightClass ui;
 
     std::vector<Skills::SkillInformation> UserSkillSelection() const;
+    std::vector<std::string> solutions{};
     CraftingOptions UserCraftingOptions() const;
     ItemState UserMaxItemState() const;
     void SetQualitySkills(bool state);
     void DeleteMacros();
+    std::string CreateMacro(std::vector<Skills::SkillName>);
     uint64_t progressBarCasts = 0;
 };

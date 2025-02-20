@@ -30,19 +30,13 @@ const std::string Crafter::GetSkillSelection() const {
 	return output;
 }
 
-std::vector<std::string> Crafter::GetSolution() const {
-	std::string output = "";
-	std::vector<std::string> vectorOutput{};
+std::vector<std::vector<Skills::SkillName>> Crafter::GetSolution() const {
+	std::vector<std::vector<Skills::SkillName>> vectorOutput{};
 	if (solutions.empty()) {
 		return vectorOutput;
 	}
 	for (const auto& skillVector : solutions.at(bestCraftTime)) {
-		for (const auto& skill : skillVector) {
-			output.append(Skills::GetSkillName(skill));
-			output.append(",");
-		}
-		vectorOutput.emplace_back(output);
-		output = "";
+		vectorOutput.emplace_back(skillVector);
 	}
 	return vectorOutput;
 }

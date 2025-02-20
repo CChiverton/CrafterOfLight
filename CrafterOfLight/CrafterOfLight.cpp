@@ -77,15 +77,17 @@ void CrafterOfLight::ToggleCraftingSkills() {
     }
 }
 
-void CrafterOfLight::HandleResults(const std::vector<std::string> &results, uint8_t bestCraftTime) {
+void CrafterOfLight::HandleResults(const std::vector<std::vector<Skills::SkillName>> &results, uint8_t bestCraftTime) {
     if (results.size() == 0) {
         ui.label_info->setText(QString("No solutions found"));
         return;
     }
-    for (uint8_t i{ 1 }; i <= results.size(); ++i) {
-        ui.gridLayout_macroOutput->addWidget(new QPushButton(QString::number(i)), i - 1, 0);
+    solutions.clear();
+    for (uint8_t i{ 0 }; i < results.size(); ++i) {
+        ui.gridLayout_macroOutput->addWidget(new QPushButton(QString::number(i+1)), i, 0);
+        solutions.emplace_back(CreateMacro(results[i]));
     }
-    ui.label_info->setText(QString("Best time: ") + QString::number(bestCraftTime) + QString(" seconds\n") + QString::fromStdString(results[0])
+    ui.label_info->setText(QString("Best time: ") + QString::number(bestCraftTime) + QString(" seconds\n") + QString::fromStdString(solutions[0])
        /* + QString("\n") + QString::number(bruteCrafter.GetRemainingCasts())*/);
     crafterThread.quit();
     crafterThread.wait();
@@ -203,6 +205,15 @@ void CrafterOfLight::DeleteMacros() {
         }*/
         ++row;
     }
+}
+
+std::string CrafterOfLight::CreateMacro(std::vector<Skills::SkillName> skillList) {
+    std::string output = "";
+    for (const auto& skill : skillList) {
+        output.append(Skills::GetSkillName(skill));
+        output.append(",");
+    }
+    return output;
 }
 
 void CrafterOfLight::SetQualitySkills(bool state) {
