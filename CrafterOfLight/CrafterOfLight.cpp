@@ -77,6 +77,14 @@ void CrafterOfLight::ToggleCraftingSkills() {
     }
 }
 
+void CrafterOfLight::SolutionButtonClicked() {
+    QPushButton* widgetButton = qobject_cast<QPushButton*>(sender());
+    if (widgetButton) {
+        //int row = ui.gridLayout_macroOutput->indexOf(widgetButton);
+        ui.label_info->setText(QString::fromStdString(solutions[widgetButton->text().toInt() - 1]));
+    }
+}
+
 void CrafterOfLight::HandleResults(const std::vector<std::vector<Skills::SkillName>> &results, uint8_t bestCraftTime) {
     if (results.size() == 0) {
         ui.label_info->setText(QString("No solutions found"));
@@ -84,8 +92,10 @@ void CrafterOfLight::HandleResults(const std::vector<std::vector<Skills::SkillNa
     }
     solutions.clear();
     for (uint8_t i{ 0 }; i < results.size(); ++i) {
-        ui.gridLayout_macroOutput->addWidget(new QPushButton(QString::number(i+1)), i, 0);
+        QPushButton* button = new QPushButton(QString::number(i + 1));
+        ui.gridLayout_macroOutput->addWidget(button, i, 0);
         solutions.emplace_back(CreateMacro(results[i]));
+        connect(button, &QPushButton::clicked, this, &CrafterOfLight::SolutionButtonClicked);
     }
     ui.label_info->setText(QString("Best time: ") + QString::number(bestCraftTime) + QString(" seconds\n") + QString::fromStdString(solutions[0])
        /* + QString("\n") + QString::number(bruteCrafter.GetRemainingCasts())*/);

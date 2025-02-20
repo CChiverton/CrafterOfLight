@@ -26,6 +26,7 @@ private slots:
     void BruteCraft();
     void SmartCraft();
     void ToggleCraftingSkills();
+    void SolutionButtonClicked();
     
 
 
