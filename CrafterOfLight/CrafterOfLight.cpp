@@ -11,6 +11,7 @@ CrafterOfLight::CrafterOfLight(QWidget *parent)
     connect(ui.pushButton_bruteCraft, &QPushButton::clicked, this, &CrafterOfLight::BruteCraft);
     connect(ui.pushButton_smartCraft, &QPushButton::clicked, this, &CrafterOfLight::SmartCraft);
     connect(ui.checkBox_maxQuality, &QCheckBox::checkStateChanged, this, &CrafterOfLight::ToggleCraftingSkills);
+    LoadJsonSettings();
     ToggleCraftingSkills();
 }
 
@@ -20,6 +21,8 @@ CrafterOfLight::~CrafterOfLight()
     crafterThread.requestInterruption();
     crafterThread.quit();
     crafterThread.wait();
+
+    SaveJsonSettings();
 }
 
 /* "Dumb" crafting option with no tricks to optimisation */
@@ -255,4 +258,99 @@ void CrafterOfLight::SetQualitySkills(bool state) {
     ui.pushButton_greatStrides->setDisabled(state);
     ui.pushButton_innovation->setDisabled(state);
     ui.pushButton_delicateSynthesis->setDisabled(state);
+}
+
+void CrafterOfLight::SaveJsonSettings() {
+    QJsonObject json;
+    json["maxProgress"] = ui.spinBox_itemProgress->value();
+    json["maxQuality"] = ui.spinBox_itemQuality->value();
+    json["maxDurability"] = ui.spinBox_itemDurability->value();
+
+    json["maxCP"] = ui.spinBox_maxCP->value();
+    json["progress"] = ui.spinBox_progress->value();
+    json["quality"] = ui.spinBox_quality->value();
+
+    json["maxTurns"] = ui.spinBox_maximumTurns->value();
+    json["findQuality"] = ui.checkBox_maxQuality->isChecked();
+
+    json["basicSynthesis"] = ui.pushButton_basicSynthesis->isChecked();
+    json["carefulSynthesis"] = ui.pushButton_carefulSynthesis->isChecked();
+    json["prudentSynthesis"] = ui.pushButton_prudentSynthesis->isChecked();
+    json["groundwork"] = ui.pushButton_groundwork->isChecked();
+    json["muscleMemory"] = ui.pushButton_muscleMemory->isChecked();
+    json["basicTouch"] = ui.pushButton_basicTouch->isChecked();
+    json["standardTouch"] = ui.pushButton_standardTouch->isChecked();
+    json["advancedTouch"] = ui.pushButton_advancedTouch->isChecked();
+    json["byregot"] = ui.pushButton_byregotsBlessing->isChecked();
+    json["prudentTouch"] = ui.pushButton_prudentTouch->isChecked();
+    json["preparatoryTouch"] = ui.pushButton_preparatoryTouch->isChecked();
+    json["reflect"] = ui.pushButton_reflect->isChecked();
+    json["trainedFinesse"] = ui.pushButton_trainedFinesse->isChecked();
+    json["refinedTouch"] = ui.pushButton_refinedTouch->isChecked();
+    json["wasteNotI"] = ui.pushButton_wasteNotI->isChecked();
+    json["wasteNotII"] = ui.pushButton_wasteNotII->isChecked();
+    json["greatStrides"] = ui.pushButton_greatStrides->isChecked();
+    json["innovation"] = ui.pushButton_innovation->isChecked();
+    json["veneration"] = ui.pushButton_veneration->isChecked();
+    json["finalAppraisal"] = ui.pushButton_finalAppraisal->isChecked();
+    json["mastersMend"] = ui.pushButton_mastersMend->isChecked();
+    json["manipulation"] = ui.pushButton_manipulation->isChecked();
+    json["immaculateMend"] = ui.pushButton_immaculateMend->isChecked();
+    json["trainedPerfection"] = ui.pushButton_trainedPerfection->isChecked();
+    json["observe"] = ui.pushButton_observe->isChecked();
+    json["delicateSynthesis"] = ui.pushButton_delicateSynthesis->isChecked();
+
+    QFile settingsFile("settings.json");
+    settingsFile.open(QIODevice::WriteOnly);
+    settingsFile.write(QJsonDocument(json).toJson());
+    settingsFile.close();
+}
+
+void CrafterOfLight::LoadJsonSettings() {
+    QFileInfo checkFile("settings.json");
+    if (checkFile.exists()) {
+        QFile settingsFile("settings.json");
+        settingsFile.open(QIODevice::ReadOnly);
+        QJsonDocument json(QJsonDocument::fromJson(settingsFile.readAll()));
+
+        ui.spinBox_itemProgress->setValue(json["maxProgress"].toInt());
+        ui.spinBox_itemQuality->setValue(json["maxQuality"].toInt());
+        ui.spinBox_itemDurability->setValue(json["maxDurability"].toInt());
+
+        ui.spinBox_maxCP->setValue(json["maxCP"].toInt());
+        ui.spinBox_progress->setValue(json["progress"].toInt());
+         ui.spinBox_quality->setValue(json["quality"].toInt());
+
+        ui.spinBox_maximumTurns->setValue(json["maxTurns"].toInt());
+        ui.checkBox_maxQuality->setChecked(json["findQuality"].toBool());
+
+        ui.pushButton_basicSynthesis->setChecked(json["basicSynthesis"].toBool());
+        ui.pushButton_carefulSynthesis->setChecked(json["carefulSynthesis"].toBool());
+        ui.pushButton_prudentSynthesis->setChecked(json["prudentSynthesis"].toBool());
+        ui.pushButton_groundwork->setChecked(json["groundwork"].toBool());
+        ui.pushButton_muscleMemory->setChecked(json["muscleMemory"].toBool());
+        ui.pushButton_basicTouch->setChecked(json["basicTouch"].toBool());
+        ui.pushButton_standardTouch->setChecked(json["standardTouch"].toBool());
+        ui.pushButton_advancedTouch->setChecked(json["advancedTouch"].toBool());
+        ui.pushButton_byregotsBlessing->setChecked(json["byregot"].toBool());
+        ui.pushButton_prudentTouch->setChecked(json["prudentTouch"].toBool());
+        ui.pushButton_preparatoryTouch->setChecked(json["preparatoryTouch"].toBool());
+        ui.pushButton_reflect->setChecked(json["reflect"].toBool());
+        ui.pushButton_trainedFinesse->setChecked(json["trainedFinesse"].toBool());
+        ui.pushButton_refinedTouch->setChecked(json["refinedTouch"].toBool());
+        ui.pushButton_wasteNotI->setChecked(json["wasteNotI"].toBool());
+        ui.pushButton_wasteNotII->setChecked(json["wasteNotII"].toBool());
+        ui.pushButton_greatStrides->setChecked(json["greatStrides"].toBool());
+        ui.pushButton_innovation->setChecked(json["innovation"].toBool());
+        ui.pushButton_veneration->setChecked(json["veneration"].toBool());
+        ui.pushButton_finalAppraisal->setChecked(json["finalAppraisal"].toBool());
+        ui.pushButton_mastersMend->setChecked(json["mastersMend"].toBool());
+        ui.pushButton_manipulation->setChecked(json["manipulation"].toBool());
+        ui.pushButton_immaculateMend->setChecked(json["immaculateMend"].toBool());
+        ui.pushButton_trainedPerfection->setChecked(json["trainedPerfection"].toBool());
+        ui.pushButton_observe->setChecked(json["observe"].toBool());
+        ui.pushButton_delicateSynthesis->setChecked(json["delicateSynthesis"].toBool());
+
+        settingsFile.close();
+    }
 }
