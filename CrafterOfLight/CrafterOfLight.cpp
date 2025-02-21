@@ -14,6 +14,7 @@ CrafterOfLight::CrafterOfLight(QWidget *parent)
     ToggleCraftingSkills();
 }
 
+/* Cleanup */
 CrafterOfLight::~CrafterOfLight()
 {
     crafterThread.requestInterruption();
@@ -21,6 +22,7 @@ CrafterOfLight::~CrafterOfLight()
     crafterThread.wait();
 }
 
+/* "Dumb" crafting option with no tricks to optimisation */
 void CrafterOfLight::BruteCraft() {
     DeleteMacros();
     if (UserSkillSelection().size() == 0) {
@@ -50,6 +52,7 @@ void CrafterOfLight::BruteCraft() {
     emit FindSolution();
 }
 
+/* "Intelligent" crafting option that uses tricks and logic to attempt to reduce the total solving time */
 void CrafterOfLight::SmartCraft() {
     DeleteMacros();
     ui.gridLayout_macroOutput->addWidget(new QPushButton("1"), 0, 0);
@@ -68,6 +71,7 @@ void CrafterOfLight::SmartCraft() {
     crafter.Debug_VerifyCrafts();
 }
 
+/* Toggles the user selectable skills based on whether quality is something the user wishes to find */
 void CrafterOfLight::ToggleCraftingSkills() {
     if (ui.checkBox_maxQuality->isChecked()) {
         SetQualitySkills(false);
@@ -77,6 +81,7 @@ void CrafterOfLight::ToggleCraftingSkills() {
     }
 }
 
+/* Copies the macro to the clipboard that corresponds to the vector of the found solutions */
 void CrafterOfLight::SolutionButtonClicked() {
     QPushButton* widgetButton = qobject_cast<QPushButton*>(sender());
     if (widgetButton) {
@@ -86,6 +91,7 @@ void CrafterOfLight::SolutionButtonClicked() {
     }
 }
 
+/* Receives all the solutions from the crafter and makes changes to the UI to represent this */
 void CrafterOfLight::HandleResults(const std::vector<std::vector<Skills::SkillName>> &results, uint8_t bestCraftTime) {
     if (results.size() == 0) {
         ui.label_info->setText(QString("No solutions found"));
@@ -98,17 +104,18 @@ void CrafterOfLight::HandleResults(const std::vector<std::vector<Skills::SkillNa
         solutions.emplace_back(CreateMacro(results[i]));
         connect(button, &QPushButton::clicked, this, &CrafterOfLight::SolutionButtonClicked);
     }
-    ui.label_info->setText(QString("Best time: ") + QString::number(bestCraftTime) + QString(" seconds\n") + QString::fromStdString(solutions[0])
-       /* + QString("\n") + QString::number(bruteCrafter.GetRemainingCasts())*/);
+    ui.label_info->setText(QString("Best time: ") + QString::number(bestCraftTime) + QString(" seconds\n"));
     crafterThread.quit();
     crafterThread.wait();
 }
 
+/* Slot that changes the progress bar based on signal received from the crafter */
 void CrafterOfLight::UpdateProgressBar(uint64_t remainingCasts) {
     ui.progressBar->setValue(float(progressBarCasts - remainingCasts)/progressBarCasts * 100);
     ui.progressBar->update();
 }
 
+/* Adds skills to a vector to be passed along to the crafter. To be called only on creation of a crafter instance */
 std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() const {
     std::vector<Skills::SkillInformation> skills;
     if (ui.pushButton_basicSynthesis->isChecked()) {
@@ -193,14 +200,17 @@ std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() const
     return skills;
 }
 
+/* Returns the user crafting options from the UI */
 CraftingOptions CrafterOfLight::UserCraftingOptions() const {
     return { (uint8_t)ui.spinBox_maximumTurns->value(), ui.checkBox_maxQuality->isChecked() };
 }
 
+/* Returns the item stats from the UI */
 ItemState CrafterOfLight::UserMaxItemState() const {
     return { (uint16_t)ui.spinBox_itemProgress->value(), (uint16_t)ui.spinBox_itemQuality->value(), (int16_t)ui.spinBox_itemDurability->value() };
 }
 
+/* Deletes all the buttons and previously found solutions to make way for a new craft */
 void CrafterOfLight::DeleteMacros() {
     int row = 0;
     while (ui.gridLayout_macroOutput->count()) {
@@ -218,6 +228,7 @@ void CrafterOfLight::DeleteMacros() {
     }
 }
 
+/* Creates the text macro able to be pasted and used */
 std::string CrafterOfLight::CreateMacro(std::vector<Skills::SkillName> skillList) {
     std::string output = "";
     for (const auto& skill : skillList) {
@@ -230,6 +241,7 @@ std::string CrafterOfLight::CreateMacro(std::vector<Skills::SkillName> skillList
     return output;
 }
 
+/* Changes the clickable state of the quality skills */
 void CrafterOfLight::SetQualitySkills(bool state) {
     ui.pushButton_basicTouch->setDisabled(state);
     ui.pushButton_standardTouch->setDisabled(state);
