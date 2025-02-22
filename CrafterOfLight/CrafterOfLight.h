@@ -39,8 +39,10 @@ private:
     ItemState UserMaxItemState() const;
     void SetQualitySkills(bool state);
     void DeleteMacros();
+    bool SessionSetup();
     void SaveJsonSettings();
     void LoadJsonSettings();
     std::string CreateMacro(std::vector<Skills::SkillName>);
     uint64_t progressBarCasts = 0;
+    uint32_t sessionTime = 0;
 };

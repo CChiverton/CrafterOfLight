@@ -28,17 +28,9 @@ CrafterOfLight::~CrafterOfLight()
 /* "Dumb" crafting option with no tricks to optimisation */
 void CrafterOfLight::BruteCraft() {
     DeleteMacros();
-    if (UserSkillSelection().size() == 0) {
-        ui.label_info->setText(QString("Please select at least one skill"));
+    if (!SessionSetup()) {
         return;
     }
-    if (crafterThread.isRunning()) {
-        crafterThread.requestInterruption();
-        crafterThread.quit();
-        crafterThread.wait();
-        ui.label_info->setText(QString("Restarting"));
-    }
-
     PlayerState state = { ui.spinBox_maxCP->value() };
     BruteCrafter* bruteCrafter = new BruteCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
     progressBarCasts = bruteCrafter->GetRemainingCasts();
@@ -116,6 +108,8 @@ void CrafterOfLight::HandleResults(const std::vector<std::vector<Skills::SkillNa
 void CrafterOfLight::UpdateProgressBar(uint64_t remainingCasts) {
     ui.progressBar->setValue(float(progressBarCasts - remainingCasts)/progressBarCasts * 100);
     ui.progressBar->update();
+    ++sessionTime;
+    ui.label_sessionTime->setText(QString::number(sessionTime) + QString(" seconds"));
 }
 
 /* Adds skills to a vector to be passed along to the crafter. To be called only on creation of a crafter instance */
@@ -229,6 +223,23 @@ void CrafterOfLight::DeleteMacros() {
         }*/
         ++row;
     }
+}
+
+/* Sets up the UI and checks frees the resources required for solving */
+bool CrafterOfLight::SessionSetup() {
+    if (UserSkillSelection().size() == 0) {
+        ui.label_info->setText(QString("Please select at least one skill"));
+        return false;
+    }
+    if (crafterThread.isRunning()) {
+        crafterThread.requestInterruption();
+        crafterThread.quit();
+        crafterThread.wait();
+        ui.label_info->setText(QString("Restarting"));
+    }
+    sessionTime = 0;
+    ui.label_sessionTime->setText(QString::number(sessionTime) + QString(" seconds"));
+    return true;
 }
 
 /* Creates the text macro able to be pasted and used */
