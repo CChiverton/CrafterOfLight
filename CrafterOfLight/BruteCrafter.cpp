@@ -67,7 +67,7 @@ void BruteCrafter::RecursiveBruteSolve(CraftingSession& craftingManager) {
 
 void BruteCrafter::BruteSolveConditions(CraftingSession& craftingManager) {
 	Item item = craftingManager.GetItem();
-	if (item.IsItemCrafted() && craftingManager.GetCraftingSessionDuration() <= bestCraftTime) {
+	if (item.IsItemCrafted()) {
 		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		if (!craftingOptions.maxQualityRequired || (craftingOptions.maxQualityRequired && item.IsItemMaxQuality())) {
 			craftingManager.SaveCurrentCraftingTurn();		// Add the current turn to the history

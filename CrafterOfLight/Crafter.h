@@ -63,6 +63,9 @@ inline bool Crafter::IsSolved(const CraftingSession& craftingManager) const {
 
 /* Note: Assumes that the final turn has been added to the crafting history */
 inline void Crafter::AddSolution(const CraftingSession& craftingManager) {
+	if (craftingManager.GetCraftingSessionDuration() > bestCraftTime) {		// Added safety in case of a multi-threaded conflict
+		return;
+	}
 	bestCraftTime = craftingManager.GetCraftingSessionDuration();
 	std::array<CraftingSession::CraftState, 60> history = craftingManager.GetCurrentCraftingHistory();
 	std::vector<Skills::SkillName> solution{};
