@@ -10,11 +10,7 @@ BruteCrafter::~BruteCrafter() {};
 
 void BruteCrafter::Solve() {
 	RecursiveBruteSolve();
-	if (!forceQuit) {
-		emit ResultReady(GetSolution(), bestCraftTime);
-	}
-	emit EmitRemainingCrafts();
-	emit Finished();
+	Crafter::Solve();
 }
 
 void BruteCrafter::RecursiveBruteSolve() {

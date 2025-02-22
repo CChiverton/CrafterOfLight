@@ -20,6 +20,16 @@ Crafter::~Crafter() {
 	delete progressUpdateTimer;
 }
 
+/* Required steps for cleanup */
+void Crafter::Solve() {
+	if (!forceQuit) {
+		emit ResultReady(GetSolution(), bestCraftTime);
+	}
+	emit EmitRemainingCrafts();
+	emit Finished();
+}
+
+/* Creates a comma-separated string of skills */
 const std::string Crafter::GetSkillSelection() const {
 	std::string output = "";
 	for (const auto& skill : skillSelection) {
@@ -30,6 +40,7 @@ const std::string Crafter::GetSkillSelection() const {
 	return output;
 }
 
+/* Returns a vector of all the solutions of the fastest time */
 std::vector<std::vector<Skills::SkillName>> Crafter::GetSolution() const {
 	std::vector<std::vector<Skills::SkillName>> vectorOutput{};
 	if (solutions.empty()) {
@@ -41,6 +52,7 @@ std::vector<std::vector<Skills::SkillName>> Crafter::GetSolution() const {
 	return vectorOutput;
 }
 
+/* Debug case to ensure that the crafting is working as expected */
 void Crafter::Debug_VerifyCrafts() {
 	PlayerState debugPlayer;
 	debugPlayer.cP = 78;
@@ -130,6 +142,7 @@ void Crafter::Debug_VerifyCrafts() {
 
 }
 
+/* Slot to emit a signal to update the UI on the remaining number of crafts */
 void Crafter::EmitRemainingCrafts() {
 	emit RemainingCrafts(remainingCasts);
 }

@@ -17,6 +17,7 @@ public:
 	Crafter(CraftingOptions craftingOptions, std::vector<Skills::SkillInformation> userSkills, PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred, ItemState maxItemState);
 	~Crafter();
 
+	virtual void Solve();
 	inline const uint8_t GetMaximumTurns() const;
 	const std::string GetSkillSelection() const;
 	inline const uint8_t GetBestCraftTime() const;
