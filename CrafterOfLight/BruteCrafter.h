@@ -8,8 +8,14 @@ public:
 	~BruteCrafter();
 
 	void Solve();
-	void RecursiveBruteSolve();
+	
 
 private:
-	void BruteSolveConditions();
+	void ThreadedSolution(CraftingSession& craftingManager);
+	void RecursiveBruteSolve(CraftingSession& craftingManager);
+	void BruteSolveConditions(CraftingSession& craftingManager);
+
+	uint8_t skillSelectionCounter = 0;
+	std::mutex skillSelectionMutex;
+	uint8_t threadsFinished = 0;
 };

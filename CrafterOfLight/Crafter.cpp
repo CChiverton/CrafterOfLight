@@ -4,7 +4,8 @@
 
 Crafter::Crafter(CraftingOptions craftingOptions, std::vector<Skills::SkillInformation> userSkills, PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred, ItemState maxItemState)
 : craftingOptions(craftingOptions), skillSelection(userSkills),
-craftingManager(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState) {
+craftingManagerOne(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState),
+craftingManagerTwo(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState) {
 	totalNumberOfCasts.emplace_back(0);
 	for (uint8_t i{ 1 }; i <= craftingOptions.maxTurnLimit; ++i) {
 		remainingCasts += std::pow(userSkills.size(), i);

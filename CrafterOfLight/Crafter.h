@@ -35,10 +35,10 @@ public slots:
 	void EmitRemainingCrafts();
 
 protected:
-	inline bool IsSolved() const;
-	inline void AddSolution();
+	inline bool IsSolved(const CraftingSession& craftingManager) const;
+	inline void AddSolution(const CraftingSession& craftingManager);
 
-	CraftingSession craftingManager;
+	CraftingSession craftingManagerOne, craftingManagerTwo;
 	CraftingOptions craftingOptions;
 	std::vector<Skills::SkillInformation> skillSelection;
 	std::map<uint8_t, std::vector<std::vector<Skills::SkillName>>> solutions;
@@ -57,12 +57,12 @@ inline const uint8_t Crafter::GetMaximumTurns() const {
 	return craftingOptions.maxTurnLimit;
 }
 
-inline bool Crafter::IsSolved() const {
+inline bool Crafter::IsSolved(const CraftingSession& craftingManager) const {
 	return craftingManager.GetItem().IsItemCrafted() && (craftingOptions.maxQualityRequired && craftingManager.GetItem().IsItemMaxQuality());
 }
 
 /* Note: Assumes that the final turn has been added to the crafting history */
-inline void Crafter::AddSolution() {
+inline void Crafter::AddSolution(const CraftingSession& craftingManager) {
 	bestCraftTime = craftingManager.GetCraftingSessionDuration();
 	std::array<CraftingSession::CraftState, 60> history = craftingManager.GetCurrentCraftingHistory();
 	std::vector<Skills::SkillName> solution{};
