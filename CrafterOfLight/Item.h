@@ -86,7 +86,7 @@ inline const int16_t Item::GetMaxDurability() const {
 }
 
 inline const bool Item::IsItemBroken() const {
-	return currentItemState.progress <= 0;
+	return currentItemState.durability <= 0;
 }
 
 inline void Item::RemoveDurability(int16_t durability) {
