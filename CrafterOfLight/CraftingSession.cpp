@@ -15,7 +15,7 @@ bool CraftingSession::CraftingTurn(const Skills::SkillInformation& skill) {
 	}
 
 	item.CraftItem(player.CastSkill(skill.name));
-	ApplyPlayerItemBuffs();
+	ApplyPlayerItemBuffs(skill.name == Skills::SkillName::FINALAPPRAISAL);
 
 	currentSkillDuration = skill.castTime;
 	currentState.skillName = skill.name;

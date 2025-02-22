@@ -35,7 +35,7 @@ public:
 	inline std::array<CraftState, 60> GetCurrentCraftingHistory() const;
 
 private:
-	inline void ApplyPlayerItemBuffs();
+	inline void ApplyPlayerItemBuffs(bool finalAppraisal);
 	inline void LoadCraftState(uint8_t turn);
 
 protected:
@@ -70,12 +70,12 @@ inline std::array<CraftingSession::CraftState, 60> CraftingSession::GetCurrentCr
 	return craftState;
 }
 
-inline void CraftingSession::ApplyPlayerItemBuffs() {
+inline void CraftingSession::ApplyPlayerItemBuffs(bool finalAppraisal) {
 	if (craftState[currentState.turn].playerState.buffs[Buffs::FINALAPPRAISAL] > 0 && item.IsItemCrafted()) {
 		item.AppraiseItem();
 	}
 
-	if (craftState[currentState.turn].playerState.buffs[Buffs::MANIPULATION] > 0 && item.IsItemBroken()) {
+	if (!finalAppraisal && craftState[currentState.turn].playerState.buffs[Buffs::MANIPULATION] > 0 && !item.IsItemBroken()) {
 		item.ManipulateItem();
 	}
 }

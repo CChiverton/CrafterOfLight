@@ -118,7 +118,7 @@
     <ClCompile Include="BruteCrafter.cpp" />
     <ClCompile Include="Crafter.cpp" />
     <ClCompile Include="CrafterOfLight.cpp" />
-    <ClCompile Include="CraftinSession.cpp" />
+    <ClCompile Include="CraftingSession.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClInclude Include="BruteCrafter.h" />

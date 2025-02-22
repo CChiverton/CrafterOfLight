@@ -81,7 +81,7 @@ inline void Player::UpdatePlayerState() {
 		return;
 	}
 
-	for (uint8_t buff : currentPlayerState.buffs) {
+	for (uint8_t& buff : currentPlayerState.buffs) {
 		if (buff > 0) {
 			--buff;
 		}

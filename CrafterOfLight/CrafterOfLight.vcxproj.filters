@@ -58,7 +58,7 @@
     <ClCompile Include="Skills.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CraftinSession.cpp">
+    <ClCompile Include="CraftingSession.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Crafter.cpp">
@@ -79,9 +79,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CraftingSession.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Crafter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BruteCrafter.h">
@@ -182,5 +179,10 @@
     <Image Include="resources\skillIcons\Waste_Not_II.png">
       <Filter>Resource Files\skillIcons</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Crafter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>
