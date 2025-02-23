@@ -31,17 +31,17 @@ void BruteCrafter::ThreadedSolution(CraftingSession& craftingManager) {
 	for (; skillSelectionCounter < skillSelection.size();) {
 		skillSelectionMutex.lock();
 		++skillSelectionCounter;
+		uint8_t skill = skillSelectionCounter;
+		skillSelectionMutex.unlock();
 		if (forceQuit) {
-			skillSelectionMutex.unlock();
 			return;
 		}
 		--remainingCasts;
 		if (craftingManager.CraftingTurn(skillSelection[skillSelectionCounter-1])) {
-			skillSelectionMutex.unlock();
 			BruteSolveConditions(craftingManager);
 		}
 		else {
-			skillSelectionMutex.unlock();
+			craftingManager.ReloadCraftingTurn();
 			remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		}
 	}
@@ -59,6 +59,7 @@ void BruteCrafter::RecursiveBruteSolve(CraftingSession& craftingManager) {
 			BruteSolveConditions(craftingManager);
 		}
 		else {
+			craftingManager.ReloadCraftingTurn();
 			remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		}
 	}

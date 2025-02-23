@@ -6,7 +6,7 @@
 struct ItemState {
 	uint16_t progress = 0;
 	uint16_t quality = 0;
-	int16_t durability = 0;
+	int32_t durability = 0;
 };
 
 class Item {
@@ -31,8 +31,8 @@ public:
 	inline const bool IsItemMaxQuality() const;
 
 	/* Durability */
-	inline const int16_t GetCurrentDurability() const;
-	inline const int16_t GetMaxDurability() const;
+	inline const int32_t GetCurrentDurability() const;
+	inline const int32_t GetMaxDurability() const;
 	inline void RemoveDurability(int16_t durability);
 	inline const bool IsItemBroken() const;
 	inline void ManipulateItem();
@@ -77,11 +77,11 @@ inline const bool Item::IsItemMaxQuality() const {
 	return currentItemState.quality >= maxItemState.quality;
 }
 
-inline const int16_t Item::GetCurrentDurability() const {
+inline const int32_t Item::GetCurrentDurability() const {
 	return currentItemState.durability;
 }
 
-inline const int16_t Item::GetMaxDurability() const {
+inline const int32_t Item::GetMaxDurability() const {
 	return maxItemState.durability;
 }
 
