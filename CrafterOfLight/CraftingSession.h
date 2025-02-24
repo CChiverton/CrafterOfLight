@@ -70,13 +70,13 @@ inline std::array<CraftingSession::CraftState, 60> CraftingSession::GetCurrentCr
 	return craftState;
 }
 
-/* Buffs should be decremented before being saved so the first turn they are saved is the true buff duration */
+/* Looks at the previous turn in chain as the current turn has not been saved, meaning a different craft chain of buffs may be there */
 inline void CraftingSession::ApplyPlayerItemBuffs(bool finalAppraisal) {
-	if (craftState[currentState.turn].playerState.buffs[Buffs::FINALAPPRAISAL] > 0 && item.IsItemCrafted()) {
+	if (craftState[currentState.turn - 1].playerState.buffs[Buffs::FINALAPPRAISAL] > 0 && item.IsItemCrafted()) {
 		item.AppraiseItem();
 	}
 
-	if (!finalAppraisal && craftState[currentState.turn].playerState.buffs[Buffs::MANIPULATION] > 0 && !item.IsItemBroken()) {
+	if (!finalAppraisal && craftState[currentState.turn - 1].playerState.buffs[Buffs::MANIPULATION] > 0 && !item.IsItemBroken()) {
 		item.ManipulateItem();
 	}
 }

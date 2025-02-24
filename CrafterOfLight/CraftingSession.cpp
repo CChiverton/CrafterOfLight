@@ -55,10 +55,11 @@ bool CraftingSession::LoadLastCraftingTurn() {
 	return true;
 }
 
-/* Reloads current saved turn */
+/* Resets current state to last saved turn */
 bool CraftingSession::ReloadCraftingTurn() {
-	player.LoadPlayerState(currentState.playerState);
-	item.LoadItemState(currentState.itemState);
-	currentSkillDuration = 0;
+	if (currentState.turn < 1) {
+		return false;
+	}
+	LoadCraftingTurn(currentState.turn - 1);
 	return true;
 }

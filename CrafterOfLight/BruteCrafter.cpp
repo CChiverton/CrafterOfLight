@@ -36,14 +36,15 @@ void BruteCrafter::ThreadedSolution(CraftingSession& craftingManager) {
 		if (forceQuit) {
 			return;
 		}
+		
 		--remainingCasts;
 		if (craftingManager.CraftingTurn(skillSelection[skillSelectionCounter-1])) {
 			BruteSolveConditions(craftingManager);
 		}
 		else {
-			craftingManager.ReloadCraftingTurn();
 			remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		}
+		craftingManager.ReloadCraftingTurn();
 	}
 
 	++threadsFinished;
@@ -59,33 +60,35 @@ void BruteCrafter::RecursiveBruteSolve(CraftingSession& craftingManager) {
 			BruteSolveConditions(craftingManager);
 		}
 		else {
-			craftingManager.ReloadCraftingTurn();
 			remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		}
+		/* Undo the changes caused by this step*/
+		craftingManager.ReloadCraftingTurn();
 	}
+	/* Revert to previous step */
 	craftingManager.LoadLastCraftingTurn();
 }
 
 void BruteCrafter::BruteSolveConditions(CraftingSession& craftingManager) {
 	Item item = craftingManager.GetItem();
+	
 	if (item.IsItemCrafted()) {
 		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		if (!craftingOptions.maxQualityRequired || (craftingOptions.maxQualityRequired && item.IsItemMaxQuality())) {
-			craftingManager.SaveCurrentCraftingTurn();		// Add the current turn to the history
+			/* Save and record solution */
+			craftingManager.SaveCurrentCraftingTurn();
 			AddSolution(craftingManager);
+			/* Revert save and load state before getting in here */
 			craftingManager.LoadLastCraftingTurn();
-		}
-		else {
-			craftingManager.ReloadCraftingTurn();
 		}
 	}
 	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() >= bestCraftTime - 2 || craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit) {
 		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
-		craftingManager.ReloadCraftingTurn();
+		
 	}
 	else {
+		/* Save and proceed to next step */
 		craftingManager.SaveCurrentCraftingTurn();
 		RecursiveBruteSolve(craftingManager);
 	}
-	
 }
