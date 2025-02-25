@@ -30,8 +30,8 @@ public:
 	Player(PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred);
 	~Player();
 
-	inline const PlayerState GetCurrentPlayerState() const;
-	inline void LoadPlayerState(PlayerState playerState);
+	inline const PlayerState& GetCurrentPlayerState() const;
+	inline void LoadPlayerState(PlayerState& playerState);
 	inline const float GetProgressEfficiency() const;
 	inline const float GetQualityEfficiency() const;
 
@@ -57,11 +57,11 @@ private:
 	
 };
 
-inline const PlayerState Player::GetCurrentPlayerState() const {
+inline const PlayerState& Player::GetCurrentPlayerState() const {
 	return currentPlayerState;
 }
 
-inline void Player::LoadPlayerState(PlayerState playerState) {
+inline void Player::LoadPlayerState(PlayerState& playerState) {
 	currentPlayerState = playerState;
 }
 

@@ -15,8 +15,8 @@ public:
 	~Item();
 
 	/* State */
-	inline ItemState GetCurrentItemState() const;
-	inline void LoadItemState(ItemState itemState);
+	inline const ItemState& GetCurrentItemState() const;
+	inline void LoadItemState(ItemState& itemState);
 	void CraftItem(const Skills::SkillInformation& skill);
 
 	/* Progress */
@@ -41,11 +41,11 @@ private:
 	ItemState currentItemState, maxItemState;
 };
 
-inline ItemState Item::GetCurrentItemState() const {
+inline const ItemState& Item::GetCurrentItemState() const {
 	return currentItemState;
 }
 
-inline void Item::LoadItemState(ItemState itemState) {
+inline void Item::LoadItemState(ItemState& itemState) {
 	currentItemState = itemState;
 }
 

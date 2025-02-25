@@ -160,7 +160,6 @@ void Player::SkillEffect() {
 		currentPlayerState.buffs[MANIPULATION] = 9;
 		break;
 	case Skills::SkillName::IMMACULATEMEND:
-		currentSkill.costDurability = Skills::SkillArray[int(Skills::SkillName::IMMACULATEMEND)].costDurability;
 		break;
 
 	/* Other skills */

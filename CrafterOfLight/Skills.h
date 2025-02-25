@@ -6,7 +6,7 @@ Skills added here are usable regardless of item condition or specialisation
 */
 namespace Skills {
 
-	const enum class SkillName {
+	const enum class SkillName : uint8_t {
 		/* Synthesis skills */
 		BASICSYNTHESIS = 0,
 		CAREFULSYNTHESIS,
