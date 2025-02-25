@@ -46,7 +46,7 @@ namespace Skills {
 		NONE
 	};
 
-	const enum class SkillType {
+	const enum class SkillType : uint8_t {
 		SYNTHESIS = 0,
 		TOUCH,
 		BUFF,
@@ -62,8 +62,8 @@ namespace Skills {
 		SkillType	type;
 		uint8_t		costCP;
 		int16_t		costDurability;
-		uint16_t		synthesisEfficiency;
-		uint16_t		touchEfficiency;
+		uint16_t	synthesisEfficiency;
+		uint16_t	touchEfficiency;
 		uint8_t		castTime;
 	};
 

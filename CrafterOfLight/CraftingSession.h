@@ -28,8 +28,8 @@ public:
 	bool LoadLastCraftingTurn();
 	bool ReloadCraftingTurn();
 
-	inline Player GetPlayer() const;
-	inline Item GetItem() const;
+	inline const Player& GetPlayer() const;
+	inline const Item& GetItem() const;
 	inline uint8_t GetCraftingSessionTurn() const;
 	inline uint8_t GetCraftingSessionDuration() const;
 	inline std::array<CraftState, 60> GetCurrentCraftingHistory() const;
@@ -50,11 +50,11 @@ protected:
 
 };
 
-inline Player CraftingSession::GetPlayer() const {
+inline const Player& CraftingSession::GetPlayer() const {
 	return player;
 }
 
-inline Item CraftingSession::GetItem() const {
+inline const Item& CraftingSession::GetItem() const {
 	return item;
 }
 

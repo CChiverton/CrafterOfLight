@@ -39,9 +39,9 @@ public:
 	bool IsSkillCastable(const Skills::SkillInformation& skill, const int16_t itemDurability);
 
 private:
-	void CheckSpecialConditions(const int16_t itemDurability);
+	inline void CheckSpecialConditions(const int16_t itemDurability);
 	bool CanCastSkill();
-	void SkillEffect();
+	inline void SkillEffect();
 	inline void UpdatePlayerState();
 	void SynthesisBuffs();
 	void TouchBuffs(const uint8_t innerQuietStacks);
@@ -71,6 +71,141 @@ inline const float Player::GetProgressEfficiency() const {
 
 inline const float Player::GetQualityEfficiency() const {
 	return qualityPerOneEfficiency;
+}
+
+
+// Maybe change touch skills to be default 18CP and increase if not combo? Will stop the CP check being late
+inline void Player::CheckSpecialConditions(const int16_t itemDurability) {
+	if (currentPlayerState.buffs[TRAINEDPERFECTION] > 0 && currentSkill.costDurability != 0) {
+		currentSkill.costDurability = 0;
+	}
+	switch (currentSkill.name) {
+	case Skills::SkillName::GROUNDWORK:
+		if (itemDurability < currentSkill.costDurability) {
+			currentSkill.synthesisEfficiency /= 2;
+		}
+		currentPlayerState.combo = false;
+		break;
+	case Skills::SkillName::STANDARDTOUCH:
+		if (currentPlayerState.lastSkillUsed == Skills::SkillName::BASICTOUCH) {
+			currentSkill.costCP = 18;
+			currentPlayerState.combo = true;
+		}
+		break;
+	case Skills::SkillName::ADVANCEDTOUCH:
+		if ((currentPlayerState.lastSkillUsed == Skills::SkillName::STANDARDTOUCH && currentPlayerState.combo == true) || currentPlayerState.lastSkillUsed == Skills::SkillName::OBSERVE) {
+			currentSkill.costCP = 18;
+		}
+		currentPlayerState.combo = false;
+		break;
+	case Skills::SkillName::REFINEDTOUCH:
+		if (currentPlayerState.lastSkillUsed == Skills::SkillName::BASICTOUCH) {
+			currentPlayerState.combo = true;
+		}
+		break;
+	default:
+		currentPlayerState.combo = false;
+		break;
+	}
+}
+
+/*
+Player applies immediate effect before acting on the item
+*/
+void Player::SkillEffect() {
+	if (currentPlayerState.buffs[WASTENOT] > 0) {
+		currentSkill.costDurability /= 2;
+	}
+	switch (currentSkill.name) {
+		/* Synthesis skills */
+	case Skills::SkillName::BASICSYNTHESIS:
+	case Skills::SkillName::CAREFULSYNTHESIS:
+	case Skills::SkillName::PRUDENTSYNTHESIS:
+	case Skills::SkillName::GROUNDWORK:
+		SynthesisBuffs();
+		break;
+	case Skills::SkillName::MUSCLEMEMORY:
+		SynthesisBuffs();
+		currentPlayerState.buffs[Buffs::MUSCLEMEMORY] = 6;
+		break;
+
+		/* Touch skills */
+	case Skills::SkillName::BASICTOUCH:
+	case Skills::SkillName::STANDARDTOUCH:
+	case Skills::SkillName::ADVANCEDTOUCH:
+		TouchBuffs(1);
+		break;
+	case Skills::SkillName::BYREGOTSBLESSING:
+		currentSkill.touchEfficiency += currentPlayerState.innerQuiet * 20;
+		TouchBuffs(0);
+		currentPlayerState.innerQuiet = 0;
+		break;
+	case Skills::SkillName::PRUDENTTOUCH:
+		TouchBuffs(1);
+		break;
+	case Skills::SkillName::PREPARATORYTOUCH:
+	case Skills::SkillName::REFLECT:
+		TouchBuffs(2);
+		break;
+	case Skills::SkillName::TRAINEDFINESSE:
+		TouchBuffs(0);
+		break;
+	case Skills::SkillName::REFINEDTOUCH:
+		if (currentPlayerState.combo) {
+			TouchBuffs(2);
+		}
+		else {
+			TouchBuffs(1);
+		}
+		break;
+
+		/* Buff skills */
+	case Skills::SkillName::WASTENOTI:
+		currentPlayerState.buffs[WASTENOT] = 5;
+		break;
+	case Skills::SkillName::WASTENOTII:
+		currentPlayerState.buffs[WASTENOT] = 9;
+		break;
+	case Skills::SkillName::GREATSTRIDES:
+		currentPlayerState.buffs[GREATSTRIDES] = 4;
+		break;
+	case Skills::SkillName::INNOVATION:
+		currentPlayerState.buffs[INNOVATION] = 5;
+		break;
+	case Skills::SkillName::VENERATION:
+		currentPlayerState.buffs[VENERATION] = 5;
+		break;
+	case Skills::SkillName::FINALAPPRAISAL:
+		currentPlayerState.buffs[FINALAPPRAISAL] = 5;
+		break;
+
+		/* Repair skills */
+	case Skills::SkillName::MASTERSMEND:
+		break;
+	case Skills::SkillName::MANIPULATION:
+		currentPlayerState.buffs[MANIPULATION] = 9;
+		break;
+	case Skills::SkillName::IMMACULATEMEND:
+		break;
+
+		/* Other skills */
+	case Skills::SkillName::TRAINEDPERFECTION:
+		currentPlayerState.buffs[TRAINEDPERFECTION] = 255;
+		currentPlayerState.trainedPerfectionUsed = true;
+		break;
+	case Skills::SkillName::OBSERVE:
+		break;
+	case Skills::SkillName::DELICATESYNTHESIS:
+		SynthesisBuffs();
+		TouchBuffs(1);
+		break;
+	case Skills::SkillName::NONE:
+		break;
+	default:
+		break;
+	}
+
+	currentPlayerState.lastSkillUsed = currentSkill.name;
 }
 
 inline void Player::UpdatePlayerState() {

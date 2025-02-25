@@ -39,8 +39,8 @@ protected:
 	inline void AddSolution(const CraftingSession& craftingManager);
 
 	CraftingSession craftingManagerOne, craftingManagerTwo;
-	CraftingOptions craftingOptions;
-	std::vector<Skills::SkillInformation> skillSelection;
+	const CraftingOptions craftingOptions;
+	const std::vector<Skills::SkillInformation> skillSelection;
 	std::map<uint8_t, std::vector<std::vector<Skills::SkillName>>> solutions;
 	uint8_t bestCraftTime = 255;
 	std::vector<uint64_t> totalNumberOfCasts{};
@@ -69,6 +69,7 @@ inline void Crafter::AddSolution(const CraftingSession& craftingManager) {
 	bestCraftTime = craftingManager.GetCraftingSessionDuration();
 	std::array<CraftingSession::CraftState, 60> history = craftingManager.GetCurrentCraftingHistory();
 	std::vector<Skills::SkillName> solution{};
+	solution.reserve(craftingManager.GetCraftingSessionTurn());
 
 	for (uint8_t i{ 1 }; i < craftingManager.GetCraftingSessionTurn(); ++i) {
 		solution.emplace_back(history[i].skillName);
