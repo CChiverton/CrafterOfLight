@@ -44,12 +44,12 @@ void BruteCrafter::ThreadedSolution(CraftingSession& craftingManager) {
 		else {
 			remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		}
-		craftingManager.ReloadCraftingTurn();
 	}
 
 	++threadsFinished;
 }
 
+/* Enacts the application of skill effects */
 void BruteCrafter::RecursiveBruteSolve(CraftingSession& craftingManager) {
 	for (const auto& skill : skillSelection) {
 		if (forceQuit) {
@@ -62,33 +62,38 @@ void BruteCrafter::RecursiveBruteSolve(CraftingSession& craftingManager) {
 		else {
 			remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		}
-		/* Undo the changes caused by this step*/
-		craftingManager.ReloadCraftingTurn();
 	}
-	/* Revert to previous step */
-	craftingManager.LoadLastCraftingTurn();
 }
 
+/* Determines the state of the item and handles the save state of the crafting chain */
 void BruteCrafter::BruteSolveConditions(CraftingSession& craftingManager) {
 	Item item = craftingManager.GetItem();
 	
 	if (item.IsItemCrafted()) {
 		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
-		if (!craftingOptions.maxQualityRequired || (craftingOptions.maxQualityRequired && item.IsItemMaxQuality())) {
+		if (!craftingOptions.maxQualityRequired || item.IsItemMaxQuality()) {
 			/* Save and record solution */
 			craftingManager.SaveCurrentCraftingTurn();
 			AddSolution(craftingManager);
 			/* Revert save and load state before getting in here */
 			craftingManager.LoadLastCraftingTurn();
 		}
+		else {
+			/* Undo the changes caused by this step*/
+			craftingManager.ReloadCraftingTurn();
+		}
 	}
-	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() >= bestCraftTime - 2 || craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit) {
+		/*		Item unworkable				Not enough time for a synth step, which is 3 seconds								This was the last turn		*/
+	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() > bestCraftTime - 3 || craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit) {
 		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
-		
+		/* Undo the changes caused by this step*/
+		craftingManager.ReloadCraftingTurn();
 	}
 	else {
 		/* Save and proceed to next step */
 		craftingManager.SaveCurrentCraftingTurn();
 		RecursiveBruteSolve(craftingManager);
+		/* Revert to previous step */
+		craftingManager.LoadLastCraftingTurn();
 	}
 }

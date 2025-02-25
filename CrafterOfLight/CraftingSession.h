@@ -72,11 +72,12 @@ inline std::array<CraftingSession::CraftState, 60> CraftingSession::GetCurrentCr
 
 /* Looks at the previous turn in chain as the current turn has not been saved, meaning a different craft chain of buffs may be there */
 inline void CraftingSession::ApplyPlayerItemBuffs(bool finalAppraisal) {
-	if (craftState[currentState.turn - 1].playerState.buffs[Buffs::FINALAPPRAISAL] > 0 && item.IsItemCrafted()) {
+	uint8_t turn = currentState.turn - 1;
+	if (craftState[turn].playerState.buffs[Buffs::FINALAPPRAISAL] > 0 && item.IsItemCrafted()) {
 		item.AppraiseItem();
 	}
 
-	if (!finalAppraisal && craftState[currentState.turn - 1].playerState.buffs[Buffs::MANIPULATION] > 0 && !item.IsItemBroken()) {
+	if (!finalAppraisal && craftState[turn].playerState.buffs[Buffs::MANIPULATION] > 0 && !item.IsItemBroken()) {
 		item.ManipulateItem();
 	}
 }
