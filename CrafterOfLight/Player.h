@@ -35,7 +35,7 @@ public:
 	inline const float GetProgressEfficiency() const;
 	inline const float GetQualityEfficiency() const;
 
-	const Skills::SkillInformation& CastSkill(const Skills::SkillName skillName);
+	const Skills::SkillInformation& CastSkill();
 	bool IsSkillCastable(const Skills::SkillInformation& skill, const int16_t itemDurability);
 
 private:
@@ -44,9 +44,9 @@ private:
 	void SkillEffect();
 	inline void UpdatePlayerState();
 	void SynthesisBuffs();
-	void TouchBuffs(uint8_t innerQuietStacks);
+	void TouchBuffs(const uint8_t innerQuietStacks);
 	inline void ApplyInnerQuiet();
-	inline void AddInnerQuiet(uint8_t stacks);
+	inline void AddInnerQuiet(const uint8_t stacks);
 
 protected:
 	PlayerState maxPlayerState, currentPlayerState;
@@ -92,7 +92,7 @@ inline void Player::ApplyInnerQuiet() {
 	currentSkill.touchEfficiency += (currentSkill.touchEfficiency / 10.0f) * currentPlayerState.innerQuiet;
 }
 
-inline void Player::AddInnerQuiet(uint8_t stacks) {
+inline void Player::AddInnerQuiet(const uint8_t stacks) {
 	currentPlayerState.innerQuiet += stacks;
 	if (currentPlayerState.innerQuiet > 10) {
 		currentPlayerState.innerQuiet = 10;

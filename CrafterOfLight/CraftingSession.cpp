@@ -9,12 +9,13 @@ CraftingSession::CraftingSession(PlayerState maxPlayerState, uint16_t progressPe
 
 CraftingSession::~CraftingSession() {}
 
+/* Assumes the item is in a workable state */
 bool CraftingSession::CraftingTurn(const Skills::SkillInformation& skill) {
-	if (!player.IsSkillCastable(skill, item.GetCurrentDurability()) || item.GetCurrentDurability() <= 0) {
+	if (!player.IsSkillCastable(skill, item.GetCurrentDurability())) {
 		return false;
 	}
 
-	item.CraftItem(player.CastSkill(skill.name));
+	item.CraftItem(player.CastSkill());
 	ApplyPlayerItemBuffs(skill.name == Skills::SkillName::FINALAPPRAISAL);
 
 	currentSkillDuration = skill.castTime;

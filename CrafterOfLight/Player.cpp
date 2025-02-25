@@ -9,8 +9,8 @@ Player::Player(PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t
 
 Player::~Player() {}
 
-/* Player applies the buffs to the skill and themselves */
-const Skills::SkillInformation& Player::CastSkill(const Skills::SkillName skillName) {
+/* Player applies the buffs to the current skill and themselves */
+const Skills::SkillInformation& Player::CastSkill() {
 	SkillEffect();
 	UpdatePlayerState();
 	return currentSkill;
@@ -25,7 +25,7 @@ bool Player::IsSkillCastable(const Skills::SkillInformation& skill, const int16_
 
 // Maybe change touch skills to be default 18CP and increase if not combo? Will stop the CP check being late
 void Player::CheckSpecialConditions(const int16_t itemDurability) {
-	if (currentPlayerState.buffs[TRAINEDPERFECTION] > 0 && currentSkill.type != Skills::SkillType::REPAIR) {
+	if (currentPlayerState.buffs[TRAINEDPERFECTION] > 0 && currentSkill.costDurability != 0) {
 		currentSkill.costDurability = 0;
 	}
 	switch (currentSkill.name) {
@@ -196,7 +196,7 @@ void Player::SynthesisBuffs() {
 	currentPlayerState.buffs[TRAINEDPERFECTION] = 0;
 }
 
-void Player::TouchBuffs(uint8_t innerQuietStacks) {
+void Player::TouchBuffs(const uint8_t innerQuietStacks) {
 	ApplyInnerQuiet();
 	currentSkill.touchEfficiency *= qualityPerOneEfficiency;
 	const uint16_t efficiency = currentSkill.touchEfficiency;
