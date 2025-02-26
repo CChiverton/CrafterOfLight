@@ -67,7 +67,7 @@ inline void Crafter::AddSolution(const CraftingSession& craftingManager) {
 		return;
 	}
 	bestCraftTime = craftingManager.GetCraftingSessionDuration();
-	std::array<CraftingSession::CraftState, 60> history = craftingManager.GetCurrentCraftingHistory();
+	const std::array<CraftingSession::CraftState, 30>& history = craftingManager.GetCurrentCraftingHistory();
 	std::vector<Skills::SkillName> solution{};
 	solution.reserve(craftingManager.GetCraftingSessionTurn());
 

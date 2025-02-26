@@ -32,7 +32,7 @@ public:
 	inline const Item& GetItem() const;
 	inline uint8_t GetCraftingSessionTurn() const;
 	inline uint8_t GetCraftingSessionDuration() const;
-	inline std::array<CraftState, 60> GetCurrentCraftingHistory() const;
+	inline const std::array<CraftState, 30>& GetCurrentCraftingHistory() const;
 
 private:
 	inline void ApplyPlayerItemBuffs(bool finalAppraisal);
@@ -45,7 +45,7 @@ protected:
 	Item item;
 	CraftState currentState;
 	uint8_t currentSkillDuration = 0;
-	std::array<CraftState, 60> craftState;
+	std::array<CraftState, 30> craftState;
 
 
 };
@@ -66,7 +66,7 @@ inline uint8_t CraftingSession::GetCraftingSessionDuration() const {
 	return currentState.duration + currentSkillDuration;
 }
 
-inline std::array<CraftingSession::CraftState, 60> CraftingSession::GetCurrentCraftingHistory() const {
+inline const std::array<CraftingSession::CraftState, 30>& CraftingSession::GetCurrentCraftingHistory() const {
 	return craftState;
 }
 

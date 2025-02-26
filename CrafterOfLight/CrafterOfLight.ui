@@ -1242,7 +1242,7 @@ QPushButton:disabled{
            <number>1</number>
           </property>
           <property name="maximum">
-           <number>60</number>
+           <number>30</number>
           </property>
          </widget>
         </item>

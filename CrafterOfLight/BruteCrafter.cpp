@@ -67,7 +67,7 @@ void BruteCrafter::RecursiveBruteSolve(CraftingSession& craftingManager) {
 
 /* Determines the state of the item and handles the save state of the crafting chain */
 void BruteCrafter::BruteSolveConditions(CraftingSession& craftingManager) {
-	Item item = craftingManager.GetItem();
+	const Item& item = craftingManager.GetItem();
 	
 	if (item.IsItemCrafted()) {
 		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
