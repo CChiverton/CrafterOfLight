@@ -18,6 +18,10 @@ const Skills::SkillInformation& Player::CastSkill() {
 
 /* Checks for any special conditions for the skill being used and applies them */
 bool Player::IsSkillCastable(const Skills::SkillInformation& skill, const int16_t itemDurability) {
+	/* 18 is the CP cost skill which can affect combos */
+	if (skill.costCP >= 18 && currentPlayerState.cP < 18) {
+		return false;
+	}
 	currentSkill = skill;
 	CheckSpecialConditions(itemDurability); 
 	return CanCastSkill();

@@ -33,8 +33,7 @@ bool CraftingSession::SaveCraftingTurn(uint8_t turn, uint8_t time) {
 
 /* Saves the current turn with the added skill time cast before moving on to the next turn */
 bool CraftingSession::SaveCurrentCraftingTurn() {
-	currentState.duration += currentSkillDuration;
-	craftState[currentState.turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState(), currentState.turn, currentState.duration, currentState.skillName};
+	craftState[currentState.turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState(), currentState.turn, uint8_t(currentState.duration + currentSkillDuration), currentState.skillName};
 	currentState = craftState[currentState.turn];
 	++currentState.turn;
 	currentSkillDuration = 0;

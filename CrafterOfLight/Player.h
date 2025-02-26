@@ -112,7 +112,7 @@ inline void Player::CheckSpecialConditions(const int16_t itemDurability) {
 /*
 Player applies immediate effect before acting on the item
 */
-void Player::SkillEffect() {
+inline void Player::SkillEffect() {
 	if (currentPlayerState.buffs[WASTENOT] > 0) {
 		currentSkill.costDurability /= 2;
 	}
