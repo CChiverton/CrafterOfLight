@@ -38,6 +38,9 @@ private:
 	inline void ApplyPlayerItemBuffs(bool finalAppraisal);
 	inline void LoadCraftState(uint8_t turn);
 
+public:
+	uint64_t totalCasts = 0;
+
 protected:
 	
 

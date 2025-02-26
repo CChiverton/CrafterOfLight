@@ -44,7 +44,7 @@ protected:
 	std::map<uint8_t, std::vector<std::vector<Skills::SkillName>>> solutions;
 	uint8_t bestCraftTime = 255;
 	std::vector<uint64_t> totalNumberOfCasts{};
-	std::atomic<uint64_t> remainingCasts = 0;
+	uint64_t remainingCasts = 0, totalCasts = 0;
 	bool forceQuit = false;
 
 private:

@@ -11,7 +11,7 @@ craftingManagerTwo(maxPlayerState, progressPerHundred, qualityPerHundred, maxIte
 		remainingCasts += std::pow(userSkills.size(), i);
 		totalNumberOfCasts.insert(totalNumberOfCasts.begin(),  remainingCasts);
 	}
-
+	totalCasts = remainingCasts;
 	progressUpdateTimer = new QTimer(this);
 	connect(progressUpdateTimer, &QTimer::timeout, this, &Crafter::EmitRemainingCrafts);
 	progressUpdateTimer->start(1000);
@@ -26,6 +26,7 @@ void Crafter::Solve() {
 	if (!forceQuit) {
 		emit ResultReady(GetSolution(), bestCraftTime);
 	}
+	remainingCasts = 0;
 	emit EmitRemainingCrafts();
 	emit Finished();
 }

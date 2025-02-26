@@ -14,6 +14,7 @@ void BruteCrafter::Solve() {
 	std::thread threadTwo(&BruteCrafter::ThreadedSolution, this, std::ref(craftingManagerTwo));
 
 	while (!forceQuit && threadsFinished != 2) {
+		remainingCasts = totalCasts - craftingManagerOne.totalCasts - craftingManagerTwo.totalCasts;
 		qApp->processEvents();
 		if (QThread::currentThread()->isInterruptionRequested()) {
 			forceQuit = true;
@@ -32,7 +33,7 @@ void BruteCrafter::CraftingSolution(CraftingSession& craftingManager, const Skil
 		BruteSolveConditions(craftingManager);
 	}
 	else {
-		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
+		craftingManager.totalCasts += totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 	}
 }
 
@@ -70,7 +71,7 @@ void BruteCrafter::BruteSolveConditions(CraftingSession& craftingManager) {
 	const Item& item = craftingManager.GetItem();
 	
 	if (item.IsItemCrafted()) {
-		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
+		craftingManager.totalCasts += totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		if (!craftingOptions.maxQualityRequired || item.IsItemMaxQuality()) {
 			/* Save and record solution */
 			craftingManager.SaveCurrentCraftingTurn();
@@ -85,7 +86,7 @@ void BruteCrafter::BruteSolveConditions(CraftingSession& craftingManager) {
 	}
 		/*		Item unworkable				Not enough time for a synth step, which is 3 seconds								This was the last turn		*/
 	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() > bestCraftTime - 3 || craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit) {
-		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
+		craftingManager.totalCasts += totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		/* Undo the changes caused by this step*/
 		craftingManager.ReloadCraftingTurn();
 	}
