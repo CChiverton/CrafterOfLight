@@ -11,6 +11,7 @@ public:
 	
 
 private:
+	void CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill);
 	void ThreadedSolution(CraftingSession& craftingManager);
 	void RecursiveBruteSolve(CraftingSession& craftingManager);
 	void BruteSolveConditions(CraftingSession& craftingManager);

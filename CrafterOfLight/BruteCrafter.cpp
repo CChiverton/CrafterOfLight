@@ -26,24 +26,29 @@ void BruteCrafter::Solve() {
 	Crafter::Solve();
 }
 
+void BruteCrafter::CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) {
+	--remainingCasts;
+	if (craftingManager.CraftingTurn(skill)) {
+		BruteSolveConditions(craftingManager);
+	}
+	else {
+		remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
+	}
+}
+
 /* Allows threads to "bunny hop" to the next available skill and follow that chain */
 void BruteCrafter::ThreadedSolution(CraftingSession& craftingManager) {
 	for (; skillSelectionCounter < skillSelection.size();) {
 		skillSelectionMutex.lock();
-		++skillSelectionCounter;
 		uint8_t skill = skillSelectionCounter;
+		++skillSelectionCounter;
 		skillSelectionMutex.unlock();
+
 		if (forceQuit) {
 			return;
 		}
-		
-		--remainingCasts;
-		if (craftingManager.CraftingTurn(skillSelection[skillSelectionCounter-1])) {
-			BruteSolveConditions(craftingManager);
-		}
-		else {
-			remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
-		}
+
+		CraftingSolution(craftingManager, skillSelection[skill]);
 	}
 
 	++threadsFinished;
@@ -55,13 +60,8 @@ void BruteCrafter::RecursiveBruteSolve(CraftingSession& craftingManager) {
 		if (forceQuit) {
 			return;
 		}
-		--remainingCasts;
-		if (craftingManager.CraftingTurn(skill)) {
-			BruteSolveConditions(craftingManager);
-		}
-		else {
-			remainingCasts -= totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
-		}
+
+		CraftingSolution(craftingManager, skill);
 	}
 }
 
