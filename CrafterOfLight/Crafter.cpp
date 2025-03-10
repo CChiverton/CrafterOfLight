@@ -3,9 +3,8 @@
 #include "Crafter.h"
 
 Crafter::Crafter(CraftingOptions craftingOptions, std::vector<Skills::SkillInformation> userSkills, PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred, ItemState maxItemState)
-: craftingOptions(craftingOptions), skillSelection(userSkills),
-craftingManagerOne(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState),
-craftingManagerTwo(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState) {
+: craftingOptions(craftingOptions), skillSelection(userSkills), maxPlayerState(maxPlayerState),
+progressPerHundred(progressPerHundred), qualityPerHundred(qualityPerHundred), maxItemState(maxItemState) {
 	totalNumberOfCasts.emplace_back(0);
 	for (uint8_t i{ 1 }; i <= craftingOptions.maxTurnLimit; ++i) {
 		remainingCasts += std::pow(userSkills.size(), i);
@@ -19,6 +18,34 @@ craftingManagerTwo(maxPlayerState, progressPerHundred, qualityPerHundred, maxIte
 
 Crafter::~Crafter() {
 	delete progressUpdateTimer;
+}
+
+void Crafter::ThreadedSolving(int threadCount) {
+	std::vector<std::thread> threads;
+	threads.reserve(threadCount);
+	std::vector<CraftingSession> craftingManagers;
+	craftingManagers.reserve(threadCount);		// Necessary to stop the address change with each new object added to the vector
+	for (uint8_t i{ 0 }; i < threadCount; ++i) {
+		craftingManagers.emplace_back(CraftingSession(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState));
+		threads.emplace_back(std::thread(&Crafter::ThreadedSolution, this, std::ref(craftingManagers[i])));
+	}
+
+	while (!forceQuit && threadsFinished != threadCount) {
+		uint64_t craftingManagerCasts{ 0 };
+		for (const CraftingSession& manager : craftingManagers) {
+			craftingManagerCasts += manager.totalCasts;
+		}
+		remainingCasts = totalCasts - craftingManagerCasts;
+		qApp->processEvents();
+		if (QThread::currentThread()->isInterruptionRequested()) {
+			forceQuit = true;
+		}
+		QThread::currentThread()->msleep(250);
+	}
+
+	for (std::thread& thread : threads) {
+		thread.join();
+	}
 }
 
 /* Required steps for cleanup */

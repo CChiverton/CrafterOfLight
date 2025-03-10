@@ -10,19 +10,7 @@ BruteCrafter::BruteCrafter(CraftingOptions craftingOptions, std::vector<Skills::
 BruteCrafter::~BruteCrafter() {};
 
 void BruteCrafter::Solve() {
-	std::thread threadOne(&BruteCrafter::ThreadedSolution, this, std::ref(craftingManagerOne));
-	std::thread threadTwo(&BruteCrafter::ThreadedSolution, this, std::ref(craftingManagerTwo));
-
-	while (!forceQuit && threadsFinished != 2) {
-		remainingCasts = totalCasts - craftingManagerOne.totalCasts - craftingManagerTwo.totalCasts;
-		qApp->processEvents();
-		if (QThread::currentThread()->isInterruptionRequested()) {
-			forceQuit = true;
-		}
-		QThread::currentThread()->msleep(250);
-	}
-	threadOne.join();
-	threadTwo.join();
+	Crafter::ThreadedSolving(2);
 
 	Crafter::Solve();
 }

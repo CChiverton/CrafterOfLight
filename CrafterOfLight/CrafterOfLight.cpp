@@ -55,15 +55,15 @@ void CrafterOfLight::SmartCraft() {
     option->setReadOnly(true);
     ui.gridLayout_macroOutput->addWidget(option, 0, 1);
     PlayerState state = { ui.spinBox_maxCP->value()};
-    Crafter crafter = Crafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
+    //Crafter crafter = Crafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
    /* Item item = crafter.GetItem();
     Player player = crafter.GetPlayer();
     PlayerState playerState = player.GetCurrentPlayerState();
     std::string output = std::format("Item Max Progress: {}, Quality: {}, Durability: {}\nPlayer CP: {}, ProgEff: {:3.2f}, QualEff: {:3.2f}\n Maximum Turns: {}",
         item.GetMaxProgress(), item.GetMaxQuality(), item.GetMaxDurability(), playerState.cP, player.GetProgressEfficiency(), player.GetQualityEfficiency(), crafter.GetMaximumTurns());
     ui.label_info->setText(QString::fromStdString(output));*/
-    ui.label_info->setText(QString::fromStdString(crafter.GetSkillSelection()));
-    crafter.Debug_VerifyCrafts();
+    //ui.label_info->setText(QString::fromStdString(crafter.GetSkillSelection()));
+    //crafter.Debug_VerifyCrafts();
 }
 
 /* Toggles the user selectable skills based on whether quality is something the user wishes to find */
