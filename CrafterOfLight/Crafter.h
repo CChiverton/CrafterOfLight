@@ -35,12 +35,13 @@ public slots:
 	void EmitRemainingCrafts();
 
 protected:
-	void ThreadedSolving(int threadCount);
-	void ThreadedSolution(CraftingSession& craftingManager);
+	void RecursiveSolve(CraftingSession& craftingManager);
 	inline bool IsSolved(const CraftingSession& craftingManager) const;
 	inline void AddSolution(const CraftingSession& craftingManager);
 
 private:
+	void ThreadedSolving(int threadCount);
+	void ThreadedSolution(CraftingSession& craftingManager);
 	virtual void CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) = 0;
 
 protected:

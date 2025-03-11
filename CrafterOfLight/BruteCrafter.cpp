@@ -19,17 +19,6 @@ void BruteCrafter::CraftingSolution(CraftingSession& craftingManager, const Skil
 	}
 }
 
-/* Enacts the application of skill effects */
-void BruteCrafter::RecursiveBruteSolve(CraftingSession& craftingManager) {
-	for (const auto& skill : skillSelection) {
-		if (forceQuit) {
-			return;
-		}
-
-		CraftingSolution(craftingManager, skill);
-	}
-}
-
 /* Determines the state of the item and handles the save state of the crafting chain */
 void BruteCrafter::BruteSolveConditions(CraftingSession& craftingManager) {
 	const Item& item = craftingManager.GetItem();
@@ -57,7 +46,7 @@ void BruteCrafter::BruteSolveConditions(CraftingSession& craftingManager) {
 	else {
 		/* Save and proceed to next step */
 		craftingManager.SaveCurrentCraftingTurn();
-		RecursiveBruteSolve(craftingManager);
+		RecursiveSolve(craftingManager);
 		/* Revert to previous step */
 		craftingManager.LoadLastCraftingTurn();
 	}

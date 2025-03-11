@@ -9,6 +9,5 @@ public:
 
 private:
 	void CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) override;
-	void RecursiveBruteSolve(CraftingSession& craftingManager);
 	void BruteSolveConditions(CraftingSession& craftingManager);
 };

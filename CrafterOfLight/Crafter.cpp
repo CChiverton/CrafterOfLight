@@ -150,6 +150,17 @@ void Crafter::EmitRemainingCrafts() {
 	emit RemainingCrafts(remainingCasts);
 }
 
+/* Enacts the application of skill effects */
+void Crafter::RecursiveSolve(CraftingSession& craftingManager) {
+	for (const auto& skill : skillSelection) {
+		if (forceQuit) {
+			return;
+		}
+
+		CraftingSolution(craftingManager, skill);
+	}
+}
+
 /* Creates and manages threads to find a solution */
 void Crafter::ThreadedSolving(int threadCount) {
 	std::vector<std::thread> threads;
