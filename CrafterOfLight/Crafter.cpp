@@ -48,8 +48,10 @@ void Crafter::ThreadedSolving(int threadCount) {
 	}
 }
 
-/* Required steps for cleanup */
+/* Finds solutions and cleans up */
 void Crafter::Solve() {
+	ThreadedSolving(2);
+
 	if (!forceQuit) {
 		emit ResultReady(GetSolution(), bestCraftTime);
 	}

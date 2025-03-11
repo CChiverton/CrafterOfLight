@@ -9,12 +9,6 @@ BruteCrafter::BruteCrafter(CraftingOptions craftingOptions, std::vector<Skills::
 
 BruteCrafter::~BruteCrafter() {};
 
-void BruteCrafter::Solve() {
-	Crafter::ThreadedSolving(2);
-
-	Crafter::Solve();
-}
-
 void BruteCrafter::CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) {
 	--remainingCasts;
 	if (craftingManager.CraftingTurn(skill)) {
