@@ -8,11 +8,7 @@ public:
 	~BruteCrafter();	
 
 private:
-	void CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill);
-	void ThreadedSolution(CraftingSession& craftingManager) override;
+	void CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) override;
 	void RecursiveBruteSolve(CraftingSession& craftingManager);
 	void BruteSolveConditions(CraftingSession& craftingManager);
-
-	uint8_t skillSelectionCounter = 0;
-	std::mutex skillSelectionMutex;
 };

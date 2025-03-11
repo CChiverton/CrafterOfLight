@@ -20,34 +20,6 @@ Crafter::~Crafter() {
 	delete progressUpdateTimer;
 }
 
-void Crafter::ThreadedSolving(int threadCount) {
-	std::vector<std::thread> threads;
-	threads.reserve(threadCount);
-	std::vector<CraftingSession> craftingManagers;
-	craftingManagers.reserve(threadCount);		// Necessary to stop the address change with each new object added to the vector
-	for (uint8_t i{ 0 }; i < threadCount; ++i) {
-		craftingManagers.emplace_back(CraftingSession(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState));
-		threads.emplace_back(std::thread(&Crafter::ThreadedSolution, this, std::ref(craftingManagers[i])));
-	}
-
-	while (!forceQuit && threadsFinished != threadCount) {
-		uint64_t craftingManagerCasts{ 0 };
-		for (const CraftingSession& manager : craftingManagers) {
-			craftingManagerCasts += manager.totalCasts;
-		}
-		remainingCasts = totalCasts - craftingManagerCasts;
-		qApp->processEvents();
-		if (QThread::currentThread()->isInterruptionRequested()) {
-			forceQuit = true;
-		}
-		QThread::currentThread()->msleep(250);
-	}
-
-	for (std::thread& thread : threads) {
-		thread.join();
-	}
-}
-
 /* Finds solutions and cleans up */
 void Crafter::Solve() {
 	ThreadedSolving(2);
@@ -176,4 +148,51 @@ void Crafter::Debug_VerifyCrafts() {
 /* Slot to emit a signal to update the UI on the remaining number of crafts */
 void Crafter::EmitRemainingCrafts() {
 	emit RemainingCrafts(remainingCasts);
+}
+
+/* Creates and manages threads to find a solution */
+void Crafter::ThreadedSolving(int threadCount) {
+	std::vector<std::thread> threads;
+	threads.reserve(threadCount);
+	std::vector<CraftingSession> craftingManagers;
+	craftingManagers.reserve(threadCount);		// Necessary to stop the address change with each new object added to the vector
+	for (uint8_t i{ 0 }; i < threadCount; ++i) {
+		craftingManagers.emplace_back(CraftingSession(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState));
+		threads.emplace_back(std::thread(&Crafter::ThreadedSolution, this, std::ref(craftingManagers[i])));
+	}
+
+	while (!forceQuit && threadsFinished != threadCount) {
+		uint64_t craftingManagerCasts{ 0 };
+		for (const CraftingSession& manager : craftingManagers) {
+			craftingManagerCasts += manager.totalCasts;
+		}
+		remainingCasts = totalCasts - craftingManagerCasts;
+		qApp->processEvents();
+		if (QThread::currentThread()->isInterruptionRequested()) {
+			forceQuit = true;
+		}
+		QThread::currentThread()->msleep(250);
+	}
+
+	for (std::thread& thread : threads) {
+		thread.join();
+	}
+}
+
+/* Allows threads to "bunny hop" to the next available skill and follow that chain */
+void Crafter::ThreadedSolution(CraftingSession& craftingManager) {
+	for (; skillSelectionCounter < skillSelection.size();) {
+		skillSelectionMutex.lock();
+		uint8_t skill = skillSelectionCounter;
+		++skillSelectionCounter;
+		skillSelectionMutex.unlock();
+
+		if (forceQuit) {
+			return;
+		}
+
+		CraftingSolution(craftingManager, skillSelection[skill]);
+	}
+
+	++threadsFinished;
 }

@@ -36,25 +36,37 @@ public slots:
 
 protected:
 	void ThreadedSolving(int threadCount);
-	virtual void ThreadedSolution(CraftingSession& craftingManager) = 0;
+	void ThreadedSolution(CraftingSession& craftingManager);
 	inline bool IsSolved(const CraftingSession& craftingManager) const;
 	inline void AddSolution(const CraftingSession& craftingManager);
 
+private:
+	virtual void CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) = 0;
+
+protected:
+	/* Initialisation variables */
 	const uint16_t progressPerHundred, qualityPerHundred;
 	const PlayerState maxPlayerState;
 	const ItemState maxItemState;
 	const CraftingOptions craftingOptions;
 	const std::vector<Skills::SkillInformation> skillSelection;
-	std::map<uint8_t, std::vector<std::vector<Skills::SkillName>>> solutions;
+
 	uint8_t bestCraftTime = 255;
 	std::vector<uint64_t> totalNumberOfCasts{};
 	uint64_t remainingCasts = 0, totalCasts = 0;
 	bool forceQuit = false;
-	uint8_t threadsFinished = 0;
-	std::mutex solutionMutex;
 
 private:
 	QTimer* progressUpdateTimer;
+
+	/* ThreadedSolution variables */
+	uint8_t skillSelectionCounter = 0;
+	std::mutex skillSelectionMutex;
+	uint8_t threadsFinished = 0;
+
+	/* Solution variables */
+	std::mutex solutionMutex;
+	std::map<uint8_t, std::vector<std::vector<Skills::SkillName>>> solutions;
 
 
 };

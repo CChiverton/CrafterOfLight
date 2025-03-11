@@ -1,7 +1,6 @@
 #include "stdafx.h"
 
 #include "BruteCrafter.h"
-#include <thread>
 
 BruteCrafter::BruteCrafter(CraftingOptions craftingOptions, std::vector<Skills::SkillInformation> userSkills, PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred, ItemState maxItemState)
 	: Crafter(craftingOptions, userSkills, maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState) 
@@ -9,6 +8,7 @@ BruteCrafter::BruteCrafter(CraftingOptions craftingOptions, std::vector<Skills::
 
 BruteCrafter::~BruteCrafter() {};
 
+/* Attempts to cast skill and updates the cast count */
 void BruteCrafter::CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) {
 	--remainingCasts;
 	if (craftingManager.CraftingTurn(skill)) {
@@ -17,24 +17,6 @@ void BruteCrafter::CraftingSolution(CraftingSession& craftingManager, const Skil
 	else {
 		craftingManager.totalCasts += totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 	}
-}
-
-/* Allows threads to "bunny hop" to the next available skill and follow that chain */
-void BruteCrafter::ThreadedSolution(CraftingSession& craftingManager) {
-	for (; skillSelectionCounter < skillSelection.size();) {
-		skillSelectionMutex.lock();
-		uint8_t skill = skillSelectionCounter;
-		++skillSelectionCounter;
-		skillSelectionMutex.unlock();
-
-		if (forceQuit) {
-			return;
-		}
-
-		CraftingSolution(craftingManager, skillSelection[skill]);
-	}
-
-	++threadsFinished;
 }
 
 /* Enacts the application of skill effects */
