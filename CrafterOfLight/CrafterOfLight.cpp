@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CrafterOfLight.h"
 #include "BruteCrafter.h"
+#include "SmartCrafter.h"
 #include <format>
 #include <thread>
 
@@ -50,20 +51,23 @@ void CrafterOfLight::BruteCraft() {
 /* "Intelligent" crafting option that uses tricks and logic to attempt to reduce the total solving time */
 void CrafterOfLight::SmartCraft() {
     DeleteMacros();
-    ui.gridLayout_macroOutput->addWidget(new QPushButton("1"), 0, 0);
-    QLineEdit* option = new QLineEdit("This is an example");                
-    option->setReadOnly(true);
-    ui.gridLayout_macroOutput->addWidget(option, 0, 1);
-    PlayerState state = { ui.spinBox_maxCP->value()};
-    //Crafter crafter = Crafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
-   /* Item item = crafter.GetItem();
-    Player player = crafter.GetPlayer();
-    PlayerState playerState = player.GetCurrentPlayerState();
-    std::string output = std::format("Item Max Progress: {}, Quality: {}, Durability: {}\nPlayer CP: {}, ProgEff: {:3.2f}, QualEff: {:3.2f}\n Maximum Turns: {}",
-        item.GetMaxProgress(), item.GetMaxQuality(), item.GetMaxDurability(), playerState.cP, player.GetProgressEfficiency(), player.GetQualityEfficiency(), crafter.GetMaximumTurns());
-    ui.label_info->setText(QString::fromStdString(output));*/
-    //ui.label_info->setText(QString::fromStdString(crafter.GetSkillSelection()));
-    //crafter.Debug_VerifyCrafts();
+    if (!SessionSetup()) {
+        return;
+    }
+    PlayerState state = { ui.spinBox_maxCP->value() };
+    SmartCrafter* smartCrafter = new SmartCrafter(UserCraftingOptions(), UserSkillSelection(), state, ui.spinBox_progress->value(), ui.spinBox_quality->value(), UserMaxItemState());
+    progressBarCasts = smartCrafter->GetRemainingCasts();
+    ui.progressBar->setMaximum(100);
+    ui.progressBar->setValue(0);
+    smartCrafter->moveToThread(&crafterThread);
+    connect(&crafterThread, &QThread::finished, smartCrafter, &QObject::deleteLater);
+    connect(smartCrafter, &SmartCrafter::Finished, smartCrafter, &QObject::deleteLater);
+    connect(this, &CrafterOfLight::FindSolution, smartCrafter, &SmartCrafter::Solve);
+    connect(smartCrafter, &SmartCrafter::RemainingCrafts, this, &CrafterOfLight::UpdateProgressBar);
+    connect(smartCrafter, &SmartCrafter::ResultReady, this, &CrafterOfLight::HandleResults);
+
+    crafterThread.start();
+    emit FindSolution();
 }
 
 /* Toggles the user selectable skills based on whether quality is something the user wishes to find */

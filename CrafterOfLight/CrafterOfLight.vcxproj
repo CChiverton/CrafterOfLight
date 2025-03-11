@@ -127,9 +127,11 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Skills.h" />
+    <ClInclude Include="SmartCrafter.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Skills.cpp" />
+    <ClCompile Include="SmartCrafter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
