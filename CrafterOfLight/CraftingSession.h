@@ -14,6 +14,10 @@ public:
 		uint8_t turn = 0;
 		uint8_t duration = 0;
 		Skills::SkillName skillName;
+		/* Smart tracking features */
+		bool finalAppraisalUsed = false;
+		bool synthesisUsedDuringVeneration = false;
+		bool touchUsedDuringInnovation = false;
 	};
 
 	CraftingSession(PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred,
@@ -39,6 +43,14 @@ private:
 	inline void LoadCraftState(uint8_t turn);
 
 public:
+	/* "Smart" features */
+	inline void SetFinalAppraisalUsed();
+	inline bool GetFinalAppraisalUsed() const;
+	inline void SetSynthesisUsedDuringVeneration(bool usedState);
+	inline bool GetSynthesisUsedDuringVeneration() const;
+	inline void SetTouchUsedDuringInnovation(bool usedState);
+	inline bool GetTouchUsedDuringInnovation() const;
+
 	uint64_t totalCasts = 0;
 
 protected:
@@ -92,4 +104,28 @@ inline void CraftingSession::LoadCraftState(uint8_t turn) {
 	item.LoadItemState(currentState.itemState);
 	++currentState.turn;
 	currentSkillDuration = 0;
+}
+
+
+/* "Smart" features */
+inline void CraftingSession::SetFinalAppraisalUsed() {
+	currentState.finalAppraisalUsed = true;
+}
+
+inline bool CraftingSession::GetFinalAppraisalUsed() const {
+	return currentState.finalAppraisalUsed;
+}
+
+inline void CraftingSession::SetSynthesisUsedDuringVeneration(bool usedState) {
+	currentState.synthesisUsedDuringVeneration = usedState;
+}
+inline bool CraftingSession::GetSynthesisUsedDuringVeneration() const {
+	return currentState.synthesisUsedDuringVeneration;
+}
+
+inline void CraftingSession::SetTouchUsedDuringInnovation(bool usedState) {
+	currentState.touchUsedDuringInnovation = usedState;
+}
+inline bool CraftingSession::GetTouchUsedDuringInnovation() const {
+	return currentState.touchUsedDuringInnovation;
 }

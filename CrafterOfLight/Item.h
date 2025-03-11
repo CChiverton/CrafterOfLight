@@ -24,6 +24,7 @@ public:
 	inline const uint16_t GetMaxProgress() const;
 	inline const bool IsItemCrafted() const;
 	inline void AppraiseItem();
+	inline const bool IsItemAppraised() const;
 
 	/* Quality */
 	inline const uint16_t GetCurrentQuality() const;
@@ -63,6 +64,10 @@ inline const bool Item::IsItemCrafted() const {
 
 inline void Item::AppraiseItem() {
 	currentItemState.progress = maxItemState.progress - 1;
+}
+
+inline const bool Item::IsItemAppraised() const {
+	return currentItemState.progress == (maxItemState.progress - 1);
 }
 
 inline const uint16_t Item::GetCurrentQuality() const {

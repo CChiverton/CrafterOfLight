@@ -13,6 +13,11 @@ SmartCrafter::~SmartCrafter() {};
 void SmartCrafter::CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) {
 	--remainingCasts;
 	if (SmartLogic(craftingManager, skill.name) && craftingManager.CraftingTurn(skill)) {
+		VenerationLogicControl(craftingManager, skill.name);
+		InnovationLogicControl(craftingManager, skill.name);
+		if (skill.name == Skills::SkillName::FINALAPPRAISAL) {
+			craftingManager.SetFinalAppraisalUsed();
+		}
 		SmartSolveConditions(craftingManager);
 	}
 	else {
@@ -54,10 +59,28 @@ void SmartCrafter::SmartSolveConditions(CraftingSession& craftingManager) {
 }
 
 /* Applies a logic as to whether there is any point in attempting a craft */
-bool SmartCrafter::SmartLogic(const CraftingSession& craftingManager, const Skills::SkillName skill) {
+bool SmartCrafter::SmartLogic(const CraftingSession& craftingManager, const Skills::SkillName skillName) {
 	const PlayerState& player = craftingManager.GetPlayer().GetCurrentPlayerState();
 	const Item& item = craftingManager.GetItem();
-	switch (skill) {
+	
+	/* Great Strides is about to run out without having been used */
+	if (player.buffs[Buffs::GREATSTRIDES] == 1 && !IsTouchAction(skillName)) {
+		return false;
+	}
+	/* Innovation buff is about to run out and wasn't used at all */
+	if (player.buffs[Buffs::INNOVATION] == 1 && !craftingManager.GetTouchUsedDuringInnovation() && !IsTouchAction(skillName)) {
+		return false;
+	}
+	/* Veneration buff is about to run out and wasn't used at all */
+	if (player.buffs[Buffs::VENERATION] == 1 && !craftingManager.GetSynthesisUsedDuringVeneration() && !IsSynthesisAction(skillName)) {
+		return false;
+	}
+	/* Final Appraisal buff is about to run out and the item hasn't reached appraisal or the move isn't a synthesis move */
+	if (player.buffs[Buffs::FINALAPPRAISAL] == 1 && (!IsSynthesisAction(skillName) || !item.IsItemAppraised())) {
+		return false;
+	}
+
+	switch (skillName) {
 	/* Synthesis */
 	case Skills::SkillName::BASICSYNTHESIS:
 	case Skills::SkillName::CAREFULSYNTHESIS:
@@ -86,11 +109,11 @@ bool SmartCrafter::SmartLogic(const CraftingSession& craftingManager, const Skil
 	case Skills::SkillName::GREATSTRIDES:
 		return player.buffs[Buffs::GREATSTRIDES] == 0;					// False if there is an active Great Strides buff
 	case Skills::SkillName::INNOVATION:
-		return player.buffs[Buffs::INNOVATION] != 4;					// False if cast last turn
+		return !(player.buffs[Buffs::INNOVATION] > 0 && !craftingManager.GetTouchUsedDuringInnovation());		// False if a touch skill hasn't been used during the current innovation time
 	case Skills::SkillName::VENERATION:
-		return player.buffs[Buffs::VENERATION] != 4;					// False if cast last turn
+		return !(player.buffs[Buffs::VENERATION] > 0 && !craftingManager.GetSynthesisUsedDuringVeneration());	// False if a synthesis skill hasn't been used during the current veneration time
 	case Skills::SkillName::FINALAPPRAISAL:
-		return player.buffs[Buffs::FINALAPPRAISAL] == 0;				// False if there is an active Final Appraisal buff
+		return !craftingManager.GetFinalAppraisalUsed();					// False if Final Appraisal has been used
 
 	/* Repair */
 	case Skills::SkillName::MASTERSMEND:
@@ -107,5 +130,69 @@ bool SmartCrafter::SmartLogic(const CraftingSession& craftingManager, const Skil
 		return true;
 	default:
 		return true;
+	}
+}
+
+bool SmartCrafter::IsSynthesisAction(const Skills::SkillName skill) {
+	switch (skill) {
+	case Skills::SkillName::BASICSYNTHESIS:
+	case Skills::SkillName::CAREFULSYNTHESIS:
+	case Skills::SkillName::PRUDENTSYNTHESIS:
+	case Skills::SkillName::GROUNDWORK:
+	case Skills::SkillName::MUSCLEMEMORY:
+	case Skills::SkillName::DELICATESYNTHESIS:			// Unique case that requires this function
+		return true;
+	default:
+		return false;
+	}
+}
+
+bool SmartCrafter::IsTouchAction(const Skills::SkillName skill) {
+	switch (skill) {
+	case Skills::SkillName::BASICTOUCH:
+	case Skills::SkillName::STANDARDTOUCH:
+	case Skills::SkillName::ADVANCEDTOUCH:
+	case Skills::SkillName::BYREGOTSBLESSING:
+	case Skills::SkillName::PRUDENTTOUCH:
+	case Skills::SkillName::PREPARATORYTOUCH:
+	case Skills::SkillName::REFLECT:
+	case Skills::SkillName::TRAINEDFINESSE:
+	case Skills::SkillName::REFINEDTOUCH:
+	case Skills::SkillName::DELICATESYNTHESIS:			// Unique case that requires this function
+		return true;
+	default:
+		return false;
+	}
+}
+
+void SmartCrafter::VenerationLogicControl(CraftingSession& craftingManager, const Skills::SkillName skillName) {
+	if (skillName == Skills::SkillName::VENERATION) {
+		craftingManager.SetSynthesisUsedDuringVeneration(false);
+		return;
+	}
+
+	if (craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::VENERATION] > 0) {
+		if (!craftingManager.GetSynthesisUsedDuringVeneration()) {
+			craftingManager.SetSynthesisUsedDuringVeneration(IsSynthesisAction(skillName));
+		}
+	}
+	else {
+		craftingManager.SetSynthesisUsedDuringVeneration(false);
+	}
+}
+
+void SmartCrafter::InnovationLogicControl(CraftingSession& craftingManager, const Skills::SkillName skillName) {
+	if (skillName == Skills::SkillName::INNOVATION) {
+		craftingManager.SetTouchUsedDuringInnovation(false);
+		return;
+	}
+
+	if (craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::INNOVATION] > 0) {
+		if (!craftingManager.GetTouchUsedDuringInnovation()) {
+			craftingManager.SetTouchUsedDuringInnovation(IsTouchAction(skillName));
+		}
+	}
+	else {
+		craftingManager.SetTouchUsedDuringInnovation(false);
 	}
 }

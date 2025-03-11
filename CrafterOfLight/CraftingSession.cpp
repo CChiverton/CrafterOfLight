@@ -25,7 +25,8 @@ bool CraftingSession::CraftingTurn(const Skills::SkillInformation& skill) {
 }
 
 bool CraftingSession::SaveCraftingTurn(uint8_t turn, uint8_t time) {
-	craftState[turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState(), turn, time, currentState.skillName };
+	craftState[turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState(), currentState.turn, uint8_t(currentState.duration + currentSkillDuration), currentState.skillName,
+		currentState.finalAppraisalUsed, currentState.synthesisUsedDuringVeneration, currentState.touchUsedDuringInnovation };
 	currentState = craftState[turn];
 	currentSkillDuration = 0;
 	return true;
@@ -33,7 +34,8 @@ bool CraftingSession::SaveCraftingTurn(uint8_t turn, uint8_t time) {
 
 /* Saves the current turn with the added skill time cast before moving on to the next turn */
 bool CraftingSession::SaveCurrentCraftingTurn() {
-	craftState[currentState.turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState(), currentState.turn, uint8_t(currentState.duration + currentSkillDuration), currentState.skillName};
+	craftState[currentState.turn] = { player.GetCurrentPlayerState(), item.GetCurrentItemState(), currentState.turn, uint8_t(currentState.duration + currentSkillDuration), currentState.skillName,
+		currentState.finalAppraisalUsed, currentState.synthesisUsedDuringVeneration, currentState.touchUsedDuringInnovation};
 	currentState = craftState[currentState.turn];
 	++currentState.turn;
 	currentSkillDuration = 0;
