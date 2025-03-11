@@ -10,4 +10,5 @@ public:
 private:
 	void CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) override;
 	void SmartSolveConditions(CraftingSession& craftingManager);
+	bool SmartLogic(const CraftingSession& craftingManager, const Skills::SkillName skill);
 };
