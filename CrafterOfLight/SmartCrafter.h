@@ -10,11 +10,12 @@ public:
 private:
 	void CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) override;
 	void SmartSolveConditions(CraftingSession& craftingManager);
-	bool SmartLogic(const CraftingSession& craftingManager, const Skills::SkillName skillName);
+	bool PreCraftSmartLogic(const CraftingSession& craftingManager, const Skills::SkillName skillName) const;
+	void PostCraftSmartLogic(CraftingSession& craftingManager, const Skills::SkillName skillName);
 
-	bool IsSynthesisAction(const Skills::SkillName skill);
-	bool IsTouchAction(const Skills::SkillName skill);
+	bool IsSynthesisAction(const Skills::SkillName skill) const;
+	bool IsTouchAction(const Skills::SkillName skill) const;
 
-	void VenerationLogicControl(CraftingSession& craftingManager, const Skills::SkillName skillName);
 	void InnovationLogicControl(CraftingSession& craftingManager, const Skills::SkillName skillName);
+	void VenerationLogicControl(CraftingSession& craftingManager, const Skills::SkillName skillName);
 };

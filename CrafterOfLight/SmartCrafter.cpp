@@ -12,12 +12,8 @@ SmartCrafter::~SmartCrafter() {};
 /* Attempts to cast skill and updates the cast count */
 void SmartCrafter::CraftingSolution(CraftingSession& craftingManager, const Skills::SkillInformation& skill) {
 	--remainingCasts;
-	if (SmartLogic(craftingManager, skill.name) && craftingManager.CraftingTurn(skill)) {
-		VenerationLogicControl(craftingManager, skill.name);
-		InnovationLogicControl(craftingManager, skill.name);
-		if (skill.name == Skills::SkillName::FINALAPPRAISAL) {
-			craftingManager.SetFinalAppraisalUsed();
-		}
+	if (PreCraftSmartLogic(craftingManager, skill.name) && craftingManager.CraftingTurn(skill)) {
+		PostCraftSmartLogic(craftingManager, skill.name);
 		SmartSolveConditions(craftingManager);
 	}
 	else {
@@ -59,9 +55,14 @@ void SmartCrafter::SmartSolveConditions(CraftingSession& craftingManager) {
 }
 
 /* Applies a logic as to whether there is any point in attempting a craft */
-bool SmartCrafter::SmartLogic(const CraftingSession& craftingManager, const Skills::SkillName skillName) {
+bool SmartCrafter::PreCraftSmartLogic(const CraftingSession& craftingManager, const Skills::SkillName skillName) const {
 	const PlayerState& player = craftingManager.GetPlayer().GetCurrentPlayerState();
 	const Item& item = craftingManager.GetItem();
+
+	/* No point in adding quality when the item is maximum quality */	// TODO Remove by just using skill information type
+	/*if (item.IsItemMaxQuality() && IsTouchAction(skillName) && skillName != Skills::SkillName::DELICATESYNTHESIS) {
+		return false;
+	}*/
 	
 	/* Great Strides is about to run out without having been used */
 	if (player.buffs[Buffs::GREATSTRIDES] == 1 && !IsTouchAction(skillName)) {
@@ -72,7 +73,7 @@ bool SmartCrafter::SmartLogic(const CraftingSession& craftingManager, const Skil
 		return false;
 	}
 	/* Veneration buff is about to run out and wasn't used at all */
-	if (player.buffs[Buffs::VENERATION] == 1 && !craftingManager.GetSynthesisUsedDuringVeneration() && !IsSynthesisAction(skillName)) {
+	else if (player.buffs[Buffs::VENERATION] == 1 && !craftingManager.GetSynthesisUsedDuringVeneration() && !IsSynthesisAction(skillName)) {	// else as Innovation and Veneration cannot be on the same buff timer
 		return false;
 	}
 	/* Final Appraisal buff is about to run out and the item hasn't reached appraisal or the move isn't a synthesis move */
@@ -133,7 +134,16 @@ bool SmartCrafter::SmartLogic(const CraftingSession& craftingManager, const Skil
 	}
 }
 
-bool SmartCrafter::IsSynthesisAction(const Skills::SkillName skill) {
+/* Applies logic and updates logic states if there is a reason to even attempt a craft */
+void SmartCrafter::PostCraftSmartLogic(CraftingSession& craftingManager, const Skills::SkillName skillName) {
+	InnovationLogicControl(craftingManager, skillName);
+	VenerationLogicControl(craftingManager, skillName);
+	if (skillName == Skills::SkillName::FINALAPPRAISAL) {
+		craftingManager.SetFinalAppraisalUsed();
+	}
+}
+
+bool SmartCrafter::IsSynthesisAction(const Skills::SkillName skill) const {
 	switch (skill) {
 	case Skills::SkillName::BASICSYNTHESIS:
 	case Skills::SkillName::CAREFULSYNTHESIS:
@@ -147,7 +157,7 @@ bool SmartCrafter::IsSynthesisAction(const Skills::SkillName skill) {
 	}
 }
 
-bool SmartCrafter::IsTouchAction(const Skills::SkillName skill) {
+bool SmartCrafter::IsTouchAction(const Skills::SkillName skill) const {
 	switch (skill) {
 	case Skills::SkillName::BASICTOUCH:
 	case Skills::SkillName::STANDARDTOUCH:
@@ -165,22 +175,6 @@ bool SmartCrafter::IsTouchAction(const Skills::SkillName skill) {
 	}
 }
 
-void SmartCrafter::VenerationLogicControl(CraftingSession& craftingManager, const Skills::SkillName skillName) {
-	if (skillName == Skills::SkillName::VENERATION) {
-		craftingManager.SetSynthesisUsedDuringVeneration(false);
-		return;
-	}
-
-	if (craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::VENERATION] > 0) {
-		if (!craftingManager.GetSynthesisUsedDuringVeneration()) {
-			craftingManager.SetSynthesisUsedDuringVeneration(IsSynthesisAction(skillName));
-		}
-	}
-	else {
-		craftingManager.SetSynthesisUsedDuringVeneration(false);
-	}
-}
-
 void SmartCrafter::InnovationLogicControl(CraftingSession& craftingManager, const Skills::SkillName skillName) {
 	if (skillName == Skills::SkillName::INNOVATION) {
 		craftingManager.SetTouchUsedDuringInnovation(false);
@@ -194,5 +188,21 @@ void SmartCrafter::InnovationLogicControl(CraftingSession& craftingManager, cons
 	}
 	else {
 		craftingManager.SetTouchUsedDuringInnovation(false);
+	}
+}
+
+void SmartCrafter::VenerationLogicControl(CraftingSession& craftingManager, const Skills::SkillName skillName) {
+	if (skillName == Skills::SkillName::VENERATION) {
+		craftingManager.SetSynthesisUsedDuringVeneration(false);
+		return;
+	}
+
+	if (craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::VENERATION] > 0) {
+		if (!craftingManager.GetSynthesisUsedDuringVeneration()) {
+			craftingManager.SetSynthesisUsedDuringVeneration(IsSynthesisAction(skillName));
+		}
+	}
+	else {
+		craftingManager.SetSynthesisUsedDuringVeneration(false);
 	}
 }
