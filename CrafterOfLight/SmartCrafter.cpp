@@ -40,7 +40,9 @@ void SmartCrafter::SmartSolveConditions(CraftingSession& craftingManager) {
 		}
 	}
 	/*		Item unworkable				Not enough time for a synth step, which is 3 seconds								This was the last turn		*/
-	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() > bestCraftTime - 3 || craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit) {
+	else if (item.IsItemBroken() || craftingManager.GetCraftingSessionDuration() > bestCraftTime - 3 || craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit
+			/* Item is not appraised at the end of the final appraisal buff */
+		|| (craftingManager.GetFinalAppraisalUsed() && !item.IsItemAppraised() && craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::FINALAPPRAISAL] == 0)) {
 		craftingManager.totalCasts += totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		/* Undo the changes caused by this step*/
 		craftingManager.ReloadCraftingTurn();
