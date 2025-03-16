@@ -76,8 +76,8 @@ bool SmartCrafter::PreCraftSmartLogic(const CraftingSession& craftingManager, co
 	else if (player.buffs[Buffs::VENERATION] == 1 && !craftingManager.GetSynthesisUsedDuringVeneration() && !IsSynthesisAction(skillName)) {	// else as Innovation and Veneration cannot be on the same buff timer
 		return false;
 	}
-	/* Final Appraisal buff is about to run out and the item hasn't reached appraisal or the move isn't a synthesis move */
-	if (player.buffs[Buffs::FINALAPPRAISAL] == 1 && (!IsSynthesisAction(skillName) || !item.IsItemAppraised())) {
+	/* Final Appraisal buff is about to run out and the item hasn't reached appraisal and the move isn't a synthesis move or the move is a synthesis move and already appraised */
+	if (player.buffs[Buffs::FINALAPPRAISAL] == 1 && IsSynthesisAction(skillName) == item.IsItemAppraised()) {
 		return false;
 	}
 
