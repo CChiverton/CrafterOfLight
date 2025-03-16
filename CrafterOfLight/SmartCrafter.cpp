@@ -119,8 +119,8 @@ bool SmartCrafter::PreCraftSmartLogic(const CraftingSession& craftingManager, co
 		return !(player.buffs[Buffs::VENERATION] > 0 && !craftingManager.GetSynthesisUsedDuringVeneration());	// False if a synthesis skill hasn't been used during the current veneration time
 	case Skills::SkillName::FINALAPPRAISAL:
 		return !craftingManager.GetFinalAppraisalUsed()					// False if Final Appraisal has been used
-			/* Best case scenario, all buffs and one synth craft = 4*2 + 3 and then a final synth action to craft the item + 3*/
-			&& (craftingManager.GetCraftingSessionDuration() + 14) <= bestCraftTime;	// False if final appraisal would go over the best time
+			/* Best case scenario, all buffs and one synth craft = 4*2 + 3, +2 for Final Appraisal cast time and then a final synth action to craft the item + 3*/
+			&& (craftingManager.GetCraftingSessionDuration() + 16) <= bestCraftTime;	// False if final appraisal would go over the best time
 
 	/* Repair */
 	case Skills::SkillName::MASTERSMEND:
