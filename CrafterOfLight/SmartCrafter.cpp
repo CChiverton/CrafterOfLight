@@ -104,7 +104,7 @@ bool SmartCrafter::PreCraftSmartLogic(const CraftingSession& craftingManager, co
 
 	/* Buffs */
 	case Skills::SkillName::WASTENOTI:
-		return player.buffs[Buffs::WASTENOT] != 4;						// False if cast last turn
+		return player.buffs[Buffs::WASTENOT] < 4;						// False if cast last turn or the stronger buff is active
 	case Skills::SkillName::WASTENOTII:
 		return player.buffs[Buffs::WASTENOT] != 8;						// False if cast last turn
 	case Skills::SkillName::GREATSTRIDES:
