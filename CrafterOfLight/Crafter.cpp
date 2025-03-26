@@ -197,7 +197,11 @@ void Crafter::ThreadedSolution(CraftingSession& craftingManager) {
 		uint8_t skill = skillSelectionCounter;
 		++skillSelectionCounter;
 		skillSelectionMutex.unlock();
-
+		if (craftingOptions.forceTurnOneSkills && !(skillSelection[skill].name == Skills::SkillName::MUSCLEMEMORY || skillSelection[skill].name == Skills::SkillName::REFLECT)) {
+			totalCasts -= totalNumberOfCasts[1];
+			remainingCasts = totalCasts;
+			continue;
+		}
 		if (forceQuit) {
 			return;
 		}

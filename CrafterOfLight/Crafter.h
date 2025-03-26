@@ -7,6 +7,7 @@
 struct CraftingOptions {
 	uint8_t maxTurnLimit = 1;
 	bool maxQualityRequired = false;
+	bool forceTurnOneSkills = false;
 };
 
 class Crafter : public QObject {

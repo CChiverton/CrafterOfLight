@@ -203,7 +203,7 @@ std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() const
 
 /* Returns the user crafting options from the UI */
 CraftingOptions CrafterOfLight::UserCraftingOptions() const {
-    return { (uint8_t)ui.spinBox_maximumTurns->value(), ui.checkBox_maxQuality->isChecked() };
+    return { (uint8_t)ui.spinBox_maximumTurns->value(), ui.checkBox_maxQuality->isChecked(), ui.checkBox_forceTurnOne->isChecked()};
 }
 
 /* Returns the item stats from the UI */
@@ -287,6 +287,7 @@ void CrafterOfLight::SaveJsonSettings() {
 
     json["maxTurns"] = ui.spinBox_maximumTurns->value();
     json["findQuality"] = ui.checkBox_maxQuality->isChecked();
+    json["turnOne"] = ui.checkBox_forceTurnOne->isChecked();
 
     json["basicSynthesis"] = ui.pushButton_basicSynthesis->isChecked();
     json["carefulSynthesis"] = ui.pushButton_carefulSynthesis->isChecked();
@@ -338,6 +339,7 @@ void CrafterOfLight::LoadJsonSettings() {
 
         ui.spinBox_maximumTurns->setValue(json["maxTurns"].toInt());
         ui.checkBox_maxQuality->setChecked(json["findQuality"].toBool());
+        ui.checkBox_forceTurnOne->setChecked(json["turnOne"].toBool());
 
         ui.pushButton_basicSynthesis->setChecked(json["basicSynthesis"].toBool());
         ui.pushButton_carefulSynthesis->setChecked(json["carefulSynthesis"].toBool());

@@ -1274,6 +1274,13 @@ QPushButton:disabled{
           </property>
          </widget>
         </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="checkBox_forceTurnOne">
+          <property name="text">
+           <string>Force Turn One</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </widget>
