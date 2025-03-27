@@ -24,6 +24,8 @@ void SmartCrafter::CraftingSolution(CraftingSession& craftingManager, const Skil
 /* Determines the state of the item and handles the save state of the crafting chain */
 void SmartCrafter::SmartSolveConditions(CraftingSession& craftingManager) {
 	const Item& item = craftingManager.GetItem();
+	const uint8_t finalAppraisalTime = craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::FINALAPPRAISAL] > 0 ?
+		craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::FINALAPPRAISAL] * 2 : 0;
 
 	if (item.IsItemCrafted()) {
 		craftingManager.totalCasts += totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
@@ -39,8 +41,8 @@ void SmartCrafter::SmartSolveConditions(CraftingSession& craftingManager) {
 			craftingManager.ReloadCraftingTurn();
 		}
 	}
-	/*		Item unworkable					Not enough time for a synth step after best cast final appraisal, which is 3 seconds							*/
-	else if (item.IsItemBroken() || craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::FINALAPPRAISAL] * 2 + craftingManager.GetCraftingSessionDuration() > bestCraftTime - 3
+	/*		Item unworkable			Not enough time for a synth step after best cast final appraisal, which is 3 seconds							*/
+	else if (item.IsItemBroken() ||  finalAppraisalTime + craftingManager.GetCraftingSessionDuration() > bestCraftTime - 3
 		/*		This was the last turn	*/
 		|| craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit
 			/* Item is not appraised at the end of the final appraisal buff */
