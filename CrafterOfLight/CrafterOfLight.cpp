@@ -203,7 +203,11 @@ std::vector<Skills::SkillInformation> CrafterOfLight::UserSkillSelection() const
 
 /* Returns the user crafting options from the UI */
 CraftingOptions CrafterOfLight::UserCraftingOptions() const {
-    return { (uint8_t)ui.spinBox_maximumTurns->value(), ui.checkBox_maxQuality->isChecked(), ui.checkBox_forceTurnOne->isChecked()};
+    uint8_t craftTime = 255;
+    if (ui.checkBox_maximumTime->isChecked()) {
+        craftTime = (uint8_t)ui.spinBox_maximumTime->value();
+    }
+    return { (uint8_t)ui.spinBox_maximumTurns->value(), craftTime, ui.checkBox_maxQuality->isChecked(), ui.checkBox_forceTurnOne->isChecked()};
 }
 
 /* Returns the item stats from the UI */
@@ -286,6 +290,8 @@ void CrafterOfLight::SaveJsonSettings() {
     json["quality"] = ui.spinBox_quality->value();
 
     json["maxTurns"] = ui.spinBox_maximumTurns->value();
+    json["maxTimeChecked"] = ui.checkBox_maximumTime->isChecked();
+    json["maxTime"] = ui.spinBox_maximumTime->value();
     json["findQuality"] = ui.checkBox_maxQuality->isChecked();
     json["turnOne"] = ui.checkBox_forceTurnOne->isChecked();
 
@@ -335,9 +341,11 @@ void CrafterOfLight::LoadJsonSettings() {
 
         ui.spinBox_maxCP->setValue(json["maxCP"].toInt());
         ui.spinBox_progress->setValue(json["progress"].toInt());
-         ui.spinBox_quality->setValue(json["quality"].toInt());
+        ui.spinBox_quality->setValue(json["quality"].toInt());
 
         ui.spinBox_maximumTurns->setValue(json["maxTurns"].toInt());
+        ui.checkBox_maximumTime->setChecked(json["maxTimeChecked"].toBool());
+        ui.spinBox_maximumTime->setValue(json["maxTime"].toInt());
         ui.checkBox_maxQuality->setChecked(json["findQuality"].toBool());
         ui.checkBox_forceTurnOne->setChecked(json["turnOne"].toBool());
 

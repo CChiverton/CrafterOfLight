@@ -6,6 +6,7 @@
 
 struct CraftingOptions {
 	uint8_t maxTurnLimit = 1;
+	uint8_t maxTime = 255;
 	bool maxQualityRequired = false;
 	bool forceTurnOneSkills = false;
 };

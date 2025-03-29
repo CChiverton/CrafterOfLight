@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>400</height>
+    <height>411</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,7 +25,7 @@
      <x>10</x>
      <y>10</y>
      <width>291</width>
-     <height>371</height>
+     <height>391</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -1120,7 +1120,7 @@ QPushButton:disabled{
      <x>310</x>
      <y>10</y>
      <width>281</width>
-     <height>371</height>
+     <height>391</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1232,10 +1232,38 @@ QPushButton:disabled{
          <x>10</x>
          <y>30</y>
          <width>261</width>
-         <height>111</height>
+         <height>136</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="stepsLabel">
+          <property name="text">
+           <string>Maximum Steps</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="stepsLabel_maximumTime">
+          <property name="text">
+           <string>Maximum Time</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QPushButton" name="pushButton_smartCraft">
+          <property name="text">
+           <string>Smart Craft</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QCheckBox" name="checkBox_forceTurnOne">
+          <property name="text">
+           <string>Force Turn One</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="1">
          <widget class="QSpinBox" name="spinBox_maximumTurns">
           <property name="minimum">
@@ -1246,38 +1274,44 @@ QPushButton:disabled{
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="4" column="0">
          <widget class="QPushButton" name="pushButton_bruteCraft">
           <property name="text">
            <string>Brute Craft</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="spinBox_maximumTime">
+          <property name="suffix">
+           <string>s</string>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>90</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
          <widget class="QCheckBox" name="checkBox_maxQuality">
           <property name="text">
            <string>Max Quality</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton_smartCraft">
-          <property name="text">
-           <string>Smart Craft</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="stepsLabel">
-          <property name="text">
-           <string>Maximum Steps</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
-         <widget class="QCheckBox" name="checkBox_forceTurnOne">
+         <widget class="QCheckBox" name="checkBox_maximumTime">
           <property name="text">
-           <string>Force Turn One</string>
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="stepsLabel_2">
+          <property name="text">
+           <string>Enforce Maximum Time</string>
           </property>
          </widget>
         </item>
