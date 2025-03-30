@@ -259,13 +259,17 @@ uint8_t SmartCrafter::FindMinimumQualitySteps(CraftingSession& craftingManager, 
 
 	return minimumSteps;
 }
-
+/* Finds the number of quality skills used in the current history 
+* @Note To be used after the crafting step has taken place */
 uint8_t SmartCrafter::FindNumberOfQualitySkillsInSession(const CraftingSession& craftingManager) const {
 	uint8_t qualitySkillsFound = 0;
-	for (uint8_t i{ 0 }; i < craftingManager.GetCraftingSessionTurn(); ++i) {
+	for (uint8_t i{ 1 }; i < craftingManager.GetCraftingSessionTurn(); ++i) {
 		if (IsQualitySkill(craftingManager.GetCurrentCraftingHistory()[i].skillName)) {
 			++qualitySkillsFound;
 		}
+	}
+	if (IsQualitySkill(craftingManager.GetCurrentState().skillName)) {
+		++qualitySkillsFound;
 	}
 	return qualitySkillsFound;
 }

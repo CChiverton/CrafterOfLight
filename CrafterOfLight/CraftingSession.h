@@ -34,6 +34,7 @@ public:
 
 	inline const Player& GetPlayer() const;
 	inline const Item& GetItem() const;
+	inline const CraftState& GetCurrentState() const;
 	inline uint8_t GetCraftingSessionTurn() const;
 	inline uint8_t GetCraftingSessionDuration() const;
 	inline const std::array<CraftState, 30>& GetCurrentCraftingHistory() const;
@@ -72,6 +73,10 @@ inline const Player& CraftingSession::GetPlayer() const {
 
 inline const Item& CraftingSession::GetItem() const {
 	return item;
+}
+
+inline const CraftingSession::CraftState& CraftingSession::GetCurrentState() const {
+	return currentState;
 }
 
 inline uint8_t CraftingSession::GetCraftingSessionTurn() const {
