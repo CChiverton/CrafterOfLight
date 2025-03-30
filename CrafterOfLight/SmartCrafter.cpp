@@ -5,6 +5,18 @@
 SmartCrafter::SmartCrafter(CraftingOptions craftingOptions, std::vector<Skills::SkillInformation> userSkills, PlayerState maxPlayerState, uint16_t progressPerHundred, uint16_t qualityPerHundred, ItemState maxItemState)
 	: Crafter(craftingOptions, userSkills, maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState)
 {
+	if (craftingOptions.maxQualityRequired) {
+		std::vector<Skills::SkillInformation> qualitySkills;
+		for (Skills::SkillInformation skill : userSkills) {
+			if (IsQualitySkill(skill.name)) {
+				qualitySkills.emplace_back(skill);
+			}
+		}
+
+		CraftingSession craftingManager(maxPlayerState, progressPerHundred, qualityPerHundred, maxItemState);
+
+		minQualitySteps = FindMinimumQualitySteps(craftingManager, qualitySkills, craftingOptions.maxTurnLimit);
+	}
 };
 
 SmartCrafter::~SmartCrafter() {};
@@ -26,6 +38,9 @@ void SmartCrafter::SmartSolveConditions(CraftingSession& craftingManager) {
 	const Item& item = craftingManager.GetItem();
 	const uint8_t finalAppraisalTime = craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::FINALAPPRAISAL] > 0 ?
 		craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::FINALAPPRAISAL] * 2 : 0;
+	const uint8_t qualitySkillsUsed = FindNumberOfQualitySkillsInSession(craftingManager);
+	uint8_t remainingQualitySteps = minQualitySteps - qualitySkillsUsed;
+	remainingQualitySteps = remainingQualitySteps > craftingOptions.maxTurnLimit ? 0 : remainingQualitySteps;
 
 	if (item.IsItemCrafted()) {
 		craftingManager.totalCasts += totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
@@ -46,7 +61,9 @@ void SmartCrafter::SmartSolveConditions(CraftingSession& craftingManager) {
 		/*		This was the last turn	*/
 		|| craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit
 			/* Item is not appraised at the end of the final appraisal buff */
-		|| (craftingManager.GetFinalAppraisalUsed() && !item.IsItemAppraised() && craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::FINALAPPRAISAL] == 0)) {
+		|| (craftingManager.GetFinalAppraisalUsed() && !item.IsItemAppraised() && craftingManager.GetPlayer().GetCurrentPlayerState().buffs[Buffs::FINALAPPRAISAL] == 0)
+			/* Find if there is enough turns to fit in the minimum number of quality turns needed within the required turn limit */
+		|| (qualitySkillsUsed < minQualitySteps && remainingQualitySteps + craftingManager.GetCraftingSessionTurn() >= craftingOptions.maxTurnLimit)) {
 		craftingManager.totalCasts += totalNumberOfCasts[craftingManager.GetCraftingSessionTurn()];
 		/* Undo the changes caused by this step*/
 		craftingManager.ReloadCraftingTurn();
@@ -213,4 +230,42 @@ void SmartCrafter::VenerationLogicControl(CraftingSession& craftingManager, cons
 	else {
 		craftingManager.SetSynthesisUsedDuringVeneration(false);
 	}
+}
+/* Goes through the crafting process with infinite durability to find the fewest number of quality steps needed to obtain maximum quality */
+uint8_t SmartCrafter::FindMinimumQualitySteps(CraftingSession& craftingManager, const std::vector<Skills::SkillInformation>& qualitySkills, uint8_t maxSteps) {
+	uint8_t minimumSteps = maxSteps;
+	for (Skills::SkillInformation skill : qualitySkills) {
+		if (craftingManager.CraftingTurn(skill)) {
+			if (craftingManager.GetItem().IsItemMaxQuality()) {
+				craftingManager.SaveCurrentCraftingTurn();
+				minimumSteps = craftingManager.GetCraftingSessionTurn() < minimumSteps ? craftingManager.GetCraftingSessionTurn() : minimumSteps;
+				craftingManager.LoadLastCraftingTurn();
+			}
+			else if (craftingManager.GetCraftingSessionTurn() >= minimumSteps) {
+				craftingManager.ReloadCraftingTurn();
+			}
+			else {
+				craftingManager.FullRepairItem();
+				craftingManager.SaveCurrentCraftingTurn();
+				uint8_t steps = FindMinimumQualitySteps(craftingManager, qualitySkills, minimumSteps);
+				minimumSteps = steps < minimumSteps ? steps : minimumSteps;
+				craftingManager.LoadLastCraftingTurn();
+			}
+		}
+		else {
+			craftingManager.ReloadCraftingTurn();
+		}
+	}
+
+	return minimumSteps;
+}
+
+uint8_t SmartCrafter::FindNumberOfQualitySkillsInSession(const CraftingSession& craftingManager) const {
+	uint8_t qualitySkillsFound = 0;
+	for (uint8_t i{ 0 }; i < craftingManager.GetCraftingSessionTurn(); ++i) {
+		if (IsQualitySkill(craftingManager.GetCurrentCraftingHistory()[i].skillName)) {
+			++qualitySkillsFound;
+		}
+	}
+	return qualitySkillsFound;
 }

@@ -50,6 +50,7 @@ public:
 	inline bool GetSynthesisUsedDuringVeneration() const;
 	inline void SetTouchUsedDuringInnovation(bool usedState);
 	inline bool GetTouchUsedDuringInnovation() const;
+	inline void FullRepairItem();
 
 	uint64_t totalCasts = 0;
 
@@ -128,4 +129,8 @@ inline void CraftingSession::SetTouchUsedDuringInnovation(bool usedState) {
 }
 inline bool CraftingSession::GetTouchUsedDuringInnovation() const {
 	return currentState.touchUsedDuringInnovation;
+}
+
+inline void CraftingSession::FullRepairItem() {
+	item.CraftItem({ Skills::SkillName::NONE,		Skills::SkillType::NONE,			0,		-127,		0,	0,		0 });
 }
