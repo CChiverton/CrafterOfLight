@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Fix the repository not correctly registering the majority language of the project
+*.cpp linguist-language=C++
+*.h linguist-language=C++
